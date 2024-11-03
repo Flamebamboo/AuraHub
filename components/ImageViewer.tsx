@@ -6,10 +6,12 @@ const placeHolderImage = require("/Users/acap/StickerSmash/assets/images/backgro
 
 type Props = {
   imgSource: ImageSource;
+  selectedImg?: string;
 };
 
-export default function ImageViewer({ imgSource }: Props) {
-  return <Image source={imgSource} style={styles.image} />;
+export default function ImageViewer({ imgSource, selectedImg }: Props) {
+  const imageSource = selectedImg ? { uri: selectedImg } : imgSource;
+  return <Image source={imageSource} style={styles.image} />;
 }
 
 const styles = StyleSheet.create({
