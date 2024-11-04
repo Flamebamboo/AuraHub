@@ -3,7 +3,6 @@ import { Image } from "expo-image";
 import ImageViewer from "@/components/ImageViewer";
 import Button from "@/components/Button";
 import { useState } from "react";
-
 import * as ImagePicker from "expo-image-picker";
 
 const placeHolderImage = require("@/assets/images/background-image.png");
@@ -11,7 +10,6 @@ const placeHolderImage = require("@/assets/images/background-image.png");
 const index = () => {
   const [selectedImg, setSelectedImg] = useState("");
   const [showAppOptions, setShowAppOptions] = useState(false);
-
   const pickImageAsync = async () => {
     //launchImageLibaryAsync recieves an object of ImagePickerOptions
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -28,7 +26,7 @@ const index = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View className="flex-1 bg-black items-center">
       <View style={styles.imageContainer}>
         <ImageViewer imgSource={placeHolderImage} selectedImg={selectedImg} />
       </View>
