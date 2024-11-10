@@ -11,17 +11,14 @@ const index = () => {
     PixelifySans: require("../assets/fonts/PixelifySans.ttf"),
   });
   return (
-    <SafeAreaView className="bg-black h-full">
+    <SafeAreaView className="bg-primary-custom-blue h-full">
       <ScrollView
         contentContainerStyle={{
           height: "100%",
         }}
       >
-        <View className="w-full flex justify-center items-center h-full px-4">
-          <Text
-            className="align-top font-bold text-7xl text-white underline decoration-red-500 mt-10"
-            style={{ fontFamily: "PixelifySans" }}
-          >
+        <View className="w-full flex justify-center items-center h-full pt-8 px-4">
+          <Text className="align-top font-bold text-7xl text-white underline decoration-red-500 mt-10">
             StudyHub
           </Text>
 

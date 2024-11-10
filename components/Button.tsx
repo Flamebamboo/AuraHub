@@ -79,6 +79,16 @@ export default function Button({ label, theme, font, onPress }: Props) {
       </View>
     );
   }
+  if (theme === "SignIn") {
+    return (
+      <TouchableOpacity
+        className="mt-6 bg-red-500 py-4 rounded-xl items-center"
+        onPress={onPress}
+      >
+        <Text className="text-white font-bold text-lg">Sign In</Text>
+      </TouchableOpacity>
+    );
+  }
 
   return (
     <View style={styles.buttonContainer}>
