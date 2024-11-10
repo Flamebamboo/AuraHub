@@ -1,32 +1,28 @@
 import { Tabs } from "expo-router";
-import { Ionicons } from "@expo/vector-icons";
-
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faHouse } from "@fortawesome/free-solid-svg-icons/faHouse";
+import { faUser } from "@fortawesome/free-solid-svg-icons/faUser";
 export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: "#ffd33d",
-        headerStyle: {
-          backgroundColor: "#25292e",
-        },
+        tabBarActiveTintColor: "#fff",
         headerShadowVisible: false,
-        headerTintColor: "#fff",
         tabBarStyle: {
-          backgroundColor: "#25292e",
+          backgroundColor: "#000",
         },
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
-          title: "Home",
+          title: "",
           tabBarIcon: ({ color, focused }) => (
-            <Ionicons
-              name={
-                focused ? "information-circle" : "information-circle-outline"
-              }
+            <FontAwesomeIcon
+              icon={faHouse}
               color={color}
               size={24}
+              style={{ marginTop: 30 }}
             />
           ),
         }}
@@ -34,12 +30,13 @@ export default function TabLayout() {
       <Tabs.Screen
         name="about"
         options={{
-          title: "About",
+          title: "",
           tabBarIcon: ({ color, focused }) => (
-            <Ionicons
-              name={focused ? "home-sharp" : "home-outline"}
+            <FontAwesomeIcon
+              icon={faUser}
               color={color}
               size={24}
+              style={{ marginTop: 30 }}
             />
           ),
         }}
