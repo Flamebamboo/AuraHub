@@ -27,7 +27,7 @@ const index = () => {
             <Button
               label="CREATE AN ACCOUNT"
               theme="createAccount"
-              onPress={() => router.push("/(auth)/sign-in")}
+              onPress={() => router.push("/(auth)/sign-up")}
             />
             <Button
               label="I ALREADY HAVE AN ACCOUNT"

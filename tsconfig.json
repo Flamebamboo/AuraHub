@@ -14,6 +14,7 @@
     "nativewind-env.d.ts",
     "app/(auth)/sign-in.jsx",
     "app/index.jsx",
-    "components/FormField.jsx"
+    "components/FormField.jsx",
+    "app/(auth)/sign-up.jsx"
   ]
 }

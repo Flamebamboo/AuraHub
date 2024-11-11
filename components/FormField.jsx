@@ -1,17 +1,13 @@
-"use client";
-
 import React, { useState } from "react";
 import {
   View,
   Text,
   TextInput,
   TouchableOpacity,
-  Image,
-  KeyboardAvoidingView,
-  Platform,
+  StyleSheet,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import Button from "./Button";
+import { useFonts } from "expo-font";
 
 const FormField = ({
   title,
@@ -23,27 +19,46 @@ const FormField = ({
   ...props
 }) => {
   const [showPassword, setShowPassword] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
+
+  const [fontsLoaded] = useFonts({
+    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
+  });
+
+  if (!fontsLoaded) {
+    return null;
+  }
 
   return (
-    <View className="mb-4">
-      <Text className="text-base text-gray-200 font-medium">{title}</Text>
-      <View className="w-full h-14 px-4 bg-gray-800 rounded-xl border border-gray-700 focus-within:border-red-500 flex-row items-center">
-        <Ionicons name={iconName} size={20} color="#7B7B8B" />
+    <View style={styles.container}>
+      <Text style={styles.label}>{title}</Text>
+      <View style={[styles.inputContainer, isFocused && styles.focusedInput]}>
+        <Ionicons
+          name={iconName}
+          size={20}
+          color="#9CA3AF"
+          style={styles.icon}
+        />
         <TextInput
-          className="flex-1 ml-3 text-white font-semibold text-base"
+          style={styles.input}
           value={value}
           placeholder={placeholder}
-          placeholderTextColor="#7B7B8B"
+          placeholderTextColor="#9CA3AF"
           onChangeText={handleChangeText}
           secureTextEntry={secureTextEntry && !showPassword}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
           {...props}
         />
         {secureTextEntry && (
-          <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+          <TouchableOpacity
+            onPress={() => setShowPassword(!showPassword)}
+            style={styles.eyeIcon}
+          >
             <Ionicons
               name={showPassword ? "eye-off" : "eye"}
               size={20}
-              color="#7B7B8B"
+              color="#9CA3AF"
             />
           </TouchableOpacity>
         )}
@@ -52,61 +67,48 @@ const FormField = ({
   );
 };
 
-export default function Component() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const styles = StyleSheet.create({
+  container: {
+    marginBottom: 16,
+    paddingHorizontal: 16,
+  },
+  label: {
+    fontFamily: "SpaceMono",
+    fontSize: 16,
+    color: "#E5E7EB",
+    marginBottom: 6,
+  },
+  inputContainer: {
+    height: 50,
+    paddingHorizontal: 16,
+    backgroundColor: "#1F2937",
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: "#374151",
+    flexDirection: "row",
+    alignItems: "center",
+    transition: "all 0.3s ease",
+  },
+  focusedInput: {
+    borderColor: "#EF4444",
+    borderWidth: 2,
+    shadowColor: "#EF4444",
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.2,
+    shadowRadius: 10,
+  },
+  icon: {
+    marginRight: 12,
+  },
+  input: {
+    flex: 1,
+    color: "#FFFFFF",
+    fontSize: 16,
+    fontWeight: "500",
+  },
+  eyeIcon: {
+    padding: 4,
+  },
+});
 
-  const handleLogin = () => {
-    // Implement login logic here
-    console.log("Login pressed");
-  };
-
-  return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      className="flex-1 "
-    >
-      <View className="flex-1 justify-center px-8">
-        <View className="items-center pb-40">
-          <Text className="mt-4 text-6xl font-bold text-white underline decoration-red-500">
-            StudyHub
-          </Text>
-          <Text className="mt-2 text-gray-400">Sign in to your account</Text>
-        </View>
-
-        <FormField
-          title="Email"
-          value={email}
-          placeholder="Enter your email"
-          handleChangeText={setEmail}
-          iconName="mail-outline"
-          keyboardType="email-address"
-          autoCapitalize="none"
-        />
-
-        <FormField
-          title="Password"
-          value={password}
-          placeholder="Enter your password"
-          handleChangeText={setPassword}
-          iconName="lock-closed-outline"
-          secureTextEntry
-        />
-
-        <TouchableOpacity
-          className="mt-2 self-end"
-          onPress={() => console.log("Forgot password pressed")}
-        >
-          <Text className="text-red-500 font-medium">Forgot password?</Text>
-        </TouchableOpacity>
-        <Button theme="SignIn" label="sign in"></Button>
-        <View className="mt-8 flex-row justify-center">
-          <Text className="text-gray-400">Don't have an account? </Text>
-          <TouchableOpacity onPress={() => console.log("Sign up pressed")}>
-            <Text className="text-red-500 font-medium">Sign up</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </KeyboardAvoidingView>
-  );
-}
+export default FormField;

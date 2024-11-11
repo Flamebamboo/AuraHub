@@ -22,7 +22,7 @@ export default function Button({ label, theme, font, onPress }: Props) {
     return (
       <View style={[styles.buttonContainer, styles.signinContainer, ,]}>
         <LinearGradient
-          colors={["#ff0000", "#FA4032"]}
+          colors={["#ef4444", "#FA4032"]}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
           style={styles.gradient}
@@ -82,10 +82,11 @@ export default function Button({ label, theme, font, onPress }: Props) {
   if (theme === "SignIn") {
     return (
       <TouchableOpacity
-        className="mt-6 bg-red-500 py-4 rounded-xl items-center"
+        className="mt-6 bg-red-500 py-4 rounded-xl items-center self-center"
+        style={{ width: 300 }}
         onPress={onPress}
       >
-        <Text className="text-white font-bold text-lg">Sign In</Text>
+        <Text className="text-white font-bold text-lg">{label}</Text>
       </TouchableOpacity>
     );
   }
