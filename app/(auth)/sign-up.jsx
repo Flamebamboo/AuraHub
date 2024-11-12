@@ -4,21 +4,13 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useState } from "react";
 import FormField from "@/components/FormField";
 import Button from "@/components/Button";
-import { router } from "expo-router";
 
-import createUser from "@/lib/appwrite";
+import { useUser } from "@/context/userContext";
+
 const SignUp = () => {
-  const [form, setForm] = useState({
-    username: "",
-    email: "",
-    password: "",
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const submit = () => {
-    createUser();
-    console.log("djsjds");
-  };
+  const user = useUser();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   return (
     <SafeAreaView className="h-full bg-primary-custom-blue">
@@ -32,29 +24,35 @@ const SignUp = () => {
           </Text>
         </View>
         <View className="min-h-[85vh]">
-          <FormField
+          {/* <FormField
             title="Username"
             value={form.username}
             placeholder="Enter your username"
             handleChangeText={(e) => setForm({ ...form, username: e })}
-          />
+          /> */}
 
           <FormField
             title="Email"
-            value={form.email}
+            value={email}
             placeholder="Enter your email"
-            handleChangeText={(e) => setForm({ ...form, email: e })}
+            handleChangeText={setEmail}
             keyboardType="email-address"
           />
           <FormField
             title="Password"
-            value={form.password}
+            value={password}
             placeholder="Enter your password"
-            handleChangeText={(e) => setForm({ ...form, password: e })}
+            handleChangeText={setPassword}
             iconName="lock-closed-outline"
             secureTextEntry
           />
-          <Button theme="SignIn" label="Sign Up" onPress={submit}></Button>
+          <Button
+            theme="SignIn"
+            label="Sign Up"
+            onPress={() => {
+              user.register(email, password);
+            }}
+          ></Button>
           <View className="flex-row justify-center mt-8">
             <Text className="text-white">Already have an account? </Text>
             <TouchableOpacity onPress={console.log("Sign in pressed")}>
