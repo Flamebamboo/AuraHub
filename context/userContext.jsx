@@ -24,9 +24,9 @@ export function UserProvider(props) {
     toast("Logged out");
   }
 
-  async function register(email, password) {
-    await account.create(ID.unique(), email, password);
-    await login(email, password);
+  async function register(username, email, password) {
+    await account.create(ID.unique(), username, email, password);
+    await login(username, email, password);
     toast("Account created");
   }
 

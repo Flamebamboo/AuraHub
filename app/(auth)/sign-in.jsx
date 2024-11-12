@@ -9,14 +9,32 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import FormField from "@/components/FormField";
 import Button from "@/components/Button";
-import { router } from "expo-router";
+import { useRouter } from "expo-router";
+import { useUser } from "@/context/userContext";
 const SignIn = () => {
+  const router = useRouter();
+  const user = useUser();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [form, setForm] = useState({
     username: "",
     email: "",
     password: "",
   });
 
+  const submit = async () => {
+    if (form.email || form.password === "") {
+      Alert.alert("Please enter your email and password");
+    }
+    setSubmitting(true);
+
+    try {
+      await user.login(form.email, form.password);
+      Alert.alert("Success", "User signed in successfully");
+      router.replace("/home");
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <SafeAreaView className="bg-primary-custom-blue flex-1">
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
@@ -53,10 +71,10 @@ const SignIn = () => {
           >
             <Text className="text-red-500 font-bold">Forgot password?</Text>
           </TouchableOpacity>
-          <Button theme="SignIn" label="Sign In" />
+          <Button theme="SignIn" label="Sign In" onPress={submit} />
           <View className="flex-row justify-center mt-8">
             <Text className="text-white">Don't have an account? </Text>
-            <TouchableOpacity onPress={console.log("Sign up pressed")}>
+            <TouchableOpacity onPress={() => router.replace("/sign-up")}>
               <Text className="text-red-500">Sign up</Text>
             </TouchableOpacity>
           </View>
