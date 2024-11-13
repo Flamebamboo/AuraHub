@@ -1,32 +1,35 @@
-import { View, Text, ScrollView, TouchableOpacity } from "react-native";
+import { View, Text, ScrollView, TouchableOpacity, Alert } from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useState } from "react";
 import FormField from "@/components/FormField";
 import Button from "@/components/Button";
-
-import { useRouter } from "expo-router";
-import { useUser } from "@/context/userContext";
+import { router } from "expo-router";
+import { createUser } from "@/lib/appwrite";
+import { useGlobalContext } from "@/context/GlobalProvider";
 
 const SignUp = () => {
-  const router = useRouter();
-  const user = useUser();
+  const { setUser, setIsLogged } = useGlobalContext();
 
   const [isSubmitting, setSubmitting] = useState(false);
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [form, setForm] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
 
   const submit = async () => {
-    if (username === "" || email === "" || password === "") {
-      Alert.alert("Please enter your username, email and password");
+    if (form.username === "" || form.email === "" || form.password === "") {
+      Alert.alert("Error", "Please fill in all fields");
     }
+
     setSubmitting(true);
-
     try {
-      const result = await user.register(email, password, username);
+      const result = await createUser(form.email, form.password, form.username);
+      setUser(result);
+      setIsLogged(true);
 
-      router.replace("/home");
+      router.replace("@/(tabs/home)");
     } catch (error) {
       Alert.alert("Error", error.message);
     } finally {
@@ -48,22 +51,22 @@ const SignUp = () => {
         <View className="min-h-[85vh]">
           <FormField
             title="Username"
-            value={username}
+            value={form.username}
             placeholder="Enter your username"
-            handleChangeText={setUsername}
+            handleChangeText={(e) => setForm({ ...form, username: e })}
           />
           <FormField
             title="Email"
-            value={email}
+            value={form.email}
             placeholder="Enter your email"
-            handleChangeText={setEmail}
+            handleChangeText={(e) => setForm({ ...form, email: e })}
             keyboardType="email-address"
           />
           <FormField
             title="Password"
-            value={password}
+            value={form.password}
             placeholder="Enter your password"
-            handleChangeText={setPassword}
+            handleChangeText={(e) => setForm({ ...form, password: e })}
             iconName="lock-closed-outline"
             secureTextEntry
           />

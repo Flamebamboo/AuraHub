@@ -5,34 +5,44 @@ import {
   ScrollView,
   TouchableOpacity,
   StyleSheet,
+  ActivityIndicator,
+  Alert,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import FormField from "@/components/FormField";
 import Button from "@/components/Button";
-import { useRouter } from "expo-router";
-import { useUser } from "@/context/userContext";
+import { router } from "expo-router";
+import { getCurrentUser, signIn, signOut } from "@/lib/appwrite";
+
+import { useGlobalContext } from "@/context/GlobalProvider";
+
 const SignIn = () => {
-  const router = useRouter();
-  const user = useUser();
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { setUser, setIsLogged } = useGlobalContext();
+  const [isSubmitting, setSubmitting] = useState(false);
   const [form, setForm] = useState({
-    username: "",
     email: "",
     password: "",
   });
 
   const submit = async () => {
-    if (form.email || form.password === "") {
-      Alert.alert("Please enter your email and password");
+    if (form.email === "" || form.password === "") {
+      Alert.alert("Error", "Please fill in all fields");
     }
+
     setSubmitting(true);
 
     try {
-      await user.login(form.email, form.password);
+      await signIn(form.email, form.password);
+      const result = await getCurrentUser();
+      setUser(result);
+      setIsLogged(true);
+
       Alert.alert("Success", "User signed in successfully");
-      router.replace("/home");
-    } catch (err) {
-      console.log(err);
+      router.replace("@/(tabs/home)");
+    } catch (error) {
+      Alert.alert("Error", error.message);
+    } finally {
+      setSubmitting(false);
     }
   };
   return (
@@ -47,14 +57,8 @@ const SignIn = () => {
           </Text>
           <FormField
             title="Enter your email or username"
-            value={form.email || form.username}
-            handleChangeText={(e) => {
-              if (e.includes("@")) {
-                setForm({ ...form, email: e });
-              } else {
-                setForm({ ...form, username: e });
-              }
-            }}
+            value={form.email}
+            handleChangeText={(e) => setForm({ ...form, email: e })}
             placeholder="username or email"
             keyboardType="email-address"
           />
@@ -71,7 +75,13 @@ const SignIn = () => {
           >
             <Text className="text-red-500 font-bold">Forgot password?</Text>
           </TouchableOpacity>
-          <Button theme="SignIn" label="Sign In" onPress={submit} />
+          <Button
+            theme="SignIn"
+            label={isSubmitting ? "Signing in..." : "Sign In"}
+            onPress={submit}
+            disabled={isSubmitting}
+          />
+
           <View className="flex-row justify-center mt-8">
             <Text className="text-white">Don't have an account? </Text>
             <TouchableOpacity onPress={() => router.replace("/sign-up")}>
@@ -86,8 +96,13 @@ const SignIn = () => {
 
 const styles = StyleSheet.create({
   scrollViewContent: {
-    flexGrow: 1, //still dont understand what this means i forgot not sure why Scrollview cant use classname
+    flexGrow: 1,
     justifyContent: "center",
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 
