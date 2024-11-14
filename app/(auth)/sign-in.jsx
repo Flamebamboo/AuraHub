@@ -14,6 +14,8 @@ import Button from "@/components/Button";
 import { router } from "expo-router";
 import { getCurrentUser, signIn, signOut } from "@/lib/appwrite";
 
+import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
+
 import { useGlobalContext } from "@/context/GlobalProvider";
 
 const SignIn = () => {
@@ -29,7 +31,7 @@ const SignIn = () => {
     setUser(null);
     setIsLogged(false);
     console.log("User signed out.");
-    router.replace("@(auth)/sign-in");
+    router.replace("/(auth)/sign-in");
   };
   const submit = async () => {
     if (form.email === "" || form.password === "") {
@@ -54,7 +56,10 @@ const SignIn = () => {
   };
   return (
     <SafeAreaView className="bg-primary-custom-blue flex-1">
-      <ScrollView contentContainerStyle={styles.scrollViewContent}>
+      <KeyboardAwareScrollView
+        bottomOffset={62}
+        contentContainerStyle={styles.scrollViewContent}
+      >
         <View className="px-5">
           <Text className="font-bold text-7xl text-white underline decoration-red-500 text-center mb-3">
             StudyHub
@@ -88,7 +93,6 @@ const SignIn = () => {
             onPress={submit}
             disabled={isSubmitting}
           />
-          <Button theme="SignIn" label={"abort"} onPress={handleSignOut} />
 
           <View className="flex-row justify-center mt-8">
             <Text className="text-white">Don't have an account? </Text>
@@ -97,7 +101,7 @@ const SignIn = () => {
             </TouchableOpacity>
           </View>
         </View>
-      </ScrollView>
+      </KeyboardAwareScrollView>
     </SafeAreaView>
   );
 };
