@@ -2,6 +2,7 @@ import { Tabs } from "expo-router";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faHouse } from "@fortawesome/free-solid-svg-icons/faHouse";
 import { faUser } from "@fortawesome/free-solid-svg-icons/faUser";
+
 export default function TabLayout() {
   return (
     <Tabs
@@ -17,6 +18,7 @@ export default function TabLayout() {
         name="home"
         options={{
           title: "",
+          headerShown: false,
           tabBarIcon: ({ color, focused }) => (
             <FontAwesomeIcon
               icon={faHouse}
@@ -31,6 +33,7 @@ export default function TabLayout() {
         name="profile"
         options={{
           title: "",
+          headerShown: false,
           tabBarIcon: ({ color, focused }) => (
             <FontAwesomeIcon
               icon={faUser}

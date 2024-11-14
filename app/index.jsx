@@ -10,6 +10,7 @@ const index = () => {
   const [fontsLoaded] = useFonts({
     PixelifySans: require("../assets/fonts/PixelifySans.ttf"),
   });
+
   return (
     <SafeAreaView className="bg-primary-custom-blue h-full">
       <ScrollView

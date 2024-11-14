@@ -24,6 +24,13 @@ const SignIn = () => {
     password: "",
   });
 
+  const handleSignOut = async () => {
+    await signOut();
+    setUser(null);
+    setIsLogged(false);
+    console.log("User signed out.");
+    router.replace("@(auth)/sign-in");
+  };
   const submit = async () => {
     if (form.email === "" || form.password === "") {
       Alert.alert("Error", "Please fill in all fields");
@@ -38,7 +45,7 @@ const SignIn = () => {
       setIsLogged(true);
 
       Alert.alert("Success", "User signed in successfully");
-      router.replace("@/(tabs/home)");
+      router.replace("/home");
     } catch (error) {
       Alert.alert("Error", error.message);
     } finally {
@@ -81,6 +88,7 @@ const SignIn = () => {
             onPress={submit}
             disabled={isSubmitting}
           />
+          <Button theme="SignIn" label={"abort"} onPress={handleSignOut} />
 
           <View className="flex-row justify-center mt-8">
             <Text className="text-white">Don't have an account? </Text>
