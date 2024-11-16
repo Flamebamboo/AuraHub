@@ -10,6 +10,7 @@ const CustomButton = ({
   onPress,
   variant = "solid",
   width = 300,
+  height = 50,
   leftIcon,
   fontSize = 16,
   fontFamily = "BhalooBold",
@@ -69,6 +70,7 @@ const CustomButton = ({
         variant === "transparent" && { backgroundColor: "transparent" },
         { width },
         style,
+        { height },
       ]}
     >
       <ButtonContent />
@@ -100,8 +102,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   outlineButton: {
-    borderWidth: 2,
-    borderColor: "#ef4444",
+    borderWidth: 5,
+    borderRadius: 29,
+    borderColor: "#FFF",
   },
   buttonText: {
     color: "#ffffff",

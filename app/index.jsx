@@ -8,7 +8,7 @@ import { Redirect, router } from "expo-router";
 
 const index = () => {
   return (
-    <SafeAreaView className="bg-primary-custom-pink h-full">
+    <SafeAreaView className="bg-primary-custom-lightpink h-full">
       <ScrollView
         contentContainerStyle={{
           height: "100%",

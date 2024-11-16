@@ -21,17 +21,9 @@ const FormField = ({
   const [showPassword, setShowPassword] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
 
-  const [fontsLoaded] = useFonts({
-    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
-  });
-
-  if (!fontsLoaded) {
-    return null;
-  }
-
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>{title}</Text>
+      <Text style={styles.label}>{title.toUpperCase()}</Text>
       <View style={[styles.inputContainer, isFocused && styles.focusedInput]}>
         <Ionicons
           name={iconName}
@@ -73,18 +65,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   label: {
-    fontFamily: "SpaceMono",
-    fontSize: 16,
-    color: "#E5E7EB",
-    marginBottom: 6,
+    fontFamily: "BhalooBold",
+    fontSize: 17,
+    color: "#FFF",
   },
   inputContainer: {
-    height: 50,
+    height: 40,
     paddingHorizontal: 16,
-    backgroundColor: "#1F2937",
+    backgroundColor: "#FFF",
     borderRadius: 12,
-    borderWidth: 1,
-    borderColor: "#374151",
+
     flexDirection: "row",
     alignItems: "center",
     transition: "all 0.3s ease",
@@ -102,9 +92,10 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    color: "#FFFFFF",
+    color: "#000",
     fontSize: 16,
-    fontWeight: "500",
+
+    fontFamily: "BhalooBold",
   },
   eyeIcon: {
     padding: 4,

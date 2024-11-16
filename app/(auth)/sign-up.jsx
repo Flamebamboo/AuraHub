@@ -38,20 +38,21 @@ const SignUp = () => {
   };
 
   return (
-    <SafeAreaView className="h-full bg-primary-custom-pink">
-      <ScrollView>
-        <View className="pt-10">
-          <Text className="mb-32 text-center text-white text-xl font-semibold">
-            Create Account
+    <View className="h-full  bg-primary-custom-lightpink flex ">
+      {/* over empty section here i intent to put pixel art stuff like characters hanging over*/}
+      <View className="flex-1"></View>
+
+      {/* main container for sign up page with curvy purple design */}
+      <View className=" bg-primary-custom-purple rounded-t-[30px] h-3/4">
+        <View className="pt-16">
+          <Text className="mb-4 text-center font-extrabold text-white text-3xl">
+            CREATE AN <Text className="text-primary-custom-pink">ACCOUNT</Text>
           </Text>
         </View>
-        <View className="min-h-[85vh]">
-          <FormField
-            title="Username"
-            value={form.username}
-            placeholder="Enter your username"
-            handleChangeText={(e) => setForm({ ...form, username: e })}
-          />
+
+        {/* form fields for registering */}
+
+        <View className="flex-1 px-12 pt-10">
           <FormField
             title="Email"
             value={form.email}
@@ -67,20 +68,52 @@ const SignUp = () => {
             iconName="lock-closed-outline"
             secureTextEntry
           />
+
+          {/* custom buttons for registering */}
+
           <CustomButton
-            variant="solid"
-            label="Sign Up"
+            variant="outline"
+            label="Register"
+            fontSize={20}
+            fontFamily="BhalooBold"
             onPress={submit}
+            width={280}
+            style={{ alignSelf: "center", marginTop: 30, marginBottom: 30 }}
           ></CustomButton>
-          <View className="flex-row justify-center mt-8">
-            <Text className="text-white">Already have an account? </Text>
+
+          {/* horizontal line divider */}
+
+          <View className="w-full h-[1px] bg-gray-300 my-6" />
+
+          {/* oAuth google and apple sign up custom buttons*/}
+          <View className="gap-y-4">
+            <CustomButton
+              variant="solid"
+              label="Sign Up With Google"
+              fontSize={18}
+              iconName="google"
+            ></CustomButton>
+
+            <CustomButton
+              variant="solid"
+              label="Sign Up With Apple"
+              fontSize={18}
+              backgroundColor="#000"
+            ></CustomButton>
+          </View>
+
+          {/* Go to sign in page if they have acc*/}
+
+          <View className="flex-row justify-center mt-5">
             <TouchableOpacity onPress={() => router.replace("/sign-in")}>
-              <Text className="text-red-500">Sign in</Text>
+              <Text className="text-gray-300 underline font-extrabold text-lg">
+                Already have an account?
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
-      </ScrollView>
-    </SafeAreaView>
+      </View>
+    </View>
   );
 };
 

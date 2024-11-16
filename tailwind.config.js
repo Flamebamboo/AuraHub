@@ -12,15 +12,16 @@ module.exports = {
       colors: {
         primary: {
           "custom-blue": "#0B192C",
-          "custom-pink": "#9482DA",
+          "custom-lightpink": "#9482DA",
+          "custom-purple": "#231F35",
           "custom-button": "#004086",
+          "custom-pink": "#EB3678",
         },
       },
       fontFamily: {
         PixelifySans: ["PixelifySans", "sans-serif"],
         ReadexPro: ["ReadexPro", "sans-serif"],
         ReadexProBold: ["ReadexPro-Bold", "sans-serif"],
-        BalooBhaijaan2Bold: ["BalooBhaijaan2-Bold", "sans-serif"],
       },
     },
   },
