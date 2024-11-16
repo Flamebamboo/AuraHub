@@ -3,7 +3,7 @@ import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useState } from "react";
 import FormField from "@/components/FormField";
-import Button from "@/components/Button";
+import CustomButton from "@/components/CustomButton";
 import { router } from "expo-router";
 import { createUser } from "@/lib/appwrite";
 import { useGlobalContext } from "@/context/GlobalProvider";
@@ -38,12 +38,9 @@ const SignUp = () => {
   };
 
   return (
-    <SafeAreaView className="h-full bg-primary-custom-blue">
+    <SafeAreaView className="h-full bg-primary-custom-pink">
       <ScrollView>
         <View className="pt-10">
-          <Text className="pt-10 font-bold text-7xl text-white underline decoration-red-500 text-center mb-3">
-            StudyHub
-          </Text>
           <Text className="mb-32 text-center text-white text-xl font-semibold">
             Create Account
           </Text>
@@ -70,7 +67,11 @@ const SignUp = () => {
             iconName="lock-closed-outline"
             secureTextEntry
           />
-          <Button theme="SignIn" label="Sign Up" onPress={submit}></Button>
+          <CustomButton
+            variant="solid"
+            label="Sign Up"
+            onPress={submit}
+          ></CustomButton>
           <View className="flex-row justify-center mt-8">
             <Text className="text-white">Already have an account? </Text>
             <TouchableOpacity onPress={() => router.replace("/sign-in")}>

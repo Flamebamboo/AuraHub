@@ -16,6 +16,7 @@
     "app/index.jsx",
     "components/FormField.jsx",
     "app/(auth)/sign-up.jsx",
-    "app/(tabs)/home.jsx"
+    "app/(tabs)/home.jsx",
+    "components/Button.jsx"
   ]
 }

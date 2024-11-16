@@ -10,12 +10,12 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import FormField from "@/components/FormField";
-import Button from "@/components/Button";
+import CustomButton from "@/components/CustomButton";
 import { router } from "expo-router";
 import { getCurrentUser, signIn, signOut } from "@/lib/appwrite";
 
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
-
+import { AuthTest } from "@/components/AuthTest";
 import { useGlobalContext } from "@/context/GlobalProvider";
 
 const SignIn = () => {
@@ -32,6 +32,10 @@ const SignIn = () => {
     setIsLogged(false);
     console.log("User signed out.");
     router.replace("/(auth)/sign-in");
+  };
+  const customUser = async () => {
+    await signIn("acap@acap.com", "123123123");
+    router.replace("/home");
   };
   const submit = async () => {
     if (form.email === "" || form.password === "") {
@@ -55,13 +59,13 @@ const SignIn = () => {
     }
   };
   return (
-    <SafeAreaView className="bg-primary-custom-blue flex-1">
+    <SafeAreaView className="flex-1 bg-[#1A91FF]">
       <KeyboardAwareScrollView
         bottomOffset={62}
         contentContainerStyle={styles.scrollViewContent}
       >
         <View className="px-5">
-          <Text className="font-bold text-7xl text-white underline decoration-red-500 text-center mb-3">
+          <Text className="text-7xl font-bold text-white text-center mb-3 underline decoration-[#EF4444]">
             StudyHub
           </Text>
           <Text className="mb-32 text-center text-white text-xl font-semibold">
@@ -82,13 +86,13 @@ const SignIn = () => {
             secureTextEntry
           />
           <TouchableOpacity
-            className="self-end mb-6 me-6"
+            className="self-end mb-6 mr-6"
             onPress={() => console.log("Forgot password pressed")}
           >
-            <Text className="text-red-500 font-bold">Forgot password?</Text>
+            <Text className="text-[#EF4444] font-bold">Forgot password?</Text>
           </TouchableOpacity>
-          <Button
-            theme="SignIn"
+          <CustomButton
+            theme="outline"
             label={isSubmitting ? "Signing in..." : "Sign In"}
             onPress={submit}
             disabled={isSubmitting}
@@ -97,7 +101,7 @@ const SignIn = () => {
           <View className="flex-row justify-center mt-8">
             <Text className="text-white">Don't have an account? </Text>
             <TouchableOpacity onPress={() => router.replace("/sign-up")}>
-              <Text className="text-red-500">Sign up</Text>
+              <Text className="text-[#EF4444]">Sign up</Text>
             </TouchableOpacity>
           </View>
         </View>

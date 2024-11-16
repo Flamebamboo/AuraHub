@@ -1,25 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { getCurrentUser, signOut } from "@/lib/appwrite";
 
-import Button from "@/components/Button";
 import { router } from "expo-router";
 import { useGlobalContext } from "@/context/GlobalProvider";
 import { AuthTest } from "@/components/AuthTest";
 
+//acap@acap.com
+//123123123
+import { StatsCard } from "@/components/StatsCard";
 const Home = () => {
   const { user, setUser, setIsLogged } = useGlobalContext();
-  const [selectedDay, setSelectedDay] = useState(3); // Wednesday selected by default
+  const [selectedDay, setSelectedDay] = useState(new Date().getDay()); // Wednesday selected by default
   const days = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
-
-  const handleSignOut = async () => {
-    await signOut();
-    setUser(null);
-    setIsLogged(false);
-    console.log("User signed out.");
-    router.replace("@(auth)/sign-in");
-  };
 
   const getGreeting = () => {
     const hour = new Date().getHours();
@@ -27,8 +21,6 @@ const Home = () => {
     if (hour < 18) return "good afternoon";
     return "good night";
   };
-
-  console.log("Current user state:", user); // Log the current user state
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#1a1b1e" }}>
@@ -45,46 +37,7 @@ const Home = () => {
           </View>
 
           {/* Today's Stats */}
-          <View
-            style={{
-              backgroundColor: "#25262b",
-              borderRadius: 16,
-              padding: 16,
-              gap: 16,
-            }}
-          >
-            <Text style={{ color: "#a0a0a0" }}>today</Text>
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <Text style={{ color: "#3b82f6", fontSize: 20 }}>0m/3h</Text>
-              <View
-                style={{
-                  backgroundColor: "#2c2d31",
-                  paddingHorizontal: 12,
-                  paddingVertical: 4,
-                  borderRadius: 9999,
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-              >
-                <Text style={{ color: "#a0a0a0", marginRight: 4 }}>1d</Text>
-                <View
-                  style={{
-                    width: 8,
-                    height: 8,
-                    backgroundColor: "#3b82f6",
-                    borderRadius: 9999,
-                  }}
-                />
-              </View>
-            </View>
-          </View>
-
+          <StatsCard progress="Hello" day="World" />
           {/* Day Selector */}
           <View
             style={{ flexDirection: "row", justifyContent: "space-between" }}
@@ -236,9 +189,7 @@ const Home = () => {
             </View>
           </TouchableOpacity>
         </View>
-        <View className="flex-1">
-          <Button label="Sign Out" onPress={handleSignOut} theme="SignIn" />
-        </View>
+        <View className="flex-1"></View>
       </ScrollView>
     </SafeAreaView>
   );
