@@ -37,7 +37,7 @@ const Home = () => {
           </View>
 
           {/* Today's Stats */}
-          <StatsCard progress="Hello" day="World" />
+          <StatsCard />
           {/* Day Selector */}
           <View
             style={{ flexDirection: "row", justifyContent: "space-between" }}
