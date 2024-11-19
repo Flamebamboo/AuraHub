@@ -14,7 +14,6 @@ import CustomButton from "@/components/CustomButton";
 import { router } from "expo-router";
 import { getCurrentUser, signIn, signOut } from "@/lib/appwrite";
 
-import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import { AuthTest } from "@/components/AuthTest";
 import { useGlobalContext } from "@/context/GlobalProvider";
 

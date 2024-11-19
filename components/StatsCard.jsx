@@ -1,27 +1,36 @@
 // StatsCard.jsx
 import { View, Text, StyleSheet } from "react-native";
+import { Image } from "react-native";
 import React from "react";
 
+import { DaySelector } from "./DaySelector";
 export const StatsCard = () => (
   <View className="bg-gray-800 flex w-[100%] h-[40%] rounded-3xl p-6">
-    <View>
-      <Text className="text-white text-start px-6 w-full">Today</Text>
+    <View className="flex-row justify-between items-center w-full px-4">
+      <Text className="text-white text-start">Today</Text>
+      <Image
+        className="w-8 h-8"
+        source={require("../assets/icons/FocusIcon.png")}
+      />
     </View>
     <View className="justify-center items-center flex-1">
-      <Text className="text-white text-center text-4xl font-bold">4h 36m</Text>
+      <Text className="text-white text-center text-4xl font-bold">3h 20m</Text>
       <Text className="text-white text-center text-sm font-ReadexPro font-regular">
-        SCREEN TIME TODAY
+        TOTAL FOCUS TIME
       </Text>
     </View>
     <View className="flex-row w-full justify-between px-4 pb-8">
       <View style={styles.textContainer}>
-        <Text style={styles.text}>MOST USED</Text>
+        <Text style={styles.text}>SESSIONS</Text>
+        <Text style={styles.stat}>5</Text>
       </View>
       <View style={styles.textContainer}>
-        <Text style={styles.text}>AURA POINTS</Text>
+        <Text style={styles.text}>FLASHCARDS</Text>
+        <Text style={styles.stat}>20</Text>
       </View>
       <View style={styles.textContainer}>
-        <Text style={styles.text}>PICKUPS</Text>
+        <Text style={styles.text}>HUBS</Text>
+        <Text style={styles.stat}>3</Text>
       </View>
     </View>
   </View>
@@ -34,7 +43,12 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "#fff",
-    fontSize: 12,
-    fontWeight: "light",
+    fontSize: 14,
+    fontWeight: "300",
+  },
+  stat: {
+    color: "#fff",
+    fontSize: 24,
+    fontWeight: "bold",
   },
 });
