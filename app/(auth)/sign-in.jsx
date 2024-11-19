@@ -59,18 +59,22 @@ const SignIn = () => {
     }
   };
   return (
-    <SafeAreaView className="flex-1 bg-[#1A91FF]">
-      <KeyboardAwareScrollView
-        bottomOffset={62}
-        contentContainerStyle={styles.scrollViewContent}
-      >
-        <View className="px-5">
-          <Text className="text-7xl font-bold text-white text-center mb-3 underline decoration-[#EF4444]">
-            StudyHub
+    <SafeAreaView
+      className="flex-1 bg-primary-custom-lightpink"
+      edges={["top", "left", "right"]}
+    >
+      <View className="flex-1">
+        {/* over empty section here i intent to put pixel art stuff like characters hanging over*/}
+      </View>
+
+      <View className=" bg-primary-custom-purple rounded-t-[30px] min-h-[80%]">
+        <View className="pt-16">
+          <Text className="mb-4 text-center font-extrabold text-primary-custom-pink text-3xl">
+            HEY, <Text className="text-white"> WELCOME BACK!</Text>
           </Text>
-          <Text className="mb-32 text-center text-white text-xl font-semibold">
-            Log in to your account
-          </Text>
+        </View>
+
+        <View className="flex-1 px-12 pt-8">
           <FormField
             title="Enter your email or username"
             value={form.email}
@@ -86,35 +90,55 @@ const SignIn = () => {
             secureTextEntry
           />
           <TouchableOpacity
-            className="self-end mb-6 mr-6"
+            className="mb-1 items-center"
             onPress={() => console.log("Forgot password pressed")}
           >
-            <Text className="text-[#EF4444] font-bold">Forgot password?</Text>
+            <Text className="text-[#218CFF] underline">Forgot password?</Text>
           </TouchableOpacity>
-          <CustomButton
-            theme="outline"
-            label={isSubmitting ? "Signing in..." : "Sign In"}
-            onPress={submit}
-            disabled={isSubmitting}
-          />
 
-          <View className="flex-row justify-center mt-8">
-            <Text className="text-white">Don't have an account? </Text>
+          <CustomButton
+            variant="outline"
+            label={isSubmitting ? "Signing in..." : "Log In"}
+            fontSize={20}
+            fontFamily="BhalooBold"
+            onPress={submit}
+            width={280}
+            style={{ alignSelf: "center", marginTop: 30, marginBottom: 30 }}
+            disabled={isSubmitting}
+          ></CustomButton>
+
+          <View className="w-full h-[1px] bg-gray-300 my-6" />
+
+          <View className="gap-y-4">
+            <CustomButton
+              variant="solid"
+              label="Sign Up With Google"
+              fontSize={18}
+              iconName="google"
+            ></CustomButton>
+
+            <CustomButton
+              variant="solid"
+              label="Sign Up With Apple"
+              fontSize={18}
+              backgroundColor="#000"
+            ></CustomButton>
+          </View>
+
+          <View className="flex-row justify-center mt-5">
             <TouchableOpacity onPress={() => router.replace("/sign-up")}>
-              <Text className="text-[#EF4444]">Sign up</Text>
+              <Text className="text-gray-300 underline font-extrabold text-lg">
+                Create an account?
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
-      </KeyboardAwareScrollView>
+      </View>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  scrollViewContent: {
-    flexGrow: 1,
-    justifyContent: "center",
-  },
   loadingContainer: {
     flex: 1,
     justifyContent: "center",

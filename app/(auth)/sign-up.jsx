@@ -1,4 +1,11 @@
-import { View, Text, ScrollView, TouchableOpacity, Alert } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  Alert,
+  StyleSheet,
+} from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useState } from "react";
@@ -7,7 +14,7 @@ import CustomButton from "@/components/CustomButton";
 import { router } from "expo-router";
 import { createUser } from "@/lib/appwrite";
 import { useGlobalContext } from "@/context/GlobalProvider";
-
+import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 const SignUp = () => {
   const { setUser, setIsLogged } = useGlobalContext();
 
@@ -38,12 +45,16 @@ const SignUp = () => {
   };
 
   return (
-    <View className="h-full  bg-primary-custom-lightpink flex ">
-      {/* over empty section here i intent to put pixel art stuff like characters hanging over*/}
-      <View className="flex-1"></View>
+    <SafeAreaView
+      className="flex-1 h-full bg-primary-custom-lightpink"
+      edges={["top", "left", "right"]}
+    >
+      <View className="flex-1">
+        {/* over empty section here i intent to put pixel art stuff like characters hanging over*/}
+      </View>
 
       {/* main container for sign up page with curvy purple design */}
-      <View className=" bg-primary-custom-purple rounded-t-[30px] h-3/4">
+      <View className=" bg-primary-custom-purple rounded-t-[30px] min-h-[80%]">
         <View className="pt-16">
           <Text className="mb-4 text-center font-extrabold text-white text-3xl">
             CREATE AN <Text className="text-primary-custom-pink">ACCOUNT</Text>
@@ -73,7 +84,7 @@ const SignUp = () => {
 
           <CustomButton
             variant="outline"
-            label="Register"
+            label={isSubmitting ? "Creating..." : "Register"}
             fontSize={20}
             fontFamily="BhalooBold"
             onPress={submit}
@@ -113,7 +124,7 @@ const SignUp = () => {
           </View>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
