@@ -33,8 +33,10 @@ const Home = () => {
           </View>
 
           <View className="space-y-6">
-            <StatsCard />
-            <View className=" pt-5 mb-20">
+            <View className="mb-6">
+              <StatsCard />
+            </View>
+            <View className="mb-20">
               <DaySelector />
             </View>
             <View className="mb-6">
@@ -44,6 +46,7 @@ const Home = () => {
               <StartFocus />
             </View>
           </View>
+          <View className="h-60" />
         </View>
       </ScrollView>
     </SafeAreaView>

@@ -108,7 +108,7 @@ const SignIn = () => {
 
           <View className="w-full h-[1px] bg-gray-300 my-6" />
 
-          <View className="gap-y-4">
+          <View className="gap-y-4 items-center">
             <CustomButton
               variant="solid"
               label="Sign Up With Google"
