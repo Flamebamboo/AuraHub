@@ -10,27 +10,43 @@
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.flamebamboo.StudyHub"
-    },
-    "android": {
-      "package": "com.flamebamboo.StudyHub",
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+      "backgroundColor": "#ffffff",
+      "packagerOpts": {
+        "config": "metro.config.js",
+        "sourceExts": [
+          "expo.ts",
+          "expo.tsx",
+          "expo.js",
+          "expo.jsx",
+          "ts",
+          "tsx",
+          "js",
+          "jsx",
+          "json",
+          "wasm",
+          "svg"
+        ]
+      },
+      "ios": {
+        "supportsTablet": true,
+        "bundleIdentifier": "com.flamebamboo.StudyHub"
+      },
+      "android": {
+        "package": "com.flamebamboo.StudyHub",
+        "adaptiveIcon": {
+          "foregroundImage": "./assets/images/adaptive-icon.png",
+          "backgroundColor": "#ffffff"
+        }
+      },
+      "web": {
+        "bundler": "metro",
+        "output": "static",
+        "favicon": "./assets/images/favicon.png"
+      },
+      "plugins": ["expo-router", "expo-font"],
+      "experiments": {
+        "typedRoutes": true
       }
-    },
-    "web": {
-      "bundler": "metro",
-      "output": "static",
-      "favicon": "./assets/images/favicon.png"
-    },
-    "plugins": ["expo-router", "expo-font"],
-    "experiments": {
-      "typedRoutes": true
     }
   }
 }

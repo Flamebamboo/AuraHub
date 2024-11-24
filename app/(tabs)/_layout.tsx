@@ -3,7 +3,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faHouse } from "@fortawesome/free-solid-svg-icons/faHouse";
 import { faUser } from "@fortawesome/free-solid-svg-icons/faUser";
 
+import { CustomSvg } from "../../components/CustomSvg";
 import { Image } from "react-native";
+
 export default function TabLayout() {
   return (
     <Tabs
@@ -21,9 +23,12 @@ export default function TabLayout() {
           title: "",
           headerShown: false,
           tabBarIcon: ({ color, focused }) => (
-            <Image
-              source={require("../../assets/icons/HomeIcon.png")}
+            <CustomSvg
               style={{ marginTop: 30 }}
+              height={32}
+              width={32}
+              fillColor={focused ? "#fff" : "transparent"}
+              variant="homeIcon"
             />
           ),
         }}
@@ -35,9 +40,12 @@ export default function TabLayout() {
           title: "",
           headerShown: false,
           tabBarIcon: ({ color, focused }) => (
-            <Image
-              source={require("../../assets/icons/HubsIcon.png")}
+            <CustomSvg
               style={{ marginTop: 30 }}
+              height={32}
+              width={32}
+              fillColor={focused ? "#fff" : "transparent"}
+              variant="hubsIcon"
             />
           ),
         }}
@@ -49,9 +57,12 @@ export default function TabLayout() {
           title: "",
           headerShown: false,
           tabBarIcon: ({ color, focused }) => (
-            <Image
-              source={require("../../assets/icons/ProfileIcon.png")}
+            <CustomSvg
               style={{ marginTop: 30 }}
+              height={32}
+              width={32}
+              fillColor={focused ? "#fff" : "transparent"}
+              variant="profileIcon"
             />
           ),
         }}

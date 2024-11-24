@@ -8,6 +8,7 @@ import { StartFocus } from "@/components/StartFocus";
 import { DaySelector } from "@/components/DaySelector";
 
 import { StatsCard } from "@/components/StatsCard";
+
 const Home = () => {
   const { user, setUser, setIsLogged } = useGlobalContext();
 
