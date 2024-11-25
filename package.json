@@ -21,6 +21,7 @@
     "@fortawesome/free-regular-svg-icons": "^6.6.0",
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-native-fontawesome": "^0.3.2",
+    "@react-native-picker/picker": "^2.9.0",
     "@react-navigation/native": "^6.0.2",
     "appwrite": "^14.0.1",
     "expo": "^51.0.0",
