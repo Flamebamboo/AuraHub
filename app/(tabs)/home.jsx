@@ -1,22 +1,22 @@
-import { View, Text, ScrollView, TouchableOpacity } from "react-native";
-import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
+import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 
-import { useGlobalContext } from "@/context/GlobalProvider";
+import { useGlobalContext } from '@/context/GlobalProvider';
 
-import { LibraryTimer } from "@/components/LibraryTimer";
-import { StartFocus } from "@/components/StartFocus";
-import { DaySelector } from "@/components/DaySelector";
+import { LibraryTimer } from '@/components/LibraryTimer';
+import { StartFocus } from '@/components/StartFocus';
+import { DaySelector } from '@/components/DaySelector';
 
-import { StatsCard } from "@/components/StatsCard";
+import { StatsCard } from '@/components/StatsCard';
 
 const Home = () => {
   const { user, setUser, setIsLogged } = useGlobalContext();
 
   const getGreeting = () => {
     const hour = new Date().getHours();
-    if (hour < 12) return "good morning";
-    if (hour < 18) return "good afternoon";
-    return "good night";
+    if (hour < 12) return 'good morning';
+    if (hour < 18) return 'good afternoon';
+    return 'good night';
   };
 
   return (
@@ -29,7 +29,7 @@ const Home = () => {
               {getGreeting()},
             </Text>
             <Text className="text-white font-bold text-3xl font-PixelifySans">
-              {user ? user.username : "User"}
+              {user ? user.username : 'User'}
             </Text>
           </View>
 

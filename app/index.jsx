@@ -1,17 +1,17 @@
-import { View, Text, SafeAreaView, ScrollView } from "react-native";
-import React from "react";
-import { StatusBar } from "expo-status-bar";
-import CustomButton from "@/components/CustomButton";
-import { FontAwesome } from "@expo/vector-icons";
+import { View, Text, SafeAreaView, ScrollView } from 'react-native';
+import React from 'react';
+import { StatusBar } from 'expo-status-bar';
+import CustomButton from '@/components/CustomButton';
+import { FontAwesome } from '@expo/vector-icons';
 
-import { Redirect, router } from "expo-router";
+import { Redirect, router } from 'expo-router';
 
 const index = () => {
   return (
     <SafeAreaView className="bg-primary-custom-lightpink h-full">
       <ScrollView
         contentContainerStyle={{
-          height: "100%",
+          height: '100%',
         }}
       >
         <View className="w-full flex justify-center items-center h-full pt-8 px-4">
@@ -24,19 +24,28 @@ const index = () => {
 
           <StatusBar style="auto" />
           <View className="flex-1 justify-end pb-10">
+            <View className="mb-10">
+              <CustomButton
+                label="DEV MODE"
+                variant="outline"
+                fontSize={20}
+                leftIcon="sign-in"
+                onPress={() => router.replace('/(tabs)/home')}
+              />
+            </View>
             <CustomButton
               label="Get Started"
               variant="solid"
               fontSize={20}
               leftIcon="sign-in"
-              onPress={() => router.push("/(auth)/sign-up")}
+              onPress={() => router.push('/(auth)/sign-up')}
             />
             <CustomButton
               fontSize={16}
               label="I ALREADY HAVE AN ACCOUNT"
               rightIcon="chevron-right"
               variant="transparent"
-              onPress={() => router.push("/(auth)/sign-in")}
+              onPress={() => router.push('/(auth)/sign-in')}
             />
           </View>
         </View>
