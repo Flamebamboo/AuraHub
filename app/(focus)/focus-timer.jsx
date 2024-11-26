@@ -38,9 +38,9 @@ const FocusTimer = () => {
     }
 
     return () => {
-      clearInterval(interval);
+      clearInterval(interval); //clear the interval when the component unmounts
     };
-  }, [timeRemaining, isFocus]);
+  }, [timeRemaining, isFocus]); //run the effect when the timeRemaining or isFocus changes - called [] dependencies
 
   return (
     <SafeAreaView>
@@ -60,12 +60,14 @@ const FocusTimer = () => {
         <Text style={styles.timerText}>{formatTime(timeRemaining)}</Text>
 
         <View style={styles.buttonContainer}>
+          {/* Button For Start */}
           <TouchableOpacity
             style={styles.button}
             onPress={() => setIsFocus(!isFocus)}
           >
             <Text style={styles.buttonText}>{isFocus ? 'Pause' : 'Start'}</Text>
           </TouchableOpacity>
+          {/* Button For Reset */}
           <TouchableOpacity style={styles.button} onPress={handleStopFocus}>
             <Text style={styles.buttonText}>Reset</Text>
           </TouchableOpacity>
