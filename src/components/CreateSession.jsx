@@ -12,7 +12,7 @@ import { StartFocus } from '../components/StartFocus';
 import { Ionicons } from '@expo/vector-icons';
 
 export const CreateSession = ({ bottomSheetRef }) => {
-  const handleClossPress = () => {
+  const handleClossPress = ({ bottomSheetRef }) => {
     bottomSheetRef.current?.close();
   };
 
