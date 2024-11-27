@@ -1,13 +1,13 @@
 // components/LibraryTimer.jsx
-import { View, Text, TouchableOpacity } from "react-native";
-import React from "react";
-import { router } from "expo-router";
+import { View, Text, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { router } from 'expo-router';
 
 export const LibraryTimer = () => {
   return (
     <TouchableOpacity
       className="bg-gray-800 p-4 rounded-2xl"
-      onPress={() => router.push("/library")}
+      onPress={() => router.push('/library')}
     >
       <View className="flex-row items-center gap-2 mb-4">
         <View className="w-2 h-2 bg-green-400 rounded-full" />
@@ -19,10 +19,10 @@ export const LibraryTimer = () => {
         </View>
       </View>
 
-      <Text className="text-white text-xl font-bold mb-2">Library timer</Text>
+      <Text className="text-white text-xl font-bold mb-2">Imnotsureyet</Text>
 
       <View className="flex-row items-center justify-between">
-        <Text className="text-white/80">Study live with 2,730 others</Text>
+        <Text className="text-white/80">oh weowoowoow</Text>
         <Text className="text-2xl">▶️</Text>
       </View>
     </TouchableOpacity>

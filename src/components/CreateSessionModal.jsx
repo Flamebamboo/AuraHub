@@ -6,8 +6,15 @@ import {
   TextInput,
   TouchableOpacity,
   Dimensions,
+  Pressable,
 } from 'react-native';
-import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
+import {
+  BottomSheetModal,
+  BottomSheetView,
+  BottomSheetBackdrop,
+} from '@gorhom/bottom-sheet';
+import { Ionicons } from '@expo/vector-icons';
+import SessionButtons from './SessionButtons';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
@@ -15,11 +22,25 @@ export const CreateSessionModal = ({ bottomSheetModalRef }) => {
   const [sessionName, setSessionName] = useState('');
   const [duration, setDuration] = useState('');
 
-  const snapPoints = ['75%'];
+  const snapPoints = ['85%'];
 
+  const renderBackdrop = useCallback(
+    (props) => (
+      <BottomSheetBackdrop
+        {...props}
+        disappearsOnIndex={-1}
+        appearsOnIndex={0}
+      />
+    ),
+    []
+  );
   const handleSheetChanges = useCallback((index) => {
     console.log('handleSheetChanges', index);
   }, []);
+
+  const handleClossPress = () => {
+    bottomSheetModalRef.current?.dismiss();
+  };
 
   const handleCreateSession = () => {
     console.log('Creating session:', { sessionName, duration });
@@ -32,39 +53,36 @@ export const CreateSessionModal = ({ bottomSheetModalRef }) => {
       index={0}
       snapPoints={snapPoints}
       onChange={handleSheetChanges}
-      enablePanDownToClose={true}
+      enablePanDownToClose={true} //u can hold n slide down to close
       backgroundStyle={styles.modalBackground}
+      backdropComponent={renderBackdrop}
       handleIndicatorStyle={styles.handleIndicator}
     >
       <BottomSheetView style={styles.contentContainer}>
         <Text style={styles.title}>Create New Session</Text>
-
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}>Session Name</Text>
-          <TextInput
-            style={styles.input}
-            value={sessionName}
-            onChangeText={setSessionName}
-            placeholder="Enter session name"
-            placeholderTextColor="#666"
-          />
-        </View>
-
-        <View style={styles.inputContainer}>
-          <Text style={styles.label}>Duration (minutes)</Text>
-          <TextInput
-            style={styles.input}
-            value={duration}
-            onChangeText={setDuration}
-            placeholder="Enter duration"
-            keyboardType="numeric"
-            placeholderTextColor="#666"
-          />
-        </View>
-
-        <TouchableOpacity style={styles.button} onPress={handleCreateSession}>
-          <Text style={styles.buttonText}>Create Session</Text>
+        <TouchableOpacity
+          style={styles.exitButton}
+          onPress={handleCreateSession}
+        >
+          <Ionicons name="close" size={32} color="white" />
         </TouchableOpacity>
+        <View style={styles.optionContainer}>
+          <SessionButtons
+            label="Duration"
+            leftIcon={'hourglass'}
+            rightIcon={'chevron-right'}
+          />
+          <SessionButtons
+            label="Apps Blocked"
+            leftIcon={'hourglass'}
+            rightIcon={'chevron-right'}
+          />
+          <SessionButtons
+            label="Mode"
+            leftIcon={'hourglass'}
+            rightIcon={'chevron-right'}
+          />
+        </View>
       </BottomSheetView>
     </BottomSheetModal>
   );
@@ -74,14 +92,27 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  exitButton: {
+    position: 'absolute',
+    top: 25,
+    left: 30,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#ffffff',
+    marginBottom: 24,
+    textAlign: 'center',
+  },
   modal: {
     marginHorizontal: 0,
     width: SCREEN_WIDTH,
   },
   modalBackground: {
-    backgroundColor: '#2c2c2c',
+    backgroundColor: '#141414',
   },
   handleIndicator: {
+    // the white thingy ontop
     backgroundColor: '#ffffff',
     width: 40,
   },
@@ -90,37 +121,8 @@ const styles = StyleSheet.create({
     padding: 24,
     paddingBottom: 34,
   },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#ffffff',
-    marginBottom: 24,
-  },
-  inputContainer: {
-    marginBottom: 20,
-  },
-  label: {
-    color: '#ffffff',
-    marginBottom: 8,
-    fontSize: 16,
-  },
-  input: {
-    backgroundColor: '#3c3c3c',
-    borderRadius: 8,
-    padding: 12,
-    color: '#ffffff',
-    fontSize: 16,
-  },
-  button: {
-    backgroundColor: '#007AFF',
-    padding: 16,
-    borderRadius: 8,
-    alignItems: 'center',
-    marginTop: 24,
-  },
-  buttonText: {
-    color: '#ffffff',
-    fontSize: 16,
-    fontWeight: 'bold',
+
+  optionContainer: {
+    rowGap: 30,
   },
 });
