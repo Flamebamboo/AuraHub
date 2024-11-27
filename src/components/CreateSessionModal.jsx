@@ -22,7 +22,7 @@ export const CreateSessionModal = ({ bottomSheetModalRef }) => {
   const [sessionName, setSessionName] = useState('');
   const [duration, setDuration] = useState('');
 
-  const snapPoints = ['85%'];
+  const snapPoints = ['90%'];
 
   const renderBackdrop = useCallback(
     (props) => (
@@ -53,6 +53,7 @@ export const CreateSessionModal = ({ bottomSheetModalRef }) => {
       index={0}
       snapPoints={snapPoints}
       onChange={handleSheetChanges}
+      enableContentPanningGesture={false}
       enablePanDownToClose={true} //u can hold n slide down to close
       backgroundStyle={styles.modalBackground}
       backdropComponent={renderBackdrop}
@@ -71,17 +72,37 @@ export const CreateSessionModal = ({ bottomSheetModalRef }) => {
             label="Duration"
             leftIcon={'hourglass'}
             rightIcon={'chevron-right'}
+            altLabel="30 mins"
           />
           <SessionButtons
             label="Apps Blocked"
             leftIcon={'hourglass'}
             rightIcon={'chevron-right'}
+            altLabel="Block List"
           />
           <SessionButtons
             label="Mode"
             leftIcon={'hourglass'}
             rightIcon={'chevron-right'}
+            altLabel="Trust Mode"
           />
+          <SessionButtons
+            label="Schedule for later"
+            leftIcon={'hourglass'}
+            rightIcon={'chevron-right'}
+            style={{ marginTop: 50 }}
+          />
+        </View>
+
+        <View className="pt-20 items-center w-full">
+          <Pressable
+            className="w-1/2 px-4 py-6 bg-white rounded-2xl shadow-lg flex items-center justify-center"
+            onPress={handleCreateSession}
+          >
+            <Text className="text-black font-semibold text-lg">
+              Create Session
+            </Text>
+          </Pressable>
         </View>
       </BottomSheetView>
     </BottomSheetModal>
@@ -124,5 +145,6 @@ const styles = StyleSheet.create({
 
   optionContainer: {
     rowGap: 30,
+    paddingTop: 100,
   },
 });
