@@ -53,6 +53,12 @@
     },
     "plugins": [
       "expo-router"
-    ]
+    ],
+    "android": {
+      "package": "com.anonymous.StudyHub"
+    },
+    "ios": {
+      "bundleIdentifier": "com.anonymous.StudyHub"
+    }
   }
 }

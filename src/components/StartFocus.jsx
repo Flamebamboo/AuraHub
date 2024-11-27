@@ -2,7 +2,7 @@
 import { View, Text, TouchableOpacity } from 'react-native';
 import React from 'react';
 
-export const StartFocus = (onOpenPress) => {
+export const StartFocus = ({ onOpenPress }) => {
   return (
     <TouchableOpacity
       className="bg-gray-800 p-4 w-full rounded-2xl h-36 flex-row justify-between items-center"

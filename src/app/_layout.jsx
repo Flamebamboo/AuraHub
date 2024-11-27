@@ -29,10 +29,10 @@ const RootLayout = () => {
   }
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <KeyboardProvider>
-        <GlobalProvider>
-          <SafeAreaProvider>
+    <SafeAreaProvider>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <KeyboardProvider>
+          <GlobalProvider>
             <Stack>
               <Stack.Screen name="index" options={{ headerShown: false }} />
               <Stack.Screen name="(auth)" options={{ headerShown: false }} />
@@ -40,10 +40,10 @@ const RootLayout = () => {
               <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
               <Stack.Screen name="(focus)" options={{ headerShown: false }} />
             </Stack>
-          </SafeAreaProvider>
-        </GlobalProvider>
-      </KeyboardProvider>
-    </GestureHandlerRootView>
+          </GlobalProvider>
+        </KeyboardProvider>
+      </GestureHandlerRootView>
+    </SafeAreaProvider>
   );
 };
 

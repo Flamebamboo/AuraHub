@@ -7,10 +7,6 @@ export const StatsCard = () => (
   <View className="bg-gray-800 flex w-[100%] h-80 rounded-3xl p-6">
     <View className="flex-row justify-between items-center w-full px-4">
       <Text className="text-white text-start">Today</Text>
-      <Image
-        className="w-8 h-8"
-        source={import('assets/icons/FocusIcon.png')}
-      />
     </View>
     <View className="justify-center items-center flex-1">
       <Text className="text-white text-center text-4xl font-bold">3h 20m</Text>

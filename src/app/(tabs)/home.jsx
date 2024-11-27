@@ -1,6 +1,6 @@
 import React, { View, Text, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
+import { useRef } from 'react';
 import { useGlobalContext } from '@/context/GlobalProvider';
 
 import { LibraryTimer } from '@/components/LibraryTimer';
@@ -13,8 +13,15 @@ import { StatsCard } from '@/components/StatsCard';
 const Home = () => {
   const { user } = useGlobalContext();
 
+  const handleOpenPress = () => {
+    bottomSheetRef.current?.expand();
+  };
+
+  const bottomSheetRef = useRef(null);
+
   const getGreeting = () => {
     const hour = new Date().getHours();
+    can;
     if (hour < 12) return 'good morning';
     if (hour < 18) return 'good afternoon';
     return 'good night';
@@ -45,14 +52,12 @@ const Home = () => {
               <LibraryTimer />
             </View>
             <View className="mb-6">
-              <StartFocus />
-            </View>
-            <View>
-              <CreateSession />
+              <StartFocus onOpenPress={handleOpenPress} />
             </View>
           </View>
           <View className="h-60" />
         </View>
+        <CreateSession bottomSheetRef={bottomSheetRef} />
       </ScrollView>
     </SafeAreaView>
   );

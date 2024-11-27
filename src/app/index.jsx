@@ -1,4 +1,5 @@
-import { View, Text, SafeAreaView, ScrollView } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import CustomButton from '@/components/CustomButton';

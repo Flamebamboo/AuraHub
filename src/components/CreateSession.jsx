@@ -1,22 +1,23 @@
-import { View, Text, StyleSheet, Pressable } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Pressable,
+  TouchableOpacity,
+} from 'react-native';
 import React, { useRef } from 'react';
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 
-import StartFocus from './StartFocus';
+import { StartFocus } from '../components/StartFocus';
 import { Ionicons } from '@expo/vector-icons';
-const CreateSession = () => {
-  const bottomSheetRef = useRef(null);
 
+export const CreateSession = ({ bottomSheetRef }) => {
   const handleClossPress = () => {
     bottomSheetRef.current?.close();
-  };
-  const handleOpenPress = () => {
-    bottomSheetRef.current?.expand();
   };
 
   return (
     <View style={styles.container}>
-      <StartFocus onOpenPress={handleOpenPress} />
       <BottomSheet
         ref={bottomSheetRef}
         index={1}
@@ -51,7 +52,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   bottomSheetBackground: {
-    backgroundColor: '#141414',
+    backgroundColor: '#fff',
   },
 
   contentContainer: {
@@ -72,5 +73,3 @@ const styles = StyleSheet.create({
     left: 30,
   },
 });
-
-export default CreateSession;

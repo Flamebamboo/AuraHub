@@ -9,11 +9,11 @@ import {
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useState } from 'react';
-import FormField from '@/components/FormField';
-import CustomButton from '@/components/CustomButton';
+import FormField from '../../components/FormField';
+import CustomButton from '../../components/CustomButton';
 import { router } from 'expo-router';
-import { createUser } from '@/lib/appwrite';
-import { useGlobalContext } from '@/context/GlobalProvider';
+import { createUser } from '../../lib/appwrite';
+import { useGlobalContext } from '../../context/GlobalProvider';
 import {
   KeyboardAvoidingView,
   KeyboardAwareScrollView,

@@ -9,11 +9,11 @@ import {
   Alert,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import FormField from '@/components/FormField';
-import CustomButton from '@/components/CustomButton';
+import FormField from '../../components/FormField';
+import CustomButton from '../../components/CustomButton';
 import { router } from 'expo-router';
-import { getCurrentUser, signIn, signOut } from '@/lib/appwrite';
-import { useGlobalContext } from '@/context/GlobalProvider';
+import { getCurrentUser, signIn, signOut } from '../../lib/appwrite';
+import { useGlobalContext } from '../../context/GlobalProvider';
 
 const SignIn = () => {
   const { setUser, setIsLogged } = useGlobalContext();

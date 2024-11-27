@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { Tabs } from 'expo-router';
-
-import { CustomSvg } from '@/components/CustomSvg';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { CustomSvg } from '../../components/CustomSvg';
 
 export default function TabLayout() {
   return (
