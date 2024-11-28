@@ -7,7 +7,6 @@ import { LibraryTimer } from '@/components/LibraryTimer';
 import { StartFocus } from '@/components/StartFocus';
 import { DaySelector } from '@/components/DaySelector';
 
-import { CreateSession } from '@/components/CreateSession';
 import { StatsCard } from '@/components/StatsCard';
 
 import { useCallback } from 'react';

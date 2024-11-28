@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import {
   View,
   Text,
@@ -15,15 +15,35 @@ import {
 } from '@gorhom/bottom-sheet';
 import { Ionicons } from '@expo/vector-icons';
 import SessionButtons from './SessionButtons';
+import DurationModal from './DurationModal';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 export const CreateSessionModal = ({ bottomSheetModalRef }) => {
-  const [sessionName, setSessionName] = useState('');
-  const [duration, setDuration] = useState('');
-
   const snapPoints = ['90%'];
 
+  const durationModalRef = useRef(null);
+
+  //using useState to keep track of the options
+  const [duration, setDuration] = useState(null);
+  const [mode, setMode] = useState(null);
+
+  // visibility of the options modal
+  const [isDurationModalVisible, setIsDurationModalVisible] = useState(false);
+  const [isModeVisible, setIsModeVisible] = useState(false);
+
+  //handle opening modal
+  const handleOpenDuration = useCallback(() => {
+    setIsDurationModalVisible(true);
+  }, []);
+
+  const handleCloseDuration = useCallback(() => {
+    setIsDurationModalVisible(false);
+  }, []);
+
+  // MAIN MODAL
+
+  // darkbackdrop behind the modal
   const renderBackdrop = useCallback(
     (props) => (
       <BottomSheetBackdrop
@@ -43,7 +63,6 @@ export const CreateSessionModal = ({ bottomSheetModalRef }) => {
   };
 
   const handleCreateSession = () => {
-    console.log('Creating session:', { sessionName, duration });
     bottomSheetModalRef.current?.dismiss();
   };
 
@@ -73,7 +92,19 @@ export const CreateSessionModal = ({ bottomSheetModalRef }) => {
             leftIcon={'hourglass'}
             rightIcon={'chevron-right'}
             altLabel="30 mins"
+            onPress={handleOpenDuration}
           />
+          {isDurationModalVisible && (
+            <DurationModal
+              durationSheetRef={durationModalRef}
+              onClose={handleCloseDuration}
+              onSelect={(duration) => {
+                setDuration(duration);
+                handleCloseDuration();
+              }}
+            />
+          )}
+
           <SessionButtons
             label="Apps Blocked"
             leftIcon={'hourglass'}

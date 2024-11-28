@@ -1,11 +1,24 @@
-import { View, Text, Pressable, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  Pressable,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 import React from 'react';
 
 import { FontAwesome } from '@expo/vector-icons';
-const SessionButtons = ({ label, leftIcon, rightIcon, altLabel, style }) => {
+const SessionButtons = ({
+  label,
+  leftIcon,
+  rightIcon,
+  altLabel,
+  style,
+  onPress,
+}) => {
   return (
     <View className="px-1" style={style}>
-      <Pressable style={styles.buttonContainer}>
+      <TouchableOpacity style={styles.buttonContainer} onPress={onPress}>
         <View style={styles.iconWrapper}>
           <FontAwesome
             name={leftIcon}
@@ -27,7 +40,7 @@ const SessionButtons = ({ label, leftIcon, rightIcon, altLabel, style }) => {
             style={styles.rightIcon}
           />
         </View>
-      </Pressable>
+      </TouchableOpacity>
     </View>
   );
 };
