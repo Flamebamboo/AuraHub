@@ -91,7 +91,7 @@ export const CreateSessionModal = ({ bottomSheetModalRef }) => {
             label="Duration"
             leftIcon={'hourglass'}
             rightIcon={'chevron-right'}
-            altLabel="30 mins"
+            altLabel={duration}
             onPress={handleOpenDuration}
           />
           {isDurationModalVisible && (
