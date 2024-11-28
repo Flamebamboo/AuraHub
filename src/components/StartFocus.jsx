@@ -5,7 +5,7 @@ import React from 'react';
 export const StartFocus = ({ onOpenPress }) => {
   return (
     <TouchableOpacity
-      className="bg-gray-800 p-4 w-full rounded-2xl h-36 flex-row justify-between items-center"
+      className="bg-[#2C2C2C] p-4 w-full rounded-2xl h-36 flex-row justify-between items-center"
       onPress={onOpenPress}
     >
       <View>

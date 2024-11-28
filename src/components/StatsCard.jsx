@@ -4,7 +4,7 @@ import { Image } from 'react-native';
 import React from 'react';
 
 export const StatsCard = () => (
-  <View className="bg-gray-800 flex w-[100%] h-80 rounded-3xl p-6">
+  <View className="bg-[#2C2C2C] flex w-[100%] h-80 rounded-3xl p-6">
     <View className="flex-row justify-between items-center w-full px-4">
       <Text className="text-white text-start">Today</Text>
     </View>

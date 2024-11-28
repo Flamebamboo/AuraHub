@@ -23,10 +23,16 @@ const createArray = (length) => {
 const AVAILABLE_HOURS = createArray(6);
 const AVAILABLE_MINUTES = createArray(60);
 
-const DurationModal = ({ durationSheetRef, onClose, onSelect }) => {
+const DurationModal = ({
+  durationSheetRef,
+  onClose,
+  onSelect,
+  pickerHours = '0', //to display for picker
+  pickerMinutes = '30', //to display for picker
+}) => {
   const snapPoints = ['60%'];
-  const [selectedHours, setSelectedHours] = useState('0'); // Set default values
-  const [selectedMinutes, setSelectedMinutes] = useState('0');
+  const [selectedHours, setSelectedHours] = useState(pickerHours); // Set default values
+  const [selectedMinutes, setSelectedMinutes] = useState(pickerMinutes);
 
   const handleSheetChanges = useCallback(
     (index) => {
@@ -42,12 +48,13 @@ const DurationModal = ({ durationSheetRef, onClose, onSelect }) => {
   }, []);
 
   const handleConfirm = () => {
-    // hours formual * 60 * 60
+    //executes when user clicks done
+    // hours formual from sec * 60 * 60
     const totalSeconds =
-      parseInt(selectedHours, 10) * 60 * 60 + // Hours to seconds
-      parseInt(selectedMinutes, 10) * 60; // Minutes to seconds
+      parseInt(selectedHours, 10) * 60 * 60 +
+      parseInt(selectedMinutes, 10) * 60;
 
-    onSelect?.(totalSeconds);
+    onSelect?.(totalSeconds, selectedHours, selectedMinutes); //passing the total seconds to the parent component onSelect?. is a shorthand for onSelect && onSelect()
     durationSheetRef.current?.dismiss();
   };
 
@@ -109,7 +116,7 @@ const DurationModal = ({ durationSheetRef, onClose, onSelect }) => {
         <CustomBackdrop
           {...props}
           backgroundColor="#9482DA"
-          opacity={1} // Full opacity for solid color
+          opacity={1}
 
           //future pixel art animation image
         />

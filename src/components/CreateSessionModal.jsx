@@ -25,8 +25,32 @@ export const CreateSessionModal = ({ bottomSheetModalRef }) => {
   const durationModalRef = useRef(null);
 
   //using useState to keep track of the options
+
+  //this duration is in SECONDS passed from duration modal component
   const [duration, setDuration] = useState(null);
   const [mode, setMode] = useState(null);
+
+  //remembering the picker values
+  const [selectedHours, setSelectedHours] = useState('0');
+  const [selectedMinutes, setSelectedMinutes] = useState('30');
+
+  //display time for alt besides button
+  const formatTime = (duration) => {
+    if (!duration) {
+      return '30 mins';
+    }
+
+    const hours = Math.floor(duration / 3600);
+    const minutes = Math.floor((duration % 3600) / 60);
+
+    if (hours > 0) {
+      if (minutes > 0) {
+        return `${hours}h ${minutes}m`;
+      }
+      return `${hours}h`;
+    }
+    return `${minutes}m`;
+  };
 
   // visibility of the options modal
   const [isDurationModalVisible, setIsDurationModalVisible] = useState(false);
@@ -91,17 +115,21 @@ export const CreateSessionModal = ({ bottomSheetModalRef }) => {
             label="Duration"
             leftIcon={'hourglass'}
             rightIcon={'chevron-right'}
-            altLabel={duration}
+            altLabel={formatTime(duration)}
             onPress={handleOpenDuration}
           />
           {isDurationModalVisible && (
             <DurationModal
               durationSheetRef={durationModalRef}
               onClose={handleCloseDuration}
-              onSelect={(duration) => {
-                setDuration(duration);
+              onSelect={(totalSeconds, hours, minutes) => {
+                setDuration(totalSeconds); //this is to be sent to focus session easier to format
+                setSelectedHours(hours); // hours and minutes if for picker
+                setSelectedMinutes(minutes);
                 handleCloseDuration();
               }}
+              pickerHours={selectedHours}
+              pickerMinutes={selectedMinutes} //passing the state to the modal
             />
           )}
 
@@ -126,14 +154,14 @@ export const CreateSessionModal = ({ bottomSheetModalRef }) => {
         </View>
 
         <View className="pt-20 items-center w-full">
-          <Pressable
+          <TouchableOpacity
             className="w-1/2 px-4 py-6 bg-white rounded-2xl shadow-lg flex items-center justify-center"
             onPress={handleCreateSession}
           >
             <Text className="text-black font-semibold text-lg">
               Create Session
             </Text>
-          </Pressable>
+          </TouchableOpacity>
         </View>
       </BottomSheetView>
     </BottomSheetModal>

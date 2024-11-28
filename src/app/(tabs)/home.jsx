@@ -31,7 +31,7 @@ const Home = () => {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <SafeAreaView className="flex-1 bg-black">
+      <SafeAreaView className="flex-1 bg-[#141414]">
         <ScrollView className="flex-1">
           <View className="p-5 gap-7">
             {/* Header */}
