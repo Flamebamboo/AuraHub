@@ -1,11 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Pressable,
-} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Pressable } from 'react-native';
 import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
 import { Picker } from '@react-native-picker/picker';
 import CustomBackdrop from './CustomBackdrop';
@@ -50,9 +44,7 @@ const DurationModal = ({
   const handleConfirm = () => {
     //executes when user clicks done
     // hours formual from sec * 60 * 60
-    const totalSeconds =
-      parseInt(selectedHours, 10) * 60 * 60 +
-      parseInt(selectedMinutes, 10) * 60;
+    const totalSeconds = parseInt(selectedHours, 10) * 60 * 60 + parseInt(selectedMinutes, 10) * 60;
 
     onSelect?.(totalSeconds, selectedHours, selectedMinutes); //passing the total seconds to the parent component onSelect?. is a shorthand for onSelect && onSelect()
     durationSheetRef.current?.dismiss();
@@ -69,12 +61,7 @@ const DurationModal = ({
           mode="dropdown"
         >
           {AVAILABLE_HOURS.map((value) => (
-            <Picker.Item
-              key={value}
-              label={value}
-              value={value}
-              color="#FFFFFF"
-            />
+            <Picker.Item key={value} label={value} value={value} color="#FFFFFF" />
           ))}
         </Picker>
         <Text style={styles.pickerLabel}>hours</Text>
@@ -89,12 +76,7 @@ const DurationModal = ({
           mode="dropdown"
         >
           {AVAILABLE_MINUTES.map((value) => (
-            <Picker.Item
-              key={value}
-              label={value}
-              value={value}
-              color="#FFFFFF"
-            />
+            <Picker.Item key={value} label={value} value={value} color="#FFFFFF" />
           ))}
         </Picker>
         <Text style={styles.pickerLabel}>minutes</Text>

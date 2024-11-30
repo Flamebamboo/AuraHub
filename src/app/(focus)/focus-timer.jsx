@@ -1,29 +1,53 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import React from 'react';
+import React, { useContext } from 'react';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useState, useEffect } from 'react';
 import { Picker } from '@react-native-picker/picker';
+import { FocusContext } from '@/context/FocusContextProvider';
 
+import CustomButton from '@/components/CustomButton';
+import CoffeeCupSvg from '@/components/CoffeeCupSvg';
 const FocusTimer = () => {
-  const [timeRemaining, setTimeRemaining] = useState();
+  const [timeRemaining, setTimeRemaining] = useState(0);
   const [isFocus, setIsFocus] = useState(false);
-  const [selectedTime, setSelectedTime] = useState();
 
-  const formatTime = (seconds) => {
-    const mins = Math.floor(seconds / 60); //convert seconds to minutes formula
-    const secs = seconds % 60; //get the remainder of the seconds
-    return `${mins}:${secs.toString().padStart(2, '0')}`; //return the minutes and seconds
+  //duration is in SECONDS passed from duration modal component
+  const formatTime = (duration) => {
+    if (!duration) {
+      return '30 mins';
+    }
+
+    const hours = Math.floor(duration / 3600);
+    const minutes = Math.floor((duration % 3600) / 60);
+
+    if (hours > 0) {
+      if (minutes > 0) {
+        return `${hours}h ${minutes}m`;
+      }
+      return `${hours}h`;
+    }
+    return `${minutes}m`;
   };
+
+  //recieve the focus data from the context api
+  const { focusData } = useContext(FocusContext);
 
   const handleStartFocus = () => {
     setIsFocus(true);
-    setTimeRemaining(selectedTime);
+    setTimeRemaining(focusData.duration);
   };
 
   const handleStopFocus = () => {
     setIsFocus(false);
-    setTimeRemaining(selectedTime);
+    setTimeRemaining(focusData.duration);
+  };
+
+  const calculateProgress = () => {
+    if (!timeRemaining || !focusData.duration) return 0;
+    const progress = 1 - timeRemaining / focusData.duration;
+    console.log('Calculated progress:', progress); // Add this to debug
+    return progress;
   };
 
   useEffect(() => {
@@ -44,34 +68,28 @@ const FocusTimer = () => {
 
   return (
     <SafeAreaView>
-      <View style={styles.container}>
-        {!isFocus ? (
-          <Picker
-            selectedValue={selectedTime}
-            onValueChange={(itemValue) => setSelectedTime(itemValue)}
-            style={styles.picker}
-          >
-            <Picker.Item label="25:00" value={25 * 60} />
-            <Picker.Item label="15:00" value={15 * 60} />
-            <Picker.Item label="45:00" value={45 * 60} />
-          </Picker>
-        ) : null}
+      <View>
+        <CustomButton
+          variant="solid"
+          label="Focus"
+          fontSize={18}
+          iconName="google"
+          onPress={handleStartFocus}
+        ></CustomButton>
+        <CustomButton
+          variant="solid"
+          label="Stop Focus"
+          fontSize={18}
+          iconName="google"
+          onPress={handleStopFocus}
+        ></CustomButton>
 
-        <Text style={styles.timerText}>{formatTime(timeRemaining)}</Text>
-
-        <View style={styles.buttonContainer}>
-          {/* Button For Start */}
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => setIsFocus(!isFocus)}
-          >
-            <Text style={styles.buttonText}>{isFocus ? 'Pause' : 'Start'}</Text>
-          </TouchableOpacity>
-          {/* Button For Reset */}
-          <TouchableOpacity style={styles.button} onPress={handleStopFocus}>
-            <Text style={styles.buttonText}>Reset</Text>
-          </TouchableOpacity>
+        <View className="bg-slate-500">
+          <CoffeeCupSvg progress={calculateProgress()} />
         </View>
+
+        <Text>Duration: {formatTime(focusData.duration)}</Text>
+        <Text>Mode: {focusData.mode}</Text>
       </View>
     </SafeAreaView>
   );
@@ -79,35 +97,6 @@ const FocusTimer = () => {
 
 export default FocusTimer;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  picker: {
-    width: 200,
-    height: 50,
-  },
-  timerText: {
-    fontSize: 48,
-    fontWeight: 'bold',
-    marginVertical: 20,
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    gap: 10,
-  },
-  button: {
-    backgroundColor: '#007AFF',
-    padding: 15,
-    borderRadius: 5,
-    minWidth: 100,
-    alignItems: 'center',
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
+const style = create.StyleSheet({
+  container: {},
 });

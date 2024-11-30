@@ -1,21 +1,11 @@
-import React, { useState, useCallback, useRef } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-  Dimensions,
-  Pressable,
-} from 'react-native';
-import {
-  BottomSheetModal,
-  BottomSheetView,
-  BottomSheetBackdrop,
-} from '@gorhom/bottom-sheet';
+import React, { useState, useCallback, useRef, useContext } from 'react';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Dimensions, Pressable } from 'react-native';
+import { BottomSheetModal, BottomSheetView, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import { Ionicons } from '@expo/vector-icons';
 import SessionButtons from './SessionButtons';
 import DurationModal from './DurationModal';
+import { FocusContext } from '../context/FocusContextProvider';
+import { router } from 'expo-router';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
@@ -27,8 +17,17 @@ export const CreateSessionModal = ({ bottomSheetModalRef }) => {
   //using useState to keep track of the options
 
   //this duration is in SECONDS passed from duration modal component
+  const { setFocusData } = useContext(FocusContext);
   const [duration, setDuration] = useState(null);
   const [mode, setMode] = useState(null);
+
+  //sending data to context api
+
+  const handleCreateSession = () => {
+    bottomSheetModalRef.current?.dismiss();
+    setFocusData({ duration, mode });
+    router.replace('/(focus)/focus-timer');
+  };
 
   //remembering the picker values
   const [selectedHours, setSelectedHours] = useState('0');
@@ -69,13 +68,7 @@ export const CreateSessionModal = ({ bottomSheetModalRef }) => {
 
   // darkbackdrop behind the modal
   const renderBackdrop = useCallback(
-    (props) => (
-      <BottomSheetBackdrop
-        {...props}
-        disappearsOnIndex={-1}
-        appearsOnIndex={0}
-      />
-    ),
+    (props) => <BottomSheetBackdrop {...props} disappearsOnIndex={-1} appearsOnIndex={0} />,
     []
   );
   const handleSheetChanges = useCallback((index) => {
@@ -83,10 +76,6 @@ export const CreateSessionModal = ({ bottomSheetModalRef }) => {
   }, []);
 
   const handleClossPress = () => {
-    bottomSheetModalRef.current?.dismiss();
-  };
-
-  const handleCreateSession = () => {
     bottomSheetModalRef.current?.dismiss();
   };
 
@@ -104,10 +93,7 @@ export const CreateSessionModal = ({ bottomSheetModalRef }) => {
     >
       <BottomSheetView style={styles.contentContainer}>
         <Text style={styles.title}>Create New Session</Text>
-        <TouchableOpacity
-          style={styles.exitButton}
-          onPress={handleCreateSession}
-        >
+        <TouchableOpacity style={styles.exitButton} onPress={handleCreateSession}>
           <Ionicons name="close" size={32} color="white" />
         </TouchableOpacity>
         <View style={styles.optionContainer}>
@@ -139,12 +125,7 @@ export const CreateSessionModal = ({ bottomSheetModalRef }) => {
             rightIcon={'chevron-right'}
             altLabel="Block List"
           />
-          <SessionButtons
-            label="Mode"
-            leftIcon={'hourglass'}
-            rightIcon={'chevron-right'}
-            altLabel="Trust Mode"
-          />
+          <SessionButtons label="Mode" leftIcon={'hourglass'} rightIcon={'chevron-right'} altLabel="Trust Mode" />
           <SessionButtons
             label="Schedule for later"
             leftIcon={'hourglass'}
@@ -158,9 +139,7 @@ export const CreateSessionModal = ({ bottomSheetModalRef }) => {
             className="w-1/2 px-4 py-6 bg-white rounded-2xl shadow-lg flex items-center justify-center"
             onPress={handleCreateSession}
           >
-            <Text className="text-black font-semibold text-lg">
-              Create Session
-            </Text>
+            <Text className="text-black font-semibold text-lg">Create Session</Text>
           </TouchableOpacity>
         </View>
       </BottomSheetView>
