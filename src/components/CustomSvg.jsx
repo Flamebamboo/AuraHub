@@ -40,5 +40,11 @@ export const CustomSvg = ({ height, width, fillColor, style, variant }) => {
         />
       </Svg>
     );
+  } else if (variant === 'dropdown') {
+    return (
+      <Svg {...style} xmlns="http://www.w3.org/2000/svg" viewBox="0 -0.5 16 16" shape-rendering="crispEdges">
+        <Path stroke={fillColor} d="M0 4h16M0 5h16M0 6h16M0 7h16M1 8h14M2 9h12M3 10h10M4 11h8M5 12h6M6 13h4M7 14h2" />
+      </Svg>
+    );
   }
 };

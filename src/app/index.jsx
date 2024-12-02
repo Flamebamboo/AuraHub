@@ -15,12 +15,8 @@ const index = () => {
         }}
       >
         <View className="w-full flex justify-center items-center h-full pt-8 px-4">
-          <Text className="align-top font-bold text-7xl text-white mt-10 font-ReadexProBold">
-            Aura Hub
-          </Text>
-          <Text className="text-white text-2x font-PixelifySans">
-            + aura everytime you study or work
-          </Text>
+          <Text className="align-top font-bold text-7xl text-white mt-10 font-ReadexProBold">Aura Hub</Text>
+          <Text className="text-white text-2x font-PixelifySans">+ aura everytime you study or work</Text>
 
           <StatusBar style="auto" />
           <View className="flex-1 justify-end pb-10">

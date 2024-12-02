@@ -19,27 +19,14 @@ const CustomButton = ({
   iconColor = '#ffffff',
   gradientColors = ['#ef4444', '#FA4032'],
   backgroundColor = '#004086',
+  fontWeight,
   style,
 }) => {
   const ButtonContent = () => (
     <>
-      {leftIcon && (
-        <FontAwesome
-          name={leftIcon}
-          size={iconSize}
-          color={iconColor}
-          style={styles.leftIcon}
-        />
-      )}
-      <Text style={[styles.buttonText, { fontFamily, fontSize }]}>{label}</Text>
-      {rightIcon && (
-        <FontAwesome
-          name={rightIcon}
-          size={iconSize}
-          color={iconColor}
-          style={styles.rightIcon}
-        />
-      )}
+      {leftIcon && <FontAwesome name={leftIcon} size={iconSize} color={iconColor} style={styles.leftIcon} />}
+      <Text style={[styles.buttonText, { fontFamily, fontSize, fontWeight }]}>{label}</Text>
+      {rightIcon && <FontAwesome name={rightIcon} size={iconSize} color={iconColor} style={styles.rightIcon} />}
     </>
   );
 

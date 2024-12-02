@@ -3,31 +3,23 @@ import React, { useContext } from 'react';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useState, useEffect } from 'react';
-import { Picker } from '@react-native-picker/picker';
-import { FocusContext } from '@/context/FocusContextProvider';
 
-import CustomButton from '@/components/CustomButton';
+import { FocusContext } from '@/context/FocusContextProvider';
+import { router } from 'expo-router';
+
 import CoffeeCupSvg from '@/components/CoffeeCupSvg';
 const FocusTimer = () => {
   const [timeRemaining, setTimeRemaining] = useState(0);
   const [isFocus, setIsFocus] = useState(false);
 
-  //duration is in SECONDS passed from duration modal component
-  const formatTime = (duration) => {
-    if (!duration) {
-      return '30 mins';
-    }
+  const formatTimeDisplay = (seconds) => {
+    if (!seconds) return '00:00';
 
-    const hours = Math.floor(duration / 3600);
-    const minutes = Math.floor((duration % 3600) / 60);
+    // Convert total seconds to minutes (including hours)
+    const totalMinutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
 
-    if (hours > 0) {
-      if (minutes > 0) {
-        return `${hours}h ${minutes}m`;
-      }
-      return `${hours}h`;
-    }
-    return `${minutes}m`;
+    return `${totalMinutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
   };
 
   //recieve the focus data from the context api
@@ -41,6 +33,7 @@ const FocusTimer = () => {
   const handleStopFocus = () => {
     setIsFocus(false);
     setTimeRemaining(focusData.duration);
+    router.replace('/(tabs)/home');
   };
 
   const calculateProgress = () => {
@@ -67,29 +60,18 @@ const FocusTimer = () => {
   }, [timeRemaining, isFocus]); //run the effect when the timeRemaining or isFocus changes - called [] dependencies
 
   return (
-    <SafeAreaView>
-      <View>
-        <CustomButton
-          variant="solid"
-          label="Focus"
-          fontSize={18}
-          iconName="google"
-          onPress={handleStartFocus}
-        ></CustomButton>
-        <CustomButton
-          variant="solid"
-          label="Stop Focus"
-          fontSize={18}
-          iconName="google"
-          onPress={handleStopFocus}
-        ></CustomButton>
-
-        <View className="bg-slate-500">
+    <SafeAreaView style={styles.container}>
+      <View style={styles.contentContainer}>
+        <View style={styles.cupContainer}>
           <CoffeeCupSvg progress={calculateProgress()} />
         </View>
-
-        <Text>Duration: {formatTime(focusData.duration)}</Text>
-        <Text>Mode: {focusData.mode}</Text>
+        <Text style={styles.timerDisplay}>{formatTimeDisplay(timeRemaining)}</Text>
+        <TouchableOpacity
+          className="w-1/2 px-4 py-6 bg-white rounded-2xl shadow-lg flex items-center justify-center"
+          onPress={isFocus ? handleStopFocus : handleStartFocus}
+        >
+          <Text className="text-black font-semibold text-lg">{isFocus ? 'End' : 'Start Focus'}</Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
@@ -97,6 +79,38 @@ const FocusTimer = () => {
 
 export default FocusTimer;
 
-const style = create.StyleSheet({
-  container: {},
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#241527',
+  },
+  contentContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 20,
+  },
+
+  timerDisplay: {
+    fontSize: 64,
+    fontWeight: 'bold',
+    color: '#fff',
+    marginBottom: 30,
+    fontFamily: 'ReadexPro',
+  },
+  cupContainer: {
+    width: 400,
+    height: 400,
+    marginBottom: 20,
+  },
+  timerText: {
+    fontSize: 24,
+    padding: 50,
+    color: '#fff',
+    marginBottom: 10,
+  },
+  modeText: {
+    fontSize: 18,
+    color: '#666',
+  },
 });

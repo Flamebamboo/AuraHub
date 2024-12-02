@@ -7,13 +7,16 @@ import DurationModal from './DurationModal';
 import { FocusContext } from '../context/FocusContextProvider';
 import { router } from 'expo-router';
 
+import TaskSelector from '@/components/TaskSelector';
+import { CustomSvg } from '@/components/CustomSvg';
+import CustomButton from '@/components/CustomButton';
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 export const CreateSessionModal = ({ bottomSheetModalRef }) => {
   const snapPoints = ['90%'];
 
   const durationModalRef = useRef(null);
-
+  const taskSelectorRef = useRef(null);
   //using useState to keep track of the options
 
   //this duration is in SECONDS passed from duration modal component
@@ -53,8 +56,8 @@ export const CreateSessionModal = ({ bottomSheetModalRef }) => {
 
   // visibility of the options modal
   const [isDurationModalVisible, setIsDurationModalVisible] = useState(false);
+  const [isTaskSelectorVisible, setIsTaskSelectorVisible] = useState(false);
   const [isModeVisible, setIsModeVisible] = useState(false);
-
   //handle opening modal
   const handleOpenDuration = useCallback(() => {
     setIsDurationModalVisible(true);
@@ -62,6 +65,13 @@ export const CreateSessionModal = ({ bottomSheetModalRef }) => {
 
   const handleCloseDuration = useCallback(() => {
     setIsDurationModalVisible(false);
+  }, []);
+
+  const handleOpenTask = useCallback(() => {
+    setIsTaskSelectorVisible(true);
+  }, []);
+  const handleCloseTask = useCallback(() => {
+    setIsTaskSelectorVisible(false);
   }, []);
 
   // MAIN MODAL
@@ -75,9 +85,9 @@ export const CreateSessionModal = ({ bottomSheetModalRef }) => {
     console.log('handleSheetChanges', index);
   }, []);
 
-  const handleClossPress = () => {
+  const handleClossPress = useCallback(() => {
     bottomSheetModalRef.current?.dismiss();
-  };
+  }, []);
 
   return (
     <BottomSheetModal
@@ -93,9 +103,26 @@ export const CreateSessionModal = ({ bottomSheetModalRef }) => {
     >
       <BottomSheetView style={styles.contentContainer}>
         <Text style={styles.title}>Create New Session</Text>
-        <TouchableOpacity style={styles.exitButton} onPress={handleCreateSession}>
+        <TouchableOpacity style={styles.exitButton} onPress={handleClossPress}>
           <Ionicons name="close" size={32} color="white" />
         </TouchableOpacity>
+        <View style={styles.taskContainer}>
+          <Text className="text-white font-ReadexPro font-bold text-xl">Task Goal</Text>
+          <View className="px-8">
+            <CustomButton
+              backgroundColor="#2C2C2C"
+              fontSize={14}
+              fontWeight="bold"
+              fontFamily="ReadexPro"
+              label="Coding"
+              width={130}
+              height={30}
+              rightIcon="caret-down"
+              onPress={handleOpenTask}
+            />
+            {isTaskSelectorVisible && <TaskSelector taskSelectorRef={taskSelectorRef} onClose={handleCloseTask} />}
+          </View>
+        </View>
         <View style={styles.optionContainer}>
           <SessionButtons
             label="Duration"
@@ -104,6 +131,7 @@ export const CreateSessionModal = ({ bottomSheetModalRef }) => {
             altLabel={formatTime(duration)}
             onPress={handleOpenDuration}
           />
+
           {isDurationModalVisible && (
             <DurationModal
               durationSheetRef={durationModalRef}
@@ -160,7 +188,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     color: '#ffffff',
-    marginBottom: 24,
+    marginBottom: 50,
     textAlign: 'center',
   },
   modal: {
@@ -181,8 +209,12 @@ const styles = StyleSheet.create({
     paddingBottom: 34,
   },
 
+  taskContainer: {
+    flexDirection: 'row',
+  },
+
   optionContainer: {
     rowGap: 30,
-    paddingTop: 100,
+    paddingTop: 75,
   },
 });
