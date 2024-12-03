@@ -6,7 +6,8 @@ import SessionButtons from './SessionButtons';
 import DurationModal from './DurationModal';
 import { FocusContext } from '../context/FocusContextProvider';
 import { router } from 'expo-router';
-
+import { faTag, faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import TaskSelector from '@/components/TaskSelector';
 import { CustomSvg } from '@/components/CustomSvg';
 import CustomButton from '@/components/CustomButton';
@@ -23,12 +24,14 @@ export const CreateSessionModal = ({ bottomSheetModalRef }) => {
   const { setFocusData } = useContext(FocusContext);
   const [duration, setDuration] = useState(null);
   const [mode, setMode] = useState(null);
-
+  const [selectedTask, setSelectedTask] = useState('Select Task');
+  const [displayColor, setDisplayColor] = useState('#FF0000');
   //sending data to context api
 
   const handleCreateSession = () => {
     bottomSheetModalRef.current?.dismiss();
-    setFocusData({ duration, mode });
+    setFocusData({ duration, mode, selectedTask });
+    console.log(selectedTask);
     router.replace('/(focus)/focus-timer');
   };
 
@@ -106,21 +109,25 @@ export const CreateSessionModal = ({ bottomSheetModalRef }) => {
         <TouchableOpacity style={styles.exitButton} onPress={handleClossPress}>
           <Ionicons name="close" size={32} color="white" />
         </TouchableOpacity>
-        <View style={styles.taskContainer}>
+        <View className="flex-row items-center">
           <Text className="text-white font-ReadexPro font-bold text-xl">Task Goal</Text>
           <View className="px-8">
-            <CustomButton
-              backgroundColor="#2C2C2C"
-              fontSize={14}
-              fontWeight="bold"
-              fontFamily="ReadexPro"
-              label="Coding"
-              width={130}
-              height={30}
-              rightIcon="caret-down"
+            <TouchableOpacity
+              className="bg-[#2C2C2C] flex flex-row justify-between items-center py-2 px-4 rounded-full"
               onPress={handleOpenTask}
-            />
-            {isTaskSelectorVisible && <TaskSelector taskSelectorRef={taskSelectorRef} onClose={handleCloseTask} />}
+            >
+              <FontAwesomeIcon icon={faTag} size={22} color={displayColor} />
+              <Text className="text-white text-2sm font-bold mx-4 ">{selectedTask}</Text>
+              <FontAwesomeIcon icon={faCaretDown} size={22} color="#ffffff" />
+            </TouchableOpacity>
+            {isTaskSelectorVisible && (
+              <TaskSelector
+                selectedTask={setSelectedTask}
+                displayColor={setDisplayColor}
+                taskSelectorRef={taskSelectorRef}
+                onClose={handleCloseTask}
+              />
+            )}
           </View>
         </View>
         <View style={styles.optionContainer}>
@@ -207,10 +214,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 24,
     paddingBottom: 34,
-  },
-
-  taskContainer: {
-    flexDirection: 'row',
   },
 
   optionContainer: {

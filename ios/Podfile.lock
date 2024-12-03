@@ -13,7 +13,7 @@ PODS:
     - ExpoModulesCore
   - ExpoAsset (11.0.1):
     - ExpoModulesCore
-  - ExpoFileSystem (18.0.4):
+  - ExpoFileSystem (16.0.8):
     - ExpoModulesCore
   - ExpoFont (13.0.1):
     - ExpoModulesCore
@@ -1308,6 +1308,27 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
+  - react-native-blur (4.4.1):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.01.01.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - react-native-keyboard-controller (1.14.5):
     - DoubleConversion
     - glog
@@ -1800,6 +1821,7 @@ DEPENDENCIES:
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - React-Mapbuffer (from `../node_modules/react-native/ReactCommon`)
   - React-microtasksnativemodule (from `../node_modules/react-native/ReactCommon/react/nativemodule/microtasks`)
+  - "react-native-blur (from `../node_modules/@react-native-community/blur`)"
   - react-native-keyboard-controller (from `../node_modules/react-native-keyboard-controller`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - React-nativeconfig (from `../node_modules/react-native/ReactCommon`)
@@ -1952,6 +1974,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   React-microtasksnativemodule:
     :path: "../node_modules/react-native/ReactCommon/react/nativemodule/microtasks"
+  react-native-blur:
+    :path: "../node_modules/@react-native-community/blur"
   react-native-keyboard-controller:
     :path: "../node_modules/react-native-keyboard-controller"
   react-native-safe-area-context:
@@ -2033,7 +2057,7 @@ SPEC CHECKSUMS:
   EXImageLoader: 759063a65ab016b836f73972d3bb25404888713d
   Expo: 148aac4ce0da148c63447d09ae41ddb153f35506
   ExpoAsset: 8138f2a9ec55ae1ad7c3871448379f7d97692d15
-  ExpoFileSystem: dc2679a2b5d4c465ca881129074da95faee943d5
+  ExpoFileSystem: eecaf6796aed0f4dd20042dc2ca2cac6c4bc1185
   ExpoFont: 7522d869d84ee2ee8093ee997fef5b86f85d856b
   ExpoHead: a623db43433938dcfbd6a38c27381055d01a0f3a
   ExpoImage: 89f672e47b391a749b56fecb3e2a8d6d68b9b379
@@ -2080,6 +2104,7 @@ SPEC CHECKSUMS:
   React-logger: 26155dc23db5c9038794db915f80bd2044512c2e
   React-Mapbuffer: ad1ba0205205a16dbff11b8ade6d1b3959451658
   React-microtasksnativemodule: 36e3a415c6a3a5c4784b5c6bad38013b8ca35be4
+  react-native-blur: a1bf334589f44658a58a859b1f3defe28e367fcf
   react-native-keyboard-controller: 467a88267b80baa1652b8f1f84e7aae79864f617
   react-native-safe-area-context: 4532f1a0c5d34a46b9324ccaaedcb5582a302b7d
   React-nativeconfig: aeed6e2a8ac02b2df54476afcc7c663416c12bf7

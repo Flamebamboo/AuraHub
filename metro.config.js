@@ -3,6 +3,7 @@ const { withNativeWind } = require('nativewind/metro');
 const path = require('path');
 
 const config = getDefaultConfig(__dirname);
+const { wrapWithReanimatedMetroConfig } = require('react-native-reanimated/metro-config');
 
 const { transformer, resolver } = config;
 
@@ -20,4 +21,4 @@ config.resolver = {
   },
 };
 
-module.exports = withNativeWind(config, { input: './global.css' });
+module.exports = wrapWithReanimatedMetroConfig(withNativeWind(config, { input: './global.css' }));

@@ -9,10 +9,13 @@ import { DaySelector } from '@/components/DaySelector';
 
 import { StatsCard } from '@/components/StatsCard';
 
+import { useState } from 'react';
+
 import { useCallback } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { CreateSessionModal } from '@/components/CreateSessionModal';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+
 const Home = () => {
   const { user } = useGlobalContext();
 
@@ -36,12 +39,8 @@ const Home = () => {
           <View className="p-5 gap-7">
             {/* Header */}
             <View className="mb-6">
-              <Text className="font-PixelifySans text-[#aeaeae] text-xl">
-                {getGreeting()},
-              </Text>
-              <Text className="text-white font-bold text-3xl font-PixelifySans">
-                {user ? user.username : 'User'}
-              </Text>
+              <Text className="font-PixelifySans text-[#aeaeae] text-xl">{getGreeting()},</Text>
+              <Text className="text-white font-bold text-3xl font-PixelifySans">{user ? user.username : 'User'}</Text>
             </View>
 
             <View className="space-y-6">
