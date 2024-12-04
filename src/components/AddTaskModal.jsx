@@ -1,10 +1,38 @@
 import React, { useState } from 'react';
 import { Modal, View, TextInput, TouchableOpacity, Text, StyleSheet } from 'react-native';
-
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faTag } from '@fortawesome/free-solid-svg-icons';
 const AddTaskModal = ({ visible, onClose, onAdd, labels }) => {
   const [taskName, setTaskName] = useState('');
   const [error, setError] = useState('');
+  const [selectedColor, setSelectedColor] = useState('#7C3FFF'); // Default color
+  const colors = [
+    '#7C3FFF',
+    '#FF5452',
+    '#3FFFA9',
+    '#FFDF3F',
+    '#FF9B3F',
+    '#3FCEFF',
+    '#FF3F9B',
+    '#3FFF3F',
+    '#FF3F3F',
+    '#3F3FFF',
+  ];
 
+  {
+    /*
+    Dataflow: 
+
+    1) User enters task name and selects color in here
+    2) creates an object with both properties: {name: "Task Name", color: "#selected-color"}
+    3) This object is passed to the parent via the onAdd prop
+    4) The parent's handleAddNewTask function receives this object and adds it to the labels array
+
+    
+    
+    
+    */
+  }
   const handleSubmit = () => {
     const trimmingTask = taskName.trim();
     if (trimmingTask.length === 0) {
@@ -12,13 +40,18 @@ const AddTaskModal = ({ visible, onClose, onAdd, labels }) => {
       return;
     }
 
-    if (labels.some((label) => label.toLowerCase() === trimmingTask.toLowerCase())) {
+    if (labels.some((label) => label.name.toLowerCase() === trimmingTask.toLowerCase())) {
       setError('Task already exists');
       return;
     }
+    const newTask = {
+      name: trimmingTask,
+      color: selectedColor, // Using the selectedColor state we added
+    };
 
-    onAdd(trimmingTask);
+    onAdd(newTask);
     setTaskName('');
+    setSelectedColor('#7C3FFF');
     setError('');
     onClose();
   };
@@ -34,15 +67,34 @@ const AddTaskModal = ({ visible, onClose, onAdd, labels }) => {
         <View style={styles.modalContainer}>
           <Text style={styles.modalTitle}>Add New Task</Text>
 
-          <TextInput
-            style={styles.input}
-            placeholder="Enter task name"
-            placeholderTextColor="#666666"
-            value={taskName}
-            onChangeText={handleInputChange}
-            autoFocus
-          />
+          <View style={styles.inputContainer}>
+            <FontAwesomeIcon icon={faTag} size={26} color={selectedColor} />
+            <TextInput
+              style={styles.input}
+              placeholder="Enter task name"
+              placeholderTextColor="#666666"
+              value={taskName}
+              onChangeText={handleInputChange}
+              autoFocus
+            />
+          </View>
           {error && <Text style={styles.errorText}>{error}</Text>}
+          <View style={styles.colorSelector}>
+            <Text style={styles.colorTitle}>Select Color</Text>
+            <View style={styles.colorGrid}>
+              {colors.map((color) => (
+                <TouchableOpacity
+                  key={color}
+                  style={[
+                    styles.colorOption,
+                    { backgroundColor: color },
+                    selectedColor === color && styles.selectedColor,
+                  ]}
+                  onPress={() => setSelectedColor(color)}
+                />
+              ))}
+            </View>
+          </View>
 
           <View style={styles.buttonContainer}>
             <TouchableOpacity style={[styles.button, styles.cancelButton]} onPress={onClose}>
@@ -95,12 +147,20 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   input: {
-    backgroundColor: '#2C2C2C', // Matching your item container color
+    flex: 1, // Add this to make input take remaining space
+    color: '#ffffff',
+    fontSize: 16,
+    marginLeft: 10, // Add spacing between icon and input
+  },
+
+  // Add this style
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#2C2C2C',
     borderRadius: 12,
     padding: 15,
-    color: '#ffffff',
     marginBottom: 20,
-    fontSize: 16,
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -123,5 +183,29 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 16,
     fontWeight: '600',
+  },
+  colorSelector: {
+    marginVertical: 15,
+  },
+  colorTitle: {
+    color: '#ffffff',
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  colorGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 10,
+    justifyContent: 'center',
+    marginBottom: 20,
+  },
+  colorOption: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+  },
+  selectedColor: {
+    borderWidth: 3,
+    borderColor: '#ffffff',
   },
 });

@@ -11,10 +11,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import TaskSelector from '@/components/TaskSelector';
 import { CustomSvg } from '@/components/CustomSvg';
 import CustomButton from '@/components/CustomButton';
+import Animated, { FadeIn, FadeInDown, FadeInUp, FadeOut } from 'react-native-reanimated';
+import { BlurView } from '@react-native-community/blur';
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 export const CreateSessionModal = ({ bottomSheetModalRef }) => {
   const snapPoints = ['90%'];
+  const [selectedTaskName, setSelectedTaskName] = useState(null);
 
   const durationModalRef = useRef(null);
   const taskSelectorRef = useRef(null);
@@ -61,6 +64,12 @@ export const CreateSessionModal = ({ bottomSheetModalRef }) => {
   const [isDurationModalVisible, setIsDurationModalVisible] = useState(false);
   const [isTaskSelectorVisible, setIsTaskSelectorVisible] = useState(false);
   const [isModeVisible, setIsModeVisible] = useState(false);
+
+  const [showDoneButton, setShowDoneButton] = useState(false);
+
+  const handleTaskSelect = (taskName) => {
+    setShowDoneButton(true);
+  };
   //handle opening modal
   const handleOpenDuration = useCallback(() => {
     setIsDurationModalVisible(true);
@@ -126,6 +135,9 @@ export const CreateSessionModal = ({ bottomSheetModalRef }) => {
                 displayColor={setDisplayColor}
                 taskSelectorRef={taskSelectorRef}
                 onClose={handleCloseTask}
+                selectedTaskName={selectedTaskName}
+                setSelectedTaskName={setSelectedTaskName}
+                onTaskSelect={handleTaskSelect}
               />
             )}
           </View>
