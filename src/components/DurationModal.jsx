@@ -17,16 +17,14 @@ const createArray = (length) => {
 const AVAILABLE_HOURS = createArray(6);
 const AVAILABLE_MINUTES = createArray(60);
 
-const DurationModal = ({
-  durationSheetRef,
-  onClose,
-  onSelect,
-  pickerHours = '0', //to display for picker
-  pickerMinutes = '30', //to display for picker
-}) => {
+const DurationModal = ({ durationSheetRef, onClose, onSelect, pickerHours = '0', pickerMinutes = '30' }) => {
   const snapPoints = ['60%'];
-  const [selectedHours, setSelectedHours] = useState(pickerHours); // Set default values
-  const [selectedMinutes, setSelectedMinutes] = useState(pickerMinutes);
+
+  const defaultHours = Math.floor(pickerHours / 3600);
+  const defaultMinutes = Math.floor((pickerHours % 3600) / 60);
+
+  const [selectedHours, setSelectedHours] = useState(defaultHours.toString());
+  const [selectedMinutes, setSelectedMinutes] = useState(defaultMinutes.toString());
 
   const handleSheetChanges = useCallback(
     (index) => {
