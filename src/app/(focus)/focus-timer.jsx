@@ -8,10 +8,11 @@ import { FocusContext } from '@/context/FocusContextProvider';
 import { router } from 'expo-router';
 
 import CoffeeCupSvg from '@/components/CoffeeCupSvg';
+import SplitButton from '@/components/SplitButton';
 const FocusTimer = () => {
   const [timeRemaining, setTimeRemaining] = useState(0);
   const [isFocus, setIsFocus] = useState(false);
-
+  const [lastTime, setLastTime] = useState(null);
   const formatTimeDisplay = (seconds) => {
     if (!seconds) return '00:00';
 
@@ -27,13 +28,25 @@ const FocusTimer = () => {
 
   const handleStartFocus = () => {
     setIsFocus(true);
-    setTimeRemaining(focusData.duration);
+    if (lastTime === null) {
+      setTimeRemaining(focusData.duration);
+    } else {
+      setTimeRemaining(lastTime);
+      setLastTime(null);
+    }
   };
 
   const handleStopFocus = () => {
     setIsFocus(false);
-    setTimeRemaining(focusData.duration);
+    setLastTime(timeRemaining);
     router.replace('/(tabs)/home');
+  };
+
+  const toggleFocus = () => {
+    if (isFocus) {
+      setLastTime(timeRemaining);
+    }
+    setIsFocus((prev) => !prev);
   };
 
   const calculateProgress = () => {
@@ -44,21 +57,23 @@ const FocusTimer = () => {
   };
 
   useEffect(() => {
-    let interval = null;
-
+    let interval;
     if (isFocus && timeRemaining > 0) {
       interval = setInterval(() => {
-        setTimeRemaining((timeRemaining) => timeRemaining - 1);
+        setTimeRemaining((prev) => {
+          if (prev <= 1) {
+            clearInterval(interval);
+            handleStopFocus();
+            return 0;
+          }
+          return prev - 1;
+        });
       }, 1000);
-    } else if (timeRemaining === 0) {
-      setIsFocus(false);
     }
+    return () => clearInterval(interval);
+  }, [isFocus, timeRemaining]);
 
-    return () => {
-      clearInterval(interval); //clear the interval when the component unmounts
-    };
-  }, [timeRemaining, isFocus]); //run the effect when the timeRemaining or isFocus changes - called [] dependencies
-
+  const [splitted, setSplitted] = useState(true);
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.contentContainer}>
@@ -66,12 +81,37 @@ const FocusTimer = () => {
           <CoffeeCupSvg progress={calculateProgress()} />
         </View>
         <Text style={styles.timerDisplay}>{formatTimeDisplay(timeRemaining)}</Text>
-        <TouchableOpacity
+
+        <SplitButton
+          splitted={splitted}
+          leftAction={{
+            label: 'resume',
+            onPress: () => {
+              handleStartFocus();
+              setSplitted(false);
+            },
+          }}
+          mainAction={{
+            label: 'pause',
+            onPress: () => {
+              toggleFocus();
+              setSplitted(true);
+            },
+          }}
+          rightAction={{
+            label: 'end',
+            onPress: () => {
+              handleStopFocus();
+              setSplitted(true);
+            },
+          }}
+        />
+        {/* <TouchableOpacity
           className="w-1/2 px-4 py-6 bg-white rounded-2xl shadow-lg flex items-center justify-center"
           onPress={isFocus ? handleStopFocus : handleStartFocus}
         >
           <Text className="text-black font-semibold text-lg">{isFocus ? 'End' : 'Start Focus'}</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     </SafeAreaView>
   );
