@@ -30,7 +30,7 @@ const TaskSelector = ({
   displayColor,
 }) => {
   const STORAGE_KEY = '@tasks_key'; //key for async storage
-  const snapPoints = useMemo(() => [SCREEN_HEIGHT * 1], []); // 90% of screen height
+  const snapPoints = useMemo(() => ['100%'], []); // 90% of screen height
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
   const [editMode, setEditMode] = useState(false);
 
@@ -202,6 +202,7 @@ const TaskSelector = ({
     <SafeAreaView>
       <BottomSheetModal
         ref={taskSelectorRef}
+        index={0}
         snapPoints={snapPoints}
         enableContentPanningGesture={false}
         enablePanDownToClose={true}
@@ -226,6 +227,7 @@ const TaskSelector = ({
               onClose={() => setIsAddModalVisible(false)}
               onAdd={handleAddNewTask}
               labels={labels}
+              //new prop to edit existing task object
             />
             <BottomSheetFlatList
               data={labels} //data to be rendered in this case task data
@@ -235,7 +237,7 @@ const TaskSelector = ({
             />
             {currentSelectedTask && (
               <Animated.View
-                className="absolute bottom-28 left-0 right-0 z-50"
+                className="absolute bottom-0 left-0 right-0 z-50"
                 entering={FadeInDown.duration(200)}
                 exiting={FadeOut.duration(300)}
               >
@@ -268,7 +270,8 @@ const TaskSelector = ({
               renderItem={renderEditItem}
               contentContainerStyle={styles.listContent}
             />
-            <View className="flex-1 items-end flex-row justify-center mb-9 border-2 border-white">
+
+            <View className="absolute bottom-28 left-0 right-0 items-center border-2 border-white">
               <TouchableOpacity
                 className="w-1/2 px-4 py-6 bg-white rounded-2xl shadow-lg flex items-center justify-center"
                 onPress={handleSaveChanges}
@@ -286,6 +289,7 @@ const TaskSelector = ({
 const styles = StyleSheet.create({
   container: {
     padding: 24,
+    flex: 1,
   },
   addNewButton: {
     backgroundColor: '#9482DA',
@@ -321,7 +325,7 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 200, // Generous padding to ensure content is visible
     flexGrow: 1,
-    minHeight: '100%',
+    height: SCREEN_HEIGHT,
   },
   itemContainer: {
     padding: 16,

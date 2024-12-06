@@ -1,83 +1,45 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import React, { useContext } from 'react';
-
+import { View, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useState, useEffect } from 'react';
-
-import { FocusContext } from '@/context/FocusContextProvider';
 import { router } from 'expo-router';
-
-import CoffeeCupSvg from '@/components/CoffeeCupSvg';
+import { FocusContext } from '@/context/FocusContextProvider';
+import { useTimer } from '@/hooks/useTimer';
+import { TimerDisplay } from '@/components/TimerDisplay';
+import SplitButton from '@/components/SplitButton';
+import { TimerArt, TimerArtVariants } from '@/components/TimerArt';
 const FocusTimer = () => {
-  const [timeRemaining, setTimeRemaining] = useState(0);
-  const [isFocus, setIsFocus] = useState(false);
-
-  const formatTimeDisplay = (seconds) => {
-    if (!seconds) return '00:00';
-
-    // Convert total seconds to minutes (including hours)
-    const totalMinutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
-
-    return `${totalMinutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
-  };
-
-  //recieve the focus data from the context api
   const { focusData } = useContext(FocusContext);
+  const { timeRemaining, isActive, start, pause, stop, getProgress } = useTimer(focusData.duration);
 
-  const handleStartFocus = () => {
-    setIsFocus(true);
-    setTimeRemaining(focusData.duration);
-  };
-
-  const handleStopFocus = () => {
-    setIsFocus(false);
-    setTimeRemaining(focusData.duration);
+  const handleStop = () => {
+    stop();
     router.replace('/(tabs)/home');
   };
-
-  const calculateProgress = () => {
-    if (!timeRemaining || !focusData.duration) return 0;
-    const progress = 1 - timeRemaining / focusData.duration;
-    console.log('Calculated progress:', progress); // Add this to debug
-    return progress;
-  };
-
-  useEffect(() => {
-    let interval = null;
-
-    if (isFocus && timeRemaining > 0) {
-      interval = setInterval(() => {
-        setTimeRemaining((timeRemaining) => timeRemaining - 1);
-      }, 1000);
-    } else if (timeRemaining === 0) {
-      setIsFocus(false);
-    }
-
-    return () => {
-      clearInterval(interval); //clear the interval when the component unmounts
-    };
-  }, [timeRemaining, isFocus]); //run the effect when the timeRemaining or isFocus changes - called [] dependencies
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.contentContainer}>
-        <View style={styles.cupContainer}>
-          <CoffeeCupSvg progress={calculateProgress()} />
-        </View>
-        <Text style={styles.timerDisplay}>{formatTimeDisplay(timeRemaining)}</Text>
-        <TouchableOpacity
-          className="w-1/2 px-4 py-6 bg-white rounded-2xl shadow-lg flex items-center justify-center"
-          onPress={isFocus ? handleStopFocus : handleStartFocus}
-        >
-          <Text className="text-black font-semibold text-lg">{isFocus ? 'End' : 'Start Focus'}</Text>
-        </TouchableOpacity>
+        <TimerArt variant={TimerArtVariants.COFFEE_CUP} progress={getProgress()} style={styles.artContainer} />
+        <TimerDisplay time={timeRemaining} />
+        <SplitButton
+          splitted={!isActive}
+          leftAction={{
+            label: 'resume',
+            onPress: start,
+          }}
+          mainAction={{
+            label: isActive ? 'pause' : 'start',
+            onPress: isActive ? pause : start,
+          }}
+          rightAction={{
+            label: 'end',
+            onPress: handleStop,
+          }}
+        />
       </View>
     </SafeAreaView>
   );
 };
-
-export default FocusTimer;
 
 const styles = StyleSheet.create({
   container: {
@@ -90,27 +52,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 20,
   },
-
-  timerDisplay: {
-    fontSize: 64,
-    fontWeight: 'bold',
-    color: '#fff',
-    marginBottom: 30,
-    fontFamily: 'ReadexPro',
-  },
-  cupContainer: {
-    width: 400,
-    height: 400,
-    marginBottom: 20,
-  },
-  timerText: {
-    fontSize: 24,
-    padding: 50,
-    color: '#fff',
-    marginBottom: 10,
-  },
-  modeText: {
-    fontSize: 18,
-    color: '#666',
-  },
 });
+
+export default FocusTimer;
