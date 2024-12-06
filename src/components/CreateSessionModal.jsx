@@ -23,7 +23,7 @@ export const CreateSessionModal = ({ bottomSheetModalRef }) => {
   //using useState to keep track of the options
 
   //this duration is in SECONDS passed from duration modal component
-  const { setFocusData } = useContext(FocusContext);
+  const { focusData, setFocusData } = useContext(FocusContext);
   const [duration, setDuration] = useState(null);
   const [mode, setMode] = useState(null);
   const [selectedTask, setSelectedTask] = useState('Select Task');
@@ -32,8 +32,11 @@ export const CreateSessionModal = ({ bottomSheetModalRef }) => {
 
   const handleCreateSession = () => {
     bottomSheetModalRef.current?.dismiss();
-    setFocusData({ duration, mode, selectedTask });
-    console.log(selectedTask);
+    setFocusData({
+      duration: duration || focusData.duration, // Use current or default
+      mode: mode || focusData.mode,
+      selectedTask: selectedTask || focusData.selectedTask,
+    });
     router.replace('/(focus)/focus-timer');
   };
 

@@ -33,6 +33,14 @@ const AddTaskModal = ({ visible, onClose, onAdd, labels }) => {
     
     */
   }
+
+  const MAX_TASK_LENGTH = 25; // Or whatever limit you prefer
+
+  const handleTaskNameChange = (text) => {
+    if (text.length <= MAX_TASK_LENGTH) {
+      setTaskName(text);
+    }
+  };
   const handleSubmit = () => {
     const trimmingTask = taskName.trim();
     if (trimmingTask.length === 0) {
@@ -71,12 +79,14 @@ const AddTaskModal = ({ visible, onClose, onAdd, labels }) => {
             <FontAwesomeIcon icon={faTag} size={26} color={selectedColor} />
             <TextInput
               style={styles.input}
-              placeholder="Enter task name"
+              placeholder={`Enter Task Name`}
               placeholderTextColor="#666666"
               value={taskName}
+              maxLength={MAX_TASK_LENGTH}
               onChangeText={handleInputChange}
               autoFocus
             />
+            {taskName.length > 0 && <Text style={styles.errorText}>{`${taskName.length}/${MAX_TASK_LENGTH}`}</Text>}
           </View>
           {error && <Text style={styles.errorText}>{error}</Text>}
           <View style={styles.colorSelector}>
