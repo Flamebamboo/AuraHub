@@ -9,17 +9,7 @@ import SplitButton from '@/components/SplitButton';
 import { TimerArt, TimerArtVariants } from '@/components/TimerArt';
 import { faTag, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-const FocusTimer = () => {
-  const { focusData } = useContext(FocusContext);
-  const { timeRemaining, isActive, start, pause, stop, getProgress } = useTimer(focusData.duration);
 
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { router } from 'expo-router';
-import { FocusContext } from '@/context/FocusContextProvider';
-import { useTimer } from '@/hooks/useTimer';
-import { TimerDisplay } from '@/components/TimerDisplay';
-import SplitButton from '@/components/SplitButton';
-import { TimerArt, TimerArtVariants } from '@/components/TimerArt';
 const FocusTimer = () => {
   const { focusData } = useContext(FocusContext);
   const { timeRemaining, isActive, start, pause, stop, getProgress } = useTimer(focusData.duration);
@@ -28,7 +18,6 @@ const FocusTimer = () => {
     stop();
     router.replace('/(tabs)/home');
   };
-  console.log(focusData);
 
   useEffect(() => {
     start();
@@ -44,7 +33,7 @@ const FocusTimer = () => {
           <Text style={styles.task}>{focusData.selectedTask}</Text>
           <FontAwesomeIcon icon={faCaretDown} size={22} color={focusData.taskColor} />
         </View>
-        <TimerArt variant={TimerArtVariants.COFFEE_CUP} progress={getProgress()} style={styles.artContainer} />
+        <TimerArt variant={TimerArtVariants.COFFEE_CUP} progress={getProgress()} />
         <TimerDisplay time={timeRemaining} />
         <SplitButton
           splitted={!isActive}
@@ -99,30 +88,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'center',
-  },
-});
-
-  timerDisplay: {
-    fontSize: 64,
-    fontWeight: 'bold',
-    color: '#fff',
-    marginBottom: 30,
-    fontFamily: 'ReadexPro',
-  },
-  cupContainer: {
-    width: 400,
-    height: 400,
-    marginBottom: 20,
-  },
-  timerText: {
-    fontSize: 24,
-    padding: 50,
-    color: '#fff',
-    marginBottom: 10,
-  },
-  modeText: {
-    fontSize: 18,
-    color: '#666',
   },
 });
 
