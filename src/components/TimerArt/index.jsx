@@ -2,13 +2,16 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import CoffeeCupSvg from './variants/CoffeeCupSvg';
+import Square from './variants/Square';
+import Square2 from './variants/Square2';
 // Future imports for other timer arts
 // import StudyLampSvg from './variants/StudyLampSvg';
 // import CodeEditorSvg from './variants/CodeEditorSvg';
 
 const TimerArtVariants = {
   COFFEE_CUP: 'COFFEE_CUP',
-  // STUDY_LAMP: 'STUDY_LAMP',
+  SQUARE: 'SQUARE',
+  SQUARE2: 'SQUARE2',
   // CODE_EDITOR: 'CODE_EDITOR',
 };
 
@@ -17,10 +20,10 @@ const TimerArt = ({ variant = TimerArtVariants.COFFEE_CUP, progress, style }) =>
     switch (variant) {
       case TimerArtVariants.COFFEE_CUP:
         return <CoffeeCupSvg progress={progress} />;
-      // case TimerArtVariants.STUDY_LAMP:
-      //   return <StudyLampSvg progress={progress} />;
-      // case TimerArtVariants.CODE_EDITOR:
-      //   return <CodeEditorSvg progress={progress} />;
+      case TimerArtVariants.SQUARE:
+        return <Square progress={progress} />;
+      case TimerArtVariants.SQUARE2:
+        return <Square2 progress={progress} />;
       default:
         return <CoffeeCupSvg progress={progress} />;
     }

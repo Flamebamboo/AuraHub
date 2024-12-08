@@ -27,7 +27,6 @@ const FocusTimer = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.contentContainer}>
-        <Text style={styles.title}>Focusing on:</Text>
         <View style={styles.taskContainer}>
           <FontAwesomeIcon icon={faTag} size={22} color={focusData.taskColor} />
           <Text style={styles.task}>{focusData.selectedTask}</Text>
@@ -71,18 +70,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 20,
     backgroundColor: 'white',
-    width: 150,
+    width: 160,
     height: 40,
     borderRadius: 20,
     paddingHorizontal: 20,
     justifyContent: 'space-between',
     marginTop: 20,
+    gap: 5,
   },
-  title: {
-    color: '#fff',
-    fontSize: 20,
-    textAlign: 'center',
-  },
+
   task: {
     color: 'black',
     fontSize: 16,

@@ -126,6 +126,7 @@ export const CreateSessionModal = ({ bottomSheetModalRef }) => {
             >
               <FontAwesomeIcon icon={faTag} size={22} color={displayColor} />
               <Text className="text-white text-2sm font-bold mx-4 ">{selectedTask}</Text>
+
               <FontAwesomeIcon icon={faCaretDown} size={22} color="#ffffff" />
             </TouchableOpacity>
             {isTaskSelectorVisible && (
