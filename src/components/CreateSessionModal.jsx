@@ -13,10 +13,15 @@ import { CustomSvg } from '@/components/CustomSvg';
 import CustomButton from '@/components/CustomButton';
 import Animated, { FadeIn, FadeInDown, FadeInUp, FadeOut } from 'react-native-reanimated';
 import { BlurView } from '@react-native-community/blur';
+import SegmentadControl from '@/components/SegmentadControl';
+
+import TimerBlock from '@/components/TimerBlock';
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 export const CreateSessionModal = ({ bottomSheetModalRef }) => {
-  const snapPoints = ['90%'];
+  const snapPoints = ['100%'];
+
+  const [duration, setDuration] = useState(null);
 
   const durationModalRef = useRef(null);
   const taskSelectorRef = useRef(null);
@@ -24,7 +29,7 @@ export const CreateSessionModal = ({ bottomSheetModalRef }) => {
 
   //this duration is in SECONDS passed from duration modal component
   const { focusData, setFocusData } = useContext(FocusContext);
-  const [duration, setDuration] = useState(null);
+  // const [duration, setDuration] = useState(null);
   const [mode, setMode] = useState(null);
   const [selectedTask, setSelectedTask] = useState('Select Task');
   const [displayColor, setDisplayColor] = useState('#FF0000');
@@ -44,30 +49,10 @@ export const CreateSessionModal = ({ bottomSheetModalRef }) => {
   const [selectedHours, setSelectedHours] = useState('0');
   const [selectedMinutes, setSelectedMinutes] = useState('30');
 
-  //display time for alt besides button
-  const formatTime = (duration) => {
-    if (!duration) {
-      return '30 mins';
-    }
-
-    const hours = Math.floor(duration / 3600);
-    const minutes = Math.floor((duration % 3600) / 60);
-
-    if (hours > 0) {
-      if (minutes > 0) {
-        return `${hours}h ${minutes}m`;
-      }
-      return `${hours}h`;
-    }
-    return `${minutes}m`;
-  };
-
   // visibility of the options modal
   const [isDurationModalVisible, setIsDurationModalVisible] = useState(false);
   const [isTaskSelectorVisible, setIsTaskSelectorVisible] = useState(false);
   const [isModeVisible, setIsModeVisible] = useState(false);
-
-  const [showDoneButton, setShowDoneButton] = useState(false);
 
   //handle opening modal
   const handleOpenDuration = useCallback(() => {
@@ -87,6 +72,8 @@ export const CreateSessionModal = ({ bottomSheetModalRef }) => {
 
   // MAIN MODAL
 
+  const [selectedMode, setSelectedMode] = useState('timeblock');
+
   // darkbackdrop behind the modal
   const renderBackdrop = useCallback(
     (props) => <BottomSheetBackdrop {...props} disappearsOnIndex={-1} appearsOnIndex={0} />,
@@ -103,7 +90,7 @@ export const CreateSessionModal = ({ bottomSheetModalRef }) => {
   return (
     <BottomSheetModal
       ref={bottomSheetModalRef}
-      index={0}
+      index={1}
       snapPoints={snapPoints}
       onChange={handleSheetChanges}
       enableContentPanningGesture={false}
@@ -112,121 +99,70 @@ export const CreateSessionModal = ({ bottomSheetModalRef }) => {
       backdropComponent={renderBackdrop}
       handleIndicatorStyle={styles.handleIndicator}
     >
-      <BottomSheetView style={styles.contentContainer}>
-        <Text style={styles.title}>Create New Session</Text>
+      <View style={styles.topContainer}>
         <TouchableOpacity style={styles.exitButton} onPress={handleClossPress}>
           <Ionicons name="close" size={32} color="white" />
         </TouchableOpacity>
-        <View className="flex-row items-center">
-          <Text className="text-white font-ReadexPro font-bold text-xl">Task Goal</Text>
-          <View className="px-8">
-            <TouchableOpacity
-              className="bg-[#2C2C2C] flex flex-row justify-between items-center py-2 px-4 rounded-full"
-              onPress={handleOpenTask}
-            >
-              <FontAwesomeIcon icon={faTag} size={22} color={displayColor} />
-              <Text className="text-white text-2sm font-bold mx-4 ">{selectedTask}</Text>
+        <SegmentadControl selectedMode={selectedMode} setSelectedMode={setSelectedMode} />
+      </View>
 
-              <FontAwesomeIcon icon={faCaretDown} size={22} color="#ffffff" />
-            </TouchableOpacity>
-            {isTaskSelectorVisible && (
-              <TaskSelector
-                selectedTask={setSelectedTask}
-                displayColor={setDisplayColor}
-                taskSelectorRef={taskSelectorRef}
-                onClose={handleCloseTask}
-              />
-            )}
-          </View>
-        </View>
-        <View style={styles.optionContainer}>
-          <SessionButtons
-            label="Duration"
-            leftIcon={'hourglass'}
-            rightIcon={'chevron-right'}
-            altLabel={formatTime(duration)}
-            onPress={handleOpenDuration}
-          />
+      {selectedMode === 'timeblock' ? (
+        <TimerBlock
+          handleClossPress={handleClossPress}
+          handleOpenTask={handleOpenTask}
+          selectedTask={selectedTask}
+          displayColor={displayColor}
+          handleOpenDuration={handleOpenDuration}
+          handleCreateSession={handleCreateSession}
+          duration={duration}
+        />
+      ) : (
+        <Text className="text-white text-center mt-10">Pomodoro Coming Soon!</Text>
+      )}
 
-          {isDurationModalVisible && (
-            <DurationModal
-              durationSheetRef={durationModalRef}
-              onClose={handleCloseDuration}
-              onSelect={(totalSeconds, hours, minutes) => {
-                setDuration(totalSeconds); //this is to be sent to focus session easier to format
-                setSelectedHours(hours); // hours and minutes if for picker
-                setSelectedMinutes(minutes);
-                handleCloseDuration();
-              }}
-              pickerHours={selectedHours}
-              pickerMinutes={selectedMinutes} //passing the state to the modal
-            />
-          )}
+      {isTaskSelectorVisible && (
+        <TaskSelector
+          selectedTask={setSelectedTask}
+          displayColor={setDisplayColor}
+          taskSelectorRef={taskSelectorRef}
+          onClose={handleCloseTask}
+        />
+      )}
 
-          <SessionButtons
-            label="Apps Blocked"
-            leftIcon={'hourglass'}
-            rightIcon={'chevron-right'}
-            altLabel="Block List"
-          />
-          <SessionButtons label="Mode" leftIcon={'hourglass'} rightIcon={'chevron-right'} altLabel="Trust Mode" />
-          <SessionButtons
-            label="Schedule for later"
-            leftIcon={'hourglass'}
-            rightIcon={'chevron-right'}
-            style={{ marginTop: 50 }}
-          />
-        </View>
-
-        <View className="pt-20 items-center w-full">
-          <TouchableOpacity
-            className="w-1/2 px-4 py-6 bg-white rounded-2xl shadow-lg flex items-center justify-center"
-            onPress={handleCreateSession}
-          >
-            <Text className="text-black font-semibold text-lg">Create Session</Text>
-          </TouchableOpacity>
-        </View>
-      </BottomSheetView>
+      {isDurationModalVisible && (
+        <DurationModal
+          durationSheetRef={durationModalRef}
+          onClose={handleCloseDuration}
+          onSelect={(totalSeconds, hours, minutes) => {
+            setDuration(totalSeconds); //this is to be sent to focus session easier to format
+            setSelectedHours(hours); // hours and minutes if for picker
+            setSelectedMinutes(minutes);
+            handleCloseDuration();
+          }}
+          pickerHours={selectedHours}
+          pickerMinutes={selectedMinutes} //passing the state to the modal
+        />
+      )}
     </BottomSheetModal>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  exitButton: {
-    position: 'absolute',
-    top: 25,
-    left: 30,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#ffffff',
-    marginBottom: 50,
-    textAlign: 'center',
-  },
-  modal: {
-    marginHorizontal: 0,
-    width: SCREEN_WIDTH,
-  },
   modalBackground: {
     backgroundColor: '#141414',
   },
-  handleIndicator: {
-    // the white thingy ontop
-    backgroundColor: '#ffffff',
-    width: 40,
-  },
-  contentContainer: {
-    flex: 1,
-    padding: 24,
-    paddingBottom: 34,
+
+  exitButton: {
+    position: 'absolute',
+    top: 35,
+    left: 20,
   },
 
-  optionContainer: {
-    rowGap: 30,
-    paddingTop: 75,
+  topContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 80,
+    paddingBottom: 10,
   },
 });
