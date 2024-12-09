@@ -14,7 +14,7 @@ import CustomButton from '@/components/CustomButton';
 import Animated, { FadeIn, FadeInDown, FadeInUp, FadeOut } from 'react-native-reanimated';
 import { BlurView } from '@react-native-community/blur';
 import SegmentadControl from '@/components/SegmentadControl';
-
+import Slider from '@react-native-community/slider';
 import TimerBlock from '@/components/TimerBlock';
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
@@ -117,7 +117,13 @@ export const CreateSessionModal = ({ bottomSheetModalRef }) => {
           duration={duration}
         />
       ) : (
-        <Text className="text-white text-center mt-10">Pomodoro Coming Soon!</Text>
+        <Slider
+          style={{ width: 200, height: 40 }}
+          minimumValue={0}
+          maximumValue={1}
+          minimumTrackTintColor="#FFFFFF"
+          maximumTrackTintColor="#000000"
+        />
       )}
 
       {isTaskSelectorVisible && (
