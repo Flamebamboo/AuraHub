@@ -4,6 +4,7 @@ import { BottomSheetModal, BottomSheetView, BottomSheetBackdrop } from '@gorhom/
 import { Ionicons } from '@expo/vector-icons';
 import SessionButtons from './SessionButtons';
 import DurationModal from './DurationModal';
+import { PomodoroContext } from '@/context/PomodoroContextProvider';
 import { FocusContext } from '../context/FocusContextProvider';
 import { router } from 'expo-router';
 import { faTag, faCaretDown } from '@fortawesome/free-solid-svg-icons';
@@ -14,8 +15,9 @@ import CustomButton from '@/components/CustomButton';
 import Animated, { FadeIn, FadeInDown, FadeInUp, FadeOut } from 'react-native-reanimated';
 import { BlurView } from '@react-native-community/blur';
 import SegmentadControl from '@/components/SegmentadControl';
-import Slider from '@react-native-community/slider';
+
 import TimerBlock from '@/components/TimerBlock';
+import Pomodoro from './Pomodoro';
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 export const CreateSessionModal = ({ bottomSheetModalRef }) => {
@@ -29,6 +31,8 @@ export const CreateSessionModal = ({ bottomSheetModalRef }) => {
 
   //this duration is in SECONDS passed from duration modal component
   const { focusData, setFocusData } = useContext(FocusContext);
+
+  const { pomodoroData, setPomodoroData } = useContext(PomodoroContext);
   // const [duration, setDuration] = useState(null);
   const [mode, setMode] = useState(null);
   const [selectedTask, setSelectedTask] = useState('Select Task');
@@ -44,6 +48,14 @@ export const CreateSessionModal = ({ bottomSheetModalRef }) => {
     });
     router.replace('/(focus)/focus-timer');
   };
+
+  const handleCreatePomodoro = () => {
+    bottomSheetModalRef.current?.dismiss();
+
+    console.log(pomodoroData);
+  };
+
+  // Pomodoro Stuff
 
   //remembering the picker values
   const [selectedHours, setSelectedHours] = useState('0');
@@ -117,12 +129,11 @@ export const CreateSessionModal = ({ bottomSheetModalRef }) => {
           duration={duration}
         />
       ) : (
-        <Slider
-          style={{ width: 200, height: 40 }}
-          minimumValue={0}
-          maximumValue={1}
-          minimumTrackTintColor="#FFFFFF"
-          maximumTrackTintColor="#000000"
+        <Pomodoro
+          handleOpenTask={handleOpenTask}
+          displayColor={displayColor}
+          selectedTask={selectedTask}
+          handleCreatePomodoro={handleCreatePomodoro}
         />
       )}
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import { BottomSheetView } from '@gorhom/bottom-sheet';
-import { Ionicons } from '@expo/vector-icons';
+
 import SessionButtons from './SessionButtons';
 
 import { faTag, faCaretDown } from '@fortawesome/free-solid-svg-icons';
@@ -81,10 +81,6 @@ const TimerBlock = ({
 export default TimerBlock;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-
   modal: {
     marginHorizontal: 0,
     width: SCREEN_WIDTH,
