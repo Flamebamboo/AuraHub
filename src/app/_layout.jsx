@@ -9,6 +9,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import FocusContextProvider from '@/context/FocusContextProvider';
+import PomodoroContextProvider from '@/context/PomodoroContextProvider';
 
 // Prevent splash screen from auto-hiding
 SplashScreen.preventAutoHideAsync();
@@ -38,15 +39,17 @@ const RootLayout = () => {
         <BottomSheetModalProvider>
           <KeyboardProvider>
             <FocusContextProvider>
-              <GlobalProvider>
-                <Stack>
-                  <Stack.Screen name="index" options={{ headerShown: false }} />
-                  <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-                  <Stack.Screen name="(chat)" options={{ headerShown: false }} />
-                  <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-                  <Stack.Screen name="(focus)" options={{ headerShown: false }} />
-                </Stack>
-              </GlobalProvider>
+              <PomodoroContextProvider>
+                <GlobalProvider>
+                  <Stack>
+                    <Stack.Screen name="index" options={{ headerShown: false }} />
+                    <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+                    <Stack.Screen name="(chat)" options={{ headerShown: false }} />
+                    <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                    <Stack.Screen name="(focus)" options={{ headerShown: false }} />
+                  </Stack>
+                </GlobalProvider>
+              </PomodoroContextProvider>
             </FocusContextProvider>
           </KeyboardProvider>
         </BottomSheetModalProvider>

@@ -6,7 +6,7 @@ export const FocusContext = createContext();
 const DEFAULT_FOCUS_DATA = {
   duration: 1800, // 30 minutes in seconds (30 * 60)
   mode: 'focus',
-  selectedTask: 'Focus Session',
+  selectedTask: '',
   taskColor: '#FF0000',
 };
 
