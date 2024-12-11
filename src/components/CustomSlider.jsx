@@ -2,8 +2,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import Slider from '@react-native-community/slider';
 import React, { useState } from 'react';
 
-const CustomSlider = ({ label, minVal, maxVal, step, onValueChange }) => {
-  const [value, setValue] = useState(value ?? 0);
+const CustomSlider = ({ label, minVal, maxVal, step, onValueChange, value }) => {
   return (
     <View>
       <Text className="text-white font-semibold text-xl ml-5 mb-4 ">

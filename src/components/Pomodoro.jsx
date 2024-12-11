@@ -5,14 +5,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import CustomSlider from '@/components/CustomSlider';
 import { BottomSheetView } from '@gorhom/bottom-sheet';
 import Slider from '@react-native-community/slider';
-import { PomodoroContext } from '@/context/PomodoroContextProvider';
+import usePomodoroStore from '@/store/pomodoroStore';
 
-export const Pomodoro = ({ handleOpenTask, displayColor, selectedTask, handleCreatePomodoro }) => {
-  const { pomodoroData, setPomodoroData } = useContext(PomodoroContext);
+const Pomodoro = ({ handleOpenTask, displayColor, selectedTask, handleCreatePomodoro }) => {
+  const duration = usePomodoroStore((state) => state.duration);
+  const adjustDuration = usePomodoroStore((state) => state.adjustDuration);
 
-  // useEffect(() => {
-  //   console.log('PomodoroContextProvider initialized with data:', pomodoroData);
-  // }, [pomodoroData]);
   return (
     <BottomSheetView style={styles.contentContainer}>
       <View className="flex-row items-center">
@@ -31,11 +29,11 @@ export const Pomodoro = ({ handleOpenTask, displayColor, selectedTask, handleCre
       <View className="w-full flex items-start mt-24">
         <CustomSlider
           label="Focus Duration"
-          // value={pomodoroData.pomodoroDuration}
+          value={duration}
           minVal={5}
           maxVal={150}
           step={5}
-          // onValueChange={(val) => setPomodoroData({ ...pomodoroData, pomodoroDuration: val })}
+          onValueChange={adjustDuration}
         />
       </View>
       <View className="pt-20 items-center w-full">
@@ -50,6 +48,7 @@ export const Pomodoro = ({ handleOpenTask, displayColor, selectedTask, handleCre
   );
 };
 
+export default Pomodoro;
 const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
