@@ -4,7 +4,7 @@ import { View, Button, TextInput, Text, StyleSheet, Modal, TouchableOpacity } fr
 import BottomSheet, { BottomSheetModal, BottomSheetFlatList, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import CustomBackdrop from './CustomBackdrop';
 
-import AddTaskModal from './AddTaskModal';
+import AddTaskModal from './Modals/AddTaskModal';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
@@ -15,24 +15,25 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faPenToSquare } from '@fortawesome/free-regular-svg-icons';
 import { faPlusSquare } from '@fortawesome/free-regular-svg-icons';
 import { faTag } from '@fortawesome/free-solid-svg-icons';
-import { CustomSvg } from './CustomSvg';
+import { CustomSvg } from '../CustomSvg';
 import index from '@/app';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import useTimerStore from '@/store/timerStore';
 import { Dimensions } from 'react-native';
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 
-const TaskSelector = ({
-  taskSelectorRef,
-  onClose,
-  selectedTask, //this is the function that will be called when a task is selected
-  displayColor,
-}) => {
+const TaskSelector = ({ taskSelectorRef, onClose }) => {
   const STORAGE_KEY = '@tasks_key'; //key for async storage
   const snapPoints = useMemo(() => ['100%'], []); // 90% of screen height
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
   const [editMode, setEditMode] = useState(false);
+
+  const task = useTimerStore((state) => state.task);
+  const setTask = useTimerStore((state) => state.setTask);
+  const color = useTimerStore((state) => state.color);
+  const setColor = useTimerStore((state) => state.setColor);
 
   // const deleteTaskKeyStorage = async () => {
   //   try {
@@ -161,10 +162,13 @@ const TaskSelector = ({
       const isChecked = currentSelectedTask === item.name;
 
       const toggleCheckbox = () => {
-        setCurrentSelectedTask((prevSelectedTaskName) => (prevSelectedTaskName === item.name ? null : item.name));
-        //this data is passed to the parent component so that it displays the selected task and color tag
-        selectedTask(item.name);
-        displayColor(item.color);
+        const newSelectedTask = currentSelectedTask === item.name ? null : item.name;
+        setCurrentSelectedTask(newSelectedTask);
+
+        // Update Zustand store
+
+        setTask(item.name);
+        setColor(item.color);
       };
 
       return (
