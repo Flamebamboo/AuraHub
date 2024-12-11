@@ -19,6 +19,7 @@ import { CustomSvg } from '../CustomSvg';
 import index from '@/app';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import usePomodoroStore from '@/store/pomodoroStore';
 import useTimerStore from '@/store/timerStore';
 import { Dimensions } from 'react-native';
 
@@ -34,6 +35,11 @@ const TaskSelector = ({ taskSelectorRef, onClose }) => {
   const setTask = useTimerStore((state) => state.setTask);
   const color = useTimerStore((state) => state.color);
   const setColor = useTimerStore((state) => state.setColor);
+
+  const pomodoroTask = usePomodoroStore((state) => state.task);
+  const setPomodoroTask = usePomodoroStore((state) => state.setTask);
+  const pomodoroColor = usePomodoroStore((state) => state.color);
+  const setPomodoroColor = usePomodoroStore((state) => state.setColor);
 
   // const deleteTaskKeyStorage = async () => {
   //   try {
@@ -169,6 +175,10 @@ const TaskSelector = ({ taskSelectorRef, onClose }) => {
 
         setTask(item.name);
         setColor(item.color);
+
+        // Update Pomodoro store
+        setPomodoroTask(item.name);
+        setPomodoroColor(item.color);
       };
 
       return (
