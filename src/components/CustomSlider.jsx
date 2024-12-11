@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 const CustomSlider = ({ label, minVal, maxVal, step, onValueChange, value }) => {
   return (
     <View>
-      <Text className="text-white font-semibold text-xl ml-5 mb-4 ">
+      <Text className="text-white font-semibold text-xl mb-4 ">
         {label}: {value && +value.toFixed(2)}
       </Text>
       <View className="w-full flex items-center">
