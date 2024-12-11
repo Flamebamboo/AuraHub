@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 
 import { useTimer } from '@/hooks/useTimer';
-import { TimerDisplay } from '@/components/TimerDisplay';
+import { TimerDisplay } from '@/components/Timer/TimerDisplay';
 import SplitButton from '@/components/SplitButton';
 import { TimerArt, TimerArtVariants } from '@/components/TimerArt';
 import { faTag, faCaretDown } from '@fortawesome/free-solid-svg-icons';
