@@ -20,6 +20,8 @@ const Pomodoro = ({ handleOpenTask, displayColor, selectedTask, handleCreatePomo
   const cycles = usePomodoroStore((state) => state.cycles);
   const adjustCycles = usePomodoroStore((state) => state.adjustCycles);
 
+  const color = usePomodoroStore((state) => state.color);
+  const task = usePomodoroStore((state) => state.task);
   return (
     <BottomSheetView style={styles.contentContainer}>
       <View className="flex-row items-center">
@@ -29,13 +31,13 @@ const Pomodoro = ({ handleOpenTask, displayColor, selectedTask, handleCreatePomo
             className="bg-[#2C2C2C] flex flex-row justify-between items-center py-2 px-4 rounded-full"
             onPress={handleOpenTask}
           >
-            <FontAwesomeIcon icon={faTag} size={22} color={displayColor} />
-            <Text className="text-white text-2sm font-bold mx-4 ">{selectedTask}</Text>
+            <FontAwesomeIcon icon={faTag} size={22} color={color} />
+            <Text className="text-white text-2sm font-bold mx-4 ">{task}</Text>
             <FontAwesomeIcon icon={faCaretDown} size={22} color="#ffffff" />
           </TouchableOpacity>
         </View>
       </View>
-      <View className="w-full flex items-start gap-y-4 mt-24">
+      <View className="w-full flex items-start gap-y-4 mt-20">
         <CustomSlider
           label="Focus Duration"
           value={duration}

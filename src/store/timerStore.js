@@ -5,9 +5,9 @@ const useTimerStore = create((set) => ({
   adjustDuration: (newDuration) => set({ duration: newDuration }),
   mode: 'focus',
   setMode: (newMode) => set({ mode: newMode }),
-  task: '',
+  task: 'Select Task',
   setTask: (newTask) => set({ task: newTask }),
-  color: '',
+  color: 'red',
   setColor: (newColor) => set({ color: newColor }),
 }));
 
