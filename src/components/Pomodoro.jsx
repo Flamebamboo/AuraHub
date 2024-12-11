@@ -7,9 +7,12 @@ import { BottomSheetView } from '@gorhom/bottom-sheet';
 import Slider from '@react-native-community/slider';
 import { PomodoroContext } from '@/context/PomodoroContextProvider';
 
-const Pomodoro = ({ handleOpenTask, displayColor, selectedTask, handleCreatePomodoro }) => {
+export const Pomodoro = ({ handleOpenTask, displayColor, selectedTask, handleCreatePomodoro }) => {
   const { pomodoroData, setPomodoroData } = useContext(PomodoroContext);
 
+  // useEffect(() => {
+  //   console.log('PomodoroContextProvider initialized with data:', pomodoroData);
+  // }, [pomodoroData]);
   return (
     <BottomSheetView style={styles.contentContainer}>
       <View className="flex-row items-center">
@@ -28,11 +31,11 @@ const Pomodoro = ({ handleOpenTask, displayColor, selectedTask, handleCreatePomo
       <View className="w-full flex items-start mt-24">
         <CustomSlider
           label="Focus Duration"
-          value={pomodoroData.pomodoroDuration}
+          // value={pomodoroData.pomodoroDuration}
           minVal={5}
           maxVal={150}
           step={5}
-          onValueChange={(val) => setPomodoroData({ ...pomodoroData, pomodoroDuration: val })}
+          // onValueChange={(val) => setPomodoroData({ ...pomodoroData, pomodoroDuration: val })}
         />
       </View>
       <View className="pt-20 items-center w-full">
@@ -46,8 +49,6 @@ const Pomodoro = ({ handleOpenTask, displayColor, selectedTask, handleCreatePomo
     </BottomSheetView>
   );
 };
-
-export default Pomodoro;
 
 const styles = StyleSheet.create({
   contentContainer: {

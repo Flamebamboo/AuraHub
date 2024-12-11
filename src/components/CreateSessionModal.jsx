@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef, useContext } from 'react';
+import React, { useState, useCallback, useRef, useContext, useEffect } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Dimensions, Pressable } from 'react-native';
 import { BottomSheetModal, BottomSheetView, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import { Ionicons } from '@expo/vector-icons';
