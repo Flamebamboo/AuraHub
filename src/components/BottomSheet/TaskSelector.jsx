@@ -4,7 +4,7 @@ import { View, Button, TextInput, Text, StyleSheet, Modal, TouchableOpacity } fr
 import BottomSheet, { BottomSheetModal, BottomSheetFlatList, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import CustomBackdrop from './CustomBackdrop';
 
-import AddTaskModal from './AddTaskModal';
+import AddTaskModal from './Modals/AddTaskModal';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
@@ -15,7 +15,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faPenToSquare } from '@fortawesome/free-regular-svg-icons';
 import { faPlusSquare } from '@fortawesome/free-regular-svg-icons';
 import { faTag } from '@fortawesome/free-solid-svg-icons';
-import { CustomSvg } from './CustomSvg';
+import { CustomSvg } from '../CustomSvg';
 import index from '@/app';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
