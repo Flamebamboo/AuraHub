@@ -55,7 +55,8 @@
     "react-native-svg": "15.8.0",
     "react-native-url-polyfill": "^2.0.0",
     "react-native-web": "~0.19.13",
-    "tailwindcss": "^3.4.15"
+    "tailwindcss": "^3.4.15",
+    "zustand": "^5.0.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.16.0",

@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
 import { Picker } from '@react-native-picker/picker';
 import CustomBackdrop from './CustomBackdrop';
+import useTimerStore from '@/store/timerStore';
 
 const createArray = (length) => {
   const arr = [];
@@ -17,14 +18,16 @@ const createArray = (length) => {
 const AVAILABLE_HOURS = createArray(6);
 const AVAILABLE_MINUTES = createArray(60);
 
-const DurationModal = ({ durationSheetRef, onClose, onSelect, pickerHours = '0', pickerMinutes = '30' }) => {
+const DurationModal = ({ durationSheetRef, onClose }) => {
   const snapPoints = ['60%'];
+  const duration = useTimerStore((state) => state.duration);
+  const adjustDuration = useTimerStore((state) => state.adjustDuration);
 
-  const defaultHours = Math.floor(pickerHours / 3600);
-  const defaultMinutes = Math.floor((pickerHours % 3600) / 60);
+  const initialHours = duration > 0 ? Math.floor(duration / 3600).toString() : '0';
+  const initialMinutes = duration > 0 ? Math.floor((duration % 3600) / 60).toString() : '30';
 
-  const [selectedHours, setSelectedHours] = useState(defaultHours.toString());
-  const [selectedMinutes, setSelectedMinutes] = useState(defaultMinutes.toString());
+  const [selectedHours, setSelectedHours] = useState(initialHours);
+  const [selectedMinutes, setSelectedMinutes] = useState(initialMinutes);
 
   const handleSheetChanges = useCallback(
     (index) => {
@@ -37,14 +40,13 @@ const DurationModal = ({ durationSheetRef, onClose, onSelect, pickerHours = '0',
 
   useEffect(() => {
     durationSheetRef.current?.present();
-  }, []);
+    setSelectedHours(initialHours);
+    setSelectedMinutes(initialMinutes);
+  }, [initialHours, initialMinutes]);
 
   const handleConfirm = () => {
-    //executes when user clicks done
-    // hours formual from sec * 60 * 60
     const totalSeconds = parseInt(selectedHours, 10) * 60 * 60 + parseInt(selectedMinutes, 10) * 60;
-
-    onSelect?.(totalSeconds, selectedHours, selectedMinutes); //passing the total seconds to the parent component onSelect?. is a shorthand for onSelect && onSelect()
+    adjustDuration(totalSeconds);
     durationSheetRef.current?.dismiss();
   };
 
@@ -55,7 +57,7 @@ const DurationModal = ({ durationSheetRef, onClose, onSelect, pickerHours = '0',
           style={styles.picker}
           itemStyle={styles.pickerItem}
           selectedValue={selectedHours}
-          onValueChange={setSelectedHours}
+          onValueChange={(itemValue) => setSelectedHours(itemValue)}
           mode="dropdown"
         >
           {AVAILABLE_HOURS.map((value) => (
@@ -70,7 +72,7 @@ const DurationModal = ({ durationSheetRef, onClose, onSelect, pickerHours = '0',
           style={styles.picker}
           itemStyle={styles.pickerItem}
           selectedValue={selectedMinutes}
-          onValueChange={setSelectedMinutes}
+          onValueChange={(itemValue) => setSelectedMinutes(itemValue)}
           mode="dropdown"
         >
           {AVAILABLE_MINUTES.map((value) => (

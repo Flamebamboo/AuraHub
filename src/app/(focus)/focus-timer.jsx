@@ -2,17 +2,20 @@ import React, { useContext, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
-import { FocusContext } from '@/context/FocusContextProvider';
+
 import { useTimer } from '@/hooks/useTimer';
 import { TimerDisplay } from '@/components/TimerDisplay';
 import SplitButton from '@/components/SplitButton';
 import { TimerArt, TimerArtVariants } from '@/components/TimerArt';
 import { faTag, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-
+import useTimerStore from '@/store/timerStore';
 const FocusTimer = () => {
-  const { focusData } = useContext(FocusContext);
-  const { timeRemaining, isActive, start, pause, stop, getProgress } = useTimer(focusData.duration);
+  const duration = useTimerStore((state) => state.duration);
+
+  const color = useTimerStore((state) => state.color);
+  const task = useTimerStore((state) => state.task);
+  const { timeRemaining, isActive, start, pause, stop, getProgress } = useTimer(duration);
 
   const handleStop = () => {
     stop();
@@ -28,9 +31,9 @@ const FocusTimer = () => {
     <SafeAreaView style={styles.container}>
       <View style={styles.contentContainer}>
         <View style={styles.taskContainer}>
-          <FontAwesomeIcon icon={faTag} size={22} color={focusData.taskColor} />
-          <Text style={styles.task}>{focusData.selectedTask}</Text>
-          <FontAwesomeIcon icon={faCaretDown} size={22} color={focusData.taskColor} />
+          <FontAwesomeIcon icon={faTag} size={22} color={color} />
+          <Text style={styles.task}>{task}</Text>
+          <FontAwesomeIcon icon={faCaretDown} size={22} color={color} />
         </View>
         <TimerArt variant={TimerArtVariants.COFFEE_CUP} progress={getProgress()} />
         <TimerDisplay time={timeRemaining} />
