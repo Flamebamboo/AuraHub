@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import { BottomSheetView } from '@gorhom/bottom-sheet';
-import { Ionicons } from '@expo/vector-icons';
+
 import SessionButtons from './SessionButtons';
 
 import { faTag, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-
+import useTimerStore from '@/store/timerStore';
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 const formatTime = (duration) => {
@@ -26,14 +26,12 @@ const formatTime = (duration) => {
   return `${minutes}m`;
 };
 
-const TimerBlock = ({
-  handleOpenTask,
-  selectedTask,
-  displayColor,
-  handleOpenDuration,
-  handleCreateSession,
-  duration,
-}) => {
+const TimerBlock = ({ handleOpenTask, selectedTask, displayColor, handleOpenDuration, handleCreateSession }) => {
+  const duration = useTimerStore((state) => state.duration);
+
+  const color = useTimerStore((state) => state.color);
+  const task = useTimerStore((state) => state.task);
+
   return (
     <BottomSheetView style={styles.contentContainer}>
       <View className="flex-row items-center">
@@ -43,8 +41,8 @@ const TimerBlock = ({
             className="bg-[#2C2C2C] flex flex-row justify-between items-center py-2 px-4 rounded-full"
             onPress={handleOpenTask}
           >
-            <FontAwesomeIcon icon={faTag} size={22} color={displayColor} />
-            <Text className="text-white text-2sm font-bold mx-4 ">{selectedTask}</Text>
+            <FontAwesomeIcon icon={faTag} size={22} color={color} />
+            <Text className="text-white text-2sm font-bold mx-4 ">{task}</Text>
             <FontAwesomeIcon icon={faCaretDown} size={22} color="#ffffff" />
           </TouchableOpacity>
         </View>
@@ -81,10 +79,6 @@ const TimerBlock = ({
 export default TimerBlock;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-
   modal: {
     marginHorizontal: 0,
     width: SCREEN_WIDTH,
