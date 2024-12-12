@@ -11,6 +11,17 @@ const Pomodoro = ({ handleOpenTask, displayColor, selectedTask, handleCreatePomo
   const duration = usePomodoroStore((state) => state.duration);
   const adjustDuration = usePomodoroStore((state) => state.adjustDuration);
 
+  const shortRestDuration = usePomodoroStore((state) => state.shortRest);
+  const adjustShortRest = usePomodoroStore((state) => state.adjustShortRest);
+
+  const longRestDuration = usePomodoroStore((state) => state.longRest);
+  const adjustLongRest = usePomodoroStore((state) => state.adjustLongRest);
+
+  const cycles = usePomodoroStore((state) => state.cycles);
+  const adjustCycles = usePomodoroStore((state) => state.adjustCycles);
+
+  const color = usePomodoroStore((state) => state.color);
+  const task = usePomodoroStore((state) => state.task);
   return (
     <BottomSheetView style={styles.contentContainer}>
       <View className="flex-row items-center">
@@ -20,20 +31,37 @@ const Pomodoro = ({ handleOpenTask, displayColor, selectedTask, handleCreatePomo
             className="bg-[#2C2C2C] flex flex-row justify-between items-center py-2 px-4 rounded-full"
             onPress={handleOpenTask}
           >
-            <FontAwesomeIcon icon={faTag} size={22} color={displayColor} />
-            <Text className="text-white text-2sm font-bold mx-4 ">{selectedTask}</Text>
+            <FontAwesomeIcon icon={faTag} size={22} color={color} />
+            <Text className="text-white text-2sm font-bold mx-4 ">{task}</Text>
             <FontAwesomeIcon icon={faCaretDown} size={22} color="#ffffff" />
           </TouchableOpacity>
         </View>
       </View>
-      <View className="w-full flex items-start mt-24">
+      <View className="w-full flex items-start gap-y-4 mt-20">
         <CustomSlider
           label="Focus Duration"
           value={duration}
-          minVal={5}
-          maxVal={150}
+          minVal={15}
+          maxVal={60}
           step={5}
           onValueChange={adjustDuration}
+        />
+        <CustomSlider
+          label="Short Rest Duration"
+          value={shortRestDuration}
+          minVal={5}
+          maxVal={15}
+          step={5}
+          onValueChange={adjustShortRest}
+        />
+        <CustomSlider label="Cycles" value={cycles} minVal={1} maxVal={10} step={1} onValueChange={adjustCycles} />
+        <CustomSlider
+          label="Long Rest Duration"
+          value={longRestDuration}
+          minVal={10}
+          maxVal={30}
+          step={5}
+          onValueChange={adjustLongRest}
         />
       </View>
       <View className="pt-20 items-center w-full">

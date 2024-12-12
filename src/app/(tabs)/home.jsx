@@ -13,7 +13,7 @@ import { useState } from 'react';
 
 import { useCallback } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { CreateSessionModal } from '@/components/CreateSessionModal';
+import { CreateSessionModal } from '@/components/BottomSheet/CreateSessionModal';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 
 const Home = () => {
