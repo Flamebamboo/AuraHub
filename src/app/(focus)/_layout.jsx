@@ -9,6 +9,7 @@ const RootLayout = () => {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <Stack>
         <Stack.Screen name="focus-timer" options={{ headerShown: false }} />
+        <Stack.Screen name="pomodoro-timer" options={{ headerShown: false }} />
         <Stack.Screen name="index" options={{ headerShown: false }} />
       </Stack>
       <StatusBar backgroundColor="#161622" style="light" />

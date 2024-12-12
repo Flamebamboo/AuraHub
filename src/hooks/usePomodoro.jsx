@@ -53,5 +53,61 @@ export const usePomodoro = (initialDuration, cycles, shortRest, longRest) => {
     }
   }, [phase, initialDuration, shortRest, longRest]);
 
-  const handlePhaseCompletion = useCallback(() => {});
+  const handlePhaseCompletion = useCallback(() => {
+    if (phase === 'work') {
+      setCurrentCycle((prev) => prev + 1);
+      if (currentCycle + 1 >= cycles) {
+        setPhase('longRest');
+      } else {
+        setPhase('shortRest');
+      }
+    } else {
+      setPhase('work');
+    }
+  }, [phase, currentCycle, cycles]);
+
+  const start = useCallback(() => {
+    setIsActive(true);
+  }, []);
+
+  const pause = useCallback(() => {
+    setIsActive(false);
+  }, []);
+
+  const reset = useCallback(() => {
+    setIsActive(false);
+    setCurrentCycle(0);
+    setPhase('work');
+    setTimeRemaining(initialDuration);
+  }, [initialDuration]);
+
+  useEffect(() => {
+    setTimeRemaining(getCurrentDuration());
+  }, [phase, getCurrentDuration]);
+
+  useEffect(() => {
+    let interval;
+    if (isActive && timeRemaining > 0) {
+      interval = setInterval(() => {
+        setTimeRemaining((time) => {
+          if (time <= 1) {
+            handlePhaseCompletion();
+            return getCurrentDuration();
+          }
+          return time - 1;
+        });
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [isActive, timeRemaining, getCurrentDuration, handlePhaseCompletion]);
+
+  return {
+    currentCycle,
+    phase,
+    timeRemaining,
+    isActive,
+    start,
+    pause,
+    reset,
+  };
 };

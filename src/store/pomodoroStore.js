@@ -1,17 +1,17 @@
 import { create } from 'zustand';
 
 const usePomodoroStore = create((set) => ({
-  duration: 0,
+  duration: 25,
   adjustDuration: (newDuration) => set({ duration: newDuration }),
-  shortRest: 0,
+  shortRest: 5,
   adjustShortRest: (newShortRest) => set({ shortRest: newShortRest }),
-  longRest: 0,
+  longRest: 20,
   adjustLongRest: (newLongRest) => set({ longRest: newLongRest }),
-  cycles: 0,
+  cycles: 4,
   adjustCycles: (newCycles) => set({ cycles: newCycles }),
-  task: '',
+  task: 'Select Task',
   setTask: (newTask) => set({ task: newTask }),
-  color: '',
+  color: 'red',
   setColor: (newColor) => set({ color: newColor }),
 }));
 

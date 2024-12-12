@@ -2,8 +2,8 @@ import React, { useState, useCallback, useRef, useContext, useEffect } from 'rea
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Dimensions, Pressable } from 'react-native';
 import { BottomSheetModal, BottomSheetView, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import { Ionicons } from '@expo/vector-icons';
-import SessionButtons from './SessionButtons';
-import DurationModal from './DurationModal';
+
+import DurationModal from '@/components/BottomSheet/DurationModal';
 
 import { router } from 'expo-router';
 import { faTag, faCaretDown } from '@fortawesome/free-solid-svg-icons';
@@ -15,7 +15,7 @@ import Animated, { FadeIn, FadeInDown, FadeInUp, FadeOut } from 'react-native-re
 import { BlurView } from '@react-native-community/blur';
 import SegmentadControl from '@/components/SegmentadControl';
 
-import TimerBlock from '@/components/TimerBlock';
+import TimerBlock from '@/components/Timer/TimerBlock';
 import Pomodoro from '@/components/Timer/Pomodoro';
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
