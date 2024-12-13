@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 
 const useTimerStore = create((set) => ({
-  duration: 0,
+  duration: 1800,
   adjustDuration: (newDuration) => set({ duration: newDuration }),
   mode: 'focus',
   setMode: (newMode) => set({ mode: newMode }),
