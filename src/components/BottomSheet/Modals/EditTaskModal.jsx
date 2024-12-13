@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Modal, View, TextInput, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faTag } from '@fortawesome/free-solid-svg-icons';
-const AddTaskModal = ({ visible, onClose, onAdd, labels }) => {
-  const [taskName, setTaskName] = useState('');
+const EditTaskModal = ({ visible, onClose, onEdit, labels, task }) => {
+  const [taskName, setTaskName] = useState(task ? task.name : '');
   const [error, setError] = useState('');
-  const [selectedColor, setSelectedColor] = useState('#7C3FFF'); // Default color
+  const [selectedColor, setSelectedColor] = useState(task ? task.color : '#7C3FFF');
   const colors = [
     '#7C3FFF',
     '#FF5452',
@@ -23,16 +23,24 @@ const AddTaskModal = ({ visible, onClose, onAdd, labels }) => {
     /*
     Dataflow: 
 
-    1) User enters task name and selects color in here
-    2) creates an object with both properties: {name: "Task Name", color: "#selected-color"}
-    3) This object is passed to the parent via the onAdd prop
-    4) The parent's handleAddNewTask function receives this object and adds it to the labels array
+    1) User clicks the current task in TaskList this will open the EditTaskModal
+    2) User can edit the task name and color in here
+    3) Retrieve the current task name and color from the parent component
+    4) renders the current task name and color in the input and color selector
+    5) User can edit the task name and color
 
     
     
     
     */
   }
+
+  useEffect(() => {
+    if (task) {
+      setTaskName(task.name);
+      setSelectedColor(task.color);
+    }
+  }, [task]);
 
   const handleSubmit = () => {
     const trimmingTask = taskName.trim();
@@ -41,7 +49,8 @@ const AddTaskModal = ({ visible, onClose, onAdd, labels }) => {
       return;
     }
 
-    if (labels.some((label) => label.name.toLowerCase() === trimmingTask.toLowerCase())) {
+    if (labels.some((label) => label.name.toLowerCase() === trimmingTask.toLowerCase() && label.name !== task.name)) {
+      //exclude the current edit task
       setError('Task already exists');
       return;
     }
@@ -50,7 +59,7 @@ const AddTaskModal = ({ visible, onClose, onAdd, labels }) => {
       color: selectedColor, // Using the selectedColor state we added
     };
 
-    onAdd(newTask);
+    onEdit(newTask);
     setTaskName('');
     setSelectedColor('#7C3FFF');
     setError('');
@@ -66,7 +75,7 @@ const AddTaskModal = ({ visible, onClose, onAdd, labels }) => {
     <Modal transparent visible={visible} animationType="fade" onRequestClose={onClose}>
       <View style={styles.modalOverlay}>
         <View style={styles.modalContainer}>
-          <Text style={styles.modalTitle}>Add New Task</Text>
+          <Text style={styles.modalTitle}>Edit New Task</Text>
 
           <View style={styles.inputContainer}>
             <FontAwesomeIcon icon={faTag} size={26} color={selectedColor} />
@@ -82,6 +91,7 @@ const AddTaskModal = ({ visible, onClose, onAdd, labels }) => {
             />
           </View>
           {error && <Text style={styles.errorText}>{error}</Text>}
+
           <View style={styles.colorSelector}>
             <Text style={styles.colorTitle}>Select Color</Text>
             <View style={styles.colorGrid}>
@@ -105,7 +115,7 @@ const AddTaskModal = ({ visible, onClose, onAdd, labels }) => {
             </TouchableOpacity>
 
             <TouchableOpacity style={[styles.button, styles.addButton]} onPress={handleSubmit}>
-              <Text style={styles.buttonText}>Add Task</Text>
+              <Text style={styles.buttonText}>Save Task</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -114,7 +124,7 @@ const AddTaskModal = ({ visible, onClose, onAdd, labels }) => {
   );
 };
 
-export default AddTaskModal;
+export default EditTaskModal;
 
 const styles = StyleSheet.create({
   modalOverlay: {
