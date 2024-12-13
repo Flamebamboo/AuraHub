@@ -1,24 +1,27 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { View, Button, TextInput, Text, StyleSheet, Modal, TouchableOpacity } from 'react-native';
 import BottomSheet, { BottomSheetModal, BottomSheetFlatList, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import CustomBackdrop from './CustomBackdrop';
 
 import AddTaskModal from './Modals/AddTaskModal';
+import EditTaskModal from './Modals/EditTaskModal';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
-import Animated, { FadeIn, FadeInDown, FadeInUp, FadeOut } from 'react-native-reanimated';
+import Animated, { FadeInDown, FadeOut } from 'react-native-reanimated';
+
 import { BlurView } from '@react-native-community/blur';
 //temp custom import icon
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faPenToSquare } from '@fortawesome/free-regular-svg-icons';
 import { faPlusSquare } from '@fortawesome/free-regular-svg-icons';
-import { faTag } from '@fortawesome/free-solid-svg-icons';
+import { faTag, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { CustomSvg } from '../CustomSvg';
 import index from '@/app';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import ReanimatedSwipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
 import usePomodoroStore from '@/store/pomodoroStore';
 import useTimerStore from '@/store/timerStore';
 import { Dimensions } from 'react-native';
@@ -29,8 +32,9 @@ const TaskSelector = ({ taskSelectorRef, onClose }) => {
   const STORAGE_KEY = '@tasks_key'; //key for async storage
   const snapPoints = useMemo(() => ['100%'], []); // 90% of screen height
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
-  const [editMode, setEditMode] = useState(false);
+  const [isEditModalVisible, setIsEditModalVisible] = useState(false);
 
+  const [taskToEdit, setTaskToEdit] = useState(null);
   const task = useTimerStore((state) => state.task);
   const setTask = useTimerStore((state) => state.setTask);
   const color = useTimerStore((state) => state.color);
@@ -40,6 +44,8 @@ const TaskSelector = ({ taskSelectorRef, onClose }) => {
   const setPomodoroTask = usePomodoroStore((state) => state.setTask);
   const pomodoroColor = usePomodoroStore((state) => state.color);
   const setPomodoroColor = usePomodoroStore((state) => state.setColor);
+
+  const swipeableRef = useRef(null);
 
   // const deleteTaskKeyStorage = async () => {
   //   try {
@@ -133,33 +139,22 @@ const TaskSelector = ({ taskSelectorRef, onClose }) => {
     await saveTasks(newTasks);
   };
 
+  const handleEditTask = async (taskToEdit, taskObject) => {
+    const newTasks = labels.map((task) => (task.name === taskToEdit ? taskObject : task));
+    setLabels(newTasks);
+    await saveTasks(newTasks);
+  };
+
   const handleDeleteTask = async (taskToDelete) => {
     const newTasks = labels.filter((task) => task !== taskToDelete);
     setLabels(newTasks);
     await saveTasks(newTasks);
   };
 
-  const handleSaveChanges = () => {
-    setEditMode(false);
-  };
-
   const renderBackdrop = useCallback(
     (props) => <BottomSheetBackdrop {...props} disappearsOnIndex={-1} appearsOnIndex={0} />,
     []
   );
-
-  const renderEditItem = useCallback(({ item }) => {
-    return (
-      <TouchableOpacity style={styles.itemContainer} onPress={() => handleDeleteTask(item)}>
-        <View className="flex-row px-2 justify-between items-center">
-          <View className="flex-row items-center gap-5">
-            <FontAwesomeIcon icon={faTag} size={26} color={item.color} />
-            <Text className="text-white text-xl font-semibold">{item.name}</Text>
-          </View>
-        </View>
-      </TouchableOpacity>
-    );
-  });
 
   const [currentSelectedTask, setCurrentSelectedTask] = useState(null);
 
@@ -182,7 +177,13 @@ const TaskSelector = ({ taskSelectorRef, onClose }) => {
       };
 
       return (
-        <TouchableOpacity style={styles.itemContainer} onPress={toggleCheckbox}>
+        <TouchableOpacity
+          style={styles.itemContainer}
+          onPress={() => {
+            setIsEditModalVisible(true);
+            setTaskToEdit(item);
+          }}
+        >
           <View className="flex-row px-2 justify-between items-center">
             <View className="flex-row items-center gap-5">
               <FontAwesomeIcon icon={faTag} size={26} color={item.color} />
@@ -223,78 +224,62 @@ const TaskSelector = ({ taskSelectorRef, onClose }) => {
         backgroundStyle={styles.modalBackground}
         backdropComponent={(props) => <CustomBackdrop {...props} backgroundColor="#9482DA" opacity={1} />}
       >
-        {!editMode ? (
-          <View style={styles.container}>
-            <View style={styles.titleContainer}>
-              <Text style={styles.title}>Select Task</Text>
-              <View className="flex-row gap-6">
-                <TouchableOpacity onPress={() => setIsAddModalVisible(true)}>
-                  <FontAwesomeIcon icon={faPlusSquare} size={28} color="white" />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => setEditMode(true)}>
-                  <FontAwesomeIcon icon={faPenToSquare} size={26} color="white" />
-                </TouchableOpacity>
-              </View>
-            </View>
-            <AddTaskModal
-              visible={isAddModalVisible}
-              onClose={() => setIsAddModalVisible(false)}
-              onAdd={handleAddNewTask}
-              labels={labels}
-              //new prop to edit existing task object
-            />
-            <BottomSheetFlatList
-              data={labels} //data to be rendered in this case task data
-              keyExtractor={(item) => item.name}
-              renderItem={renderItem}
-              contentContainerStyle={styles.listContent}
-            />
-            {currentSelectedTask && (
-              <Animated.View
-                className="absolute bottom-0 left-0 right-0 z-50"
-                entering={FadeInDown.duration(200)}
-                exiting={FadeOut.duration(300)}
-              >
-                <BlurView
-                  style={{ paddingTop: 30 }}
-                  blurType="dark"
-                  blurAmount={0.5}
-                  reducedTransparencyFallbackColor="black"
-                >
-                  <View className="pb-8 items-center justify-center ">
-                    <TouchableOpacity
-                      className="w-1/2 px-4 py-6 bg-white rounded-2xl shadow-lg flex items-center justify-center"
-                      onPress={onClose}
-                    >
-                      <Text className="text-black font-semibold text-lg">Done</Text>
-                    </TouchableOpacity>
-                  </View>
-                </BlurView>
-              </Animated.View>
-            )}
-          </View>
-        ) : (
-          <View style={styles.container}>
-            <Text className="text-white">
-              same thing but modified for edit like rearrage, delete task, edit/rename task
-            </Text>
-            <BottomSheetFlatList
-              data={labels} //data to be rendered in this case task data
-              keyExtractor={(item) => item.name}
-              renderItem={renderEditItem}
-              contentContainerStyle={styles.listContent}
-            />
-
-            <View className="absolute bottom-28 left-0 right-0 items-center border-2 border-white">
-              <TouchableOpacity
-                className="w-1/2 px-4 py-6 bg-white rounded-2xl shadow-lg flex items-center justify-center"
-                onPress={handleSaveChanges}
-              >
-                <Text className="text-black font-semibold text-lg">Save Changes</Text>
+        <View style={styles.container}>
+          <View style={styles.titleContainer}>
+            <Text style={styles.title}>Select Task</Text>
+            <View className="flex-row gap-6">
+              <TouchableOpacity onPress={() => setIsAddModalVisible(true)}>
+                <FontAwesomeIcon icon={faPlusSquare} size={28} color="white" />
               </TouchableOpacity>
             </View>
           </View>
-        )}
+          <AddTaskModal
+            visible={isAddModalVisible}
+            onClose={() => setIsAddModalVisible(false)}
+            onAdd={handleAddNewTask}
+            labels={labels}
+            //new prop to edit existing task object
+          />
+
+          <EditTaskModal
+            visible={isEditModalVisible}
+            onClose={() => setIsEditModalVisible(false)}
+            onEdit={(updatedTask) => handleEditTask(taskToEdit.name, updatedTask)} //children pass the updated task object and the task name to be edited
+            task={taskToEdit}
+            labels={labels}
+          />
+
+          <BottomSheetFlatList
+            data={labels} //data to be rendered in this case task data
+            keyExtractor={(item) => item.name}
+            renderItem={renderItem}
+            contentContainerStyle={[styles.listContent, { paddingBottom: labels.length > 5 ? 200 : 0 }]}
+          />
+
+          {currentSelectedTask && (
+            <Animated.View
+              className="absolute bottom-0 left-0 right-0 z-50"
+              entering={FadeInDown.duration(200)}
+              exiting={FadeOut.duration(300)}
+            >
+              <BlurView
+                style={{ paddingTop: 30 }}
+                blurType="dark"
+                blurAmount={0.5}
+                reducedTransparencyFallbackColor="black"
+              >
+                <View className="pb-8 items-center justify-center ">
+                  <TouchableOpacity
+                    className="w-1/2 px-4 py-6 bg-white rounded-2xl shadow-lg flex items-center justify-center"
+                    onPress={onClose}
+                  >
+                    <Text className="text-black font-semibold text-lg">Done</Text>
+                  </TouchableOpacity>
+                </View>
+              </BlurView>
+            </Animated.View>
+          )}
+        </View>
       </BottomSheetModal>
     </SafeAreaView>
   );
@@ -302,8 +287,15 @@ const TaskSelector = ({ taskSelectorRef, onClose }) => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 24,
     flex: 1,
+  },
+
+  itemContainer: {
+    padding: 20,
+    marginHorizontal: 16,
+    marginVertical: 8,
+    backgroundColor: '#2C2C2C',
+    borderRadius: 12,
   },
   addNewButton: {
     backgroundColor: '#9482DA',
@@ -337,12 +329,11 @@ const styles = StyleSheet.create({
   },
   listContent: {
     paddingTop: 20,
-    paddingBottom: 200, // Generous padding to ensure content is visible
     flexGrow: 1,
     height: SCREEN_HEIGHT,
   },
   itemContainer: {
-    padding: 16,
+    padding: 20,
     marginHorizontal: 16,
     marginVertical: 8,
     backgroundColor: '#2C2C2C',
