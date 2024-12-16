@@ -26,7 +26,7 @@ const index = () => {
                 variant="outline"
                 fontSize={20}
                 leftIcon="sign-in"
-                onPress={() => router.replace('/(tabs)/home')}
+                onPress={() => router.replace('/(focus)/focus-timer')}
               />
             </View>
             <CustomButton
