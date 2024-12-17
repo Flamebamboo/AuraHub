@@ -15,7 +15,7 @@ export const designItems = [
     name: 'Coffee Cup',
     description: 'A cup of coffee',
     image: require('../../assets/images/square1.png'),
-    price: 10,
+    price: '$2',
   },
   {
     id: 2,
@@ -23,7 +23,7 @@ export const designItems = [
     name: 'Square',
     description: 'A square shape',
     image: require('../../assets/images/square.png'),
-    price: 15,
+    price: '$2',
   },
   {
     id: 3,
@@ -31,7 +31,7 @@ export const designItems = [
     name: 'Tea Cup',
     description: 'A cup of tea',
     image: require('../../assets/images/square1.png'),
-    price: 12,
+    price: '$2',
   },
   {
     id: 4,
@@ -39,7 +39,7 @@ export const designItems = [
     name: 'Circle',
     description: 'A circular shape',
     image: require('../../assets/images/square.png'),
-    price: 20,
+    price: '$2',
   },
   {
     id: 5,
@@ -47,7 +47,7 @@ export const designItems = [
     name: 'Mug',
     description: 'A coffee mug',
     image: require('../../assets/images/square1.png'),
-    price: 18,
+    price: '$2',
   },
   {
     id: 6,
@@ -55,7 +55,7 @@ export const designItems = [
     name: 'Rectangle',
     description: 'A rectangular shape',
     image: require('../../assets/images/square.png'),
-    price: 25,
+    price: '$2',
   },
 ];
 
