@@ -2,10 +2,11 @@ import { View, Text, FlatList, Image, Dimensions, Touchable, TouchableOpacity } 
 import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { getFocusItems } from '@/lib/focusItem';
-import { faUnlock, faLock } from '@fortawesome/free-solid-svg-icons';
+import { faUnlock, faLock, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import useTimerVariant from '@/store/timerVariantStore';
 import { designItems } from '@/store/timerVariantStore';
+import { router } from 'expo-router';
 /*
   The plan is to store all the design data in the appwrite database and then fetch it from focusItem.js
   and then display it here. The design data will be stored in the database as an array of objects
@@ -29,7 +30,7 @@ const focusDesigns = () => {
     const isOwned = ownedItems.includes(item.id); //"includes" check if the item is in the ownedItems array
     const isEquipped = equippedItem === item.id;
     return (
-      <TouchableOpacity onPress={() => (isOwned ? setVariant(item.id) : purchaseItem(item.id))} className="m-2">
+      <TouchableOpacity onPress={() => (isOwned ? setVariant(item.variant) : purchaseItem(item.id))} className="m-2">
         <View className="flex items-center justify-center relative" style={{ width: itemWidth }}>
           <Image
             className="rounded-xl"
@@ -56,7 +57,12 @@ const focusDesigns = () => {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-primary-custom-black h-full items-center justify-center">
+    <SafeAreaView className="flex-1 bg-primary-custom-black relative">
+      <Text className="text-2xl text-white text-center mt-5">Designs</Text>
+      <TouchableOpacity onPress={() => router.back()}>
+        <FontAwesomeIcon icon={faArrowLeft} size={24} color="white" />
+      </TouchableOpacity>
+
       <FlatList
         data={designItems}
         renderItem={renderDesigns}

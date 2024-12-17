@@ -6,19 +6,19 @@ import { router } from 'expo-router';
 import { useTimer } from '@/hooks/useTimer';
 import { TimerDisplay } from '@/components/Timer/TimerDisplay';
 import SplitButton from '@/components/SplitButton';
-import { TimerArt, TimerArtVariants } from '@/components/TimerArt';
+import { TimerArt } from '@/components/TimerArt/TimerArt';
 import { faTag, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import useTimerStore from '@/store/timerStore';
-
 import useTimerVariant from '@/store/timerVariantStore';
+
 const FocusTimer = () => {
   const duration = useTimerStore((state) => state.duration);
 
   const color = useTimerStore((state) => state.color);
   const task = useTimerStore((state) => state.task);
 
-  const timerVariant = useTimerVariant((state) => state.variant);
+  const currentVariant = useTimerVariant((state) => state.variant);
   const { timeRemaining, isActive, start, pause, stop, getProgress } = useTimer(duration);
 
   const handleStop = () => {
@@ -39,8 +39,8 @@ const FocusTimer = () => {
           <Text style={styles.task}>{task}</Text>
           <FontAwesomeIcon icon={faCaretDown} size={22} color={color} />
         </View>
-        <TouchableOpacity onPress={() => router.replace('/(shop)/focus-design')}>
-          <TimerArt variant={timerVariant} progress={getProgress()} />
+        <TouchableOpacity onPress={() => router.push('/(shop)/focus-design')}>
+          <TimerArt variant={currentVariant} progress={getProgress()} />
         </TouchableOpacity>
 
         <TimerDisplay time={timeRemaining} />
