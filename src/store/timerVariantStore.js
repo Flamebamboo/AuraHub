@@ -3,9 +3,9 @@ import { create } from 'zustand';
 const useTimerVariant = create((set) => ({
   items: designItems,
   ownedItems: [1],
-  equipedItem: '1',
+  variant: 'COFFEE_CUP',
   purchaseItem: (id) => set((state) => ({ ownedItems: [...state.ownedItems, id] })),
-  setVariant: (id) => set({ variant: id }), // changeable from (shop) focus design
+  setVariant: (name) => set({ variant: name }), // changeable from (shop) focus design
 }));
 
 export const designItems = [
@@ -53,6 +53,22 @@ export const designItems = [
     id: 6,
     variant: 'RECTANGLE',
     name: 'Rectangle',
+    description: 'A rectangular shape',
+    image: require('../../assets/images/square.png'),
+    price: '$2',
+  },
+  {
+    id: 7,
+    variant: 'Chips',
+    name: 'Chips',
+    description: 'A coffee mug',
+    image: require('../../assets/images/square1.png'),
+    price: '$2',
+  },
+  {
+    id: 8,
+    variant: 'Water',
+    name: 'Water',
     description: 'A rectangular shape',
     image: require('../../assets/images/square.png'),
     price: '$2',

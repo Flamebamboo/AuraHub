@@ -4,6 +4,10 @@ import { View, StyleSheet } from 'react-native';
 import CoffeeCupSvg from './variants/CoffeeCupSvg';
 import Square from './variants/Square';
 import Square2 from './variants/Square2';
+import useTimerVariant from '@/store/timerVariantStore';
+
+const { setVariant } = useTimerVariant();
+
 // Future imports for other timer arts
 // import StudyLampSvg from './variants/StudyLampSvg';
 // import CodeEditorSvg from './variants/CodeEditorSvg';
@@ -15,7 +19,7 @@ const TimerArtVariants = {
   // CODE_EDITOR: 'CODE_EDITOR',
 };
 
-const TimerArt = ({ variant = TimerArtVariants.COFFEE_CUP, progress, style }) => {
+const TimerArt = ({ variant = 'COFFEE_CUP', progress, style }) => {
   const renderArt = () => {
     switch (variant) {
       case TimerArtVariants.COFFEE_CUP:
