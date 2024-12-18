@@ -4,9 +4,6 @@ import { View, StyleSheet } from 'react-native';
 import CoffeeCupSvg from './variants/CoffeeCupSvg';
 import Square from './variants/Square';
 import Square2 from './variants/Square2';
-import useTimerVariant from '@/store/timerVariantStore';
-
-const { setVariant } = useTimerVariant();
 
 // Future imports for other timer arts
 // import StudyLampSvg from './variants/StudyLampSvg';
