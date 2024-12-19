@@ -1,20 +1,24 @@
 import React, { useContext, useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 
 import { useTimer } from '@/hooks/useTimer';
 import { TimerDisplay } from '@/components/Timer/TimerDisplay';
 import SplitButton from '@/components/SplitButton';
-import { TimerArt, TimerArtVariants } from '@/components/TimerArt';
+import { TimerArt } from '@/components/TimerArt/TimerArt';
 import { faTag, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import useTimerStore from '@/store/timerStore';
+import useTimerVariant from '@/store/timerVariantStore';
+
 const FocusTimer = () => {
   const duration = useTimerStore((state) => state.duration);
 
   const color = useTimerStore((state) => state.color);
   const task = useTimerStore((state) => state.task);
+
+  const currentVariant = useTimerVariant((state) => state.variant);
   const { timeRemaining, isActive, start, pause, stop, getProgress } = useTimer(duration);
 
   const handleStop = () => {
@@ -35,7 +39,10 @@ const FocusTimer = () => {
           <Text style={styles.task}>{task}</Text>
           <FontAwesomeIcon icon={faCaretDown} size={22} color={color} />
         </View>
-        <TimerArt variant={TimerArtVariants.COFFEE_CUP} progress={getProgress()} />
+        <TouchableOpacity onPress={() => router.push('/(shop)/focus-design')}>
+          <TimerArt variant={currentVariant} progress={getProgress()} />
+        </TouchableOpacity>
+
         <TimerDisplay time={timeRemaining} />
         <SplitButton
           splitted={!isActive}
