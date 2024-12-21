@@ -1,5 +1,5 @@
 import { View, Text, FlatList, Image, Dimensions, Touchable, TouchableOpacity } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { getFocusItems } from '@/lib/focusItem';
 import { faUnlock, faLock, faArrowLeft, faCheck } from '@fortawesome/free-solid-svg-icons';
@@ -25,7 +25,11 @@ import { router } from 'expo-router';
 const focusDesigns = () => {
   const { width } = Dimensions.get('window');
   const itemWidth = width / 2 - 20;
-  const { ownedItems, variant, purchaseItem, setVariant } = useTimerVariant();
+  const { ownedItems, variant, purchaseItem, loadItems, setVariant } = useTimerVariant();
+
+  useEffect(() => {
+    loadItems();
+  }, [loadItems]);
 
   const renderDesigns = ({ item }) => {
     const isOwned = ownedItems.includes(item.id); //"includes" check if the item is in the ownedItems array

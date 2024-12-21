@@ -161,4 +161,21 @@ export async function saveUserDesigns(designId) {
   }
 }
 
+export async function loadUserDesigns() {
+  const currentAccount = await account.get();
+  try {
+    // Query the database to find the document associated with the current user's ID
+    const response = await databases.listDocuments(appwriteConfig.databaseId, appwriteConfig.collectionId, [
+      Query.equal('userId', currentAccount.$id), //this statement retrives the document and checks if the userId field in the database matches the current account id
+    ]);
+
+    const userDocument = response.documents[0];
+
+    // update the document with the new id
+    return JSON.parse(userDocument.designId);
+  } catch (error) {
+    console.log('error', error);
+  }
+}
+
 export { client, account, databases };

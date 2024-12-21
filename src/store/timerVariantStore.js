@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-import { saveUserDesigns } from '@/lib/appwrite';
+import { saveUserDesigns, loadUserDesigns } from '@/lib/appwrite';
 
 const useTimerVariant = create((set) => ({
   items: designItems,
@@ -13,6 +13,15 @@ const useTimerVariant = create((set) => ({
         saveUserDesigns(newOwnedItems);
         return { ownedItems: newOwnedItems };
       });
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  loadItems: async () => {
+    //fetch the user's owned items from the database
+    try {
+      const userItems = await loadUserDesigns();
+      set({ ownedItems: userItems });
     } catch (error) {
       console.log(error);
     }
