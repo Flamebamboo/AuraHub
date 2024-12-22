@@ -1,0 +1,7 @@
+[
+  {
+    "name": "distilgpt2",
+    "model": "Xenova/distilgpt2_onnx-quantized",
+    "onnx_path": "decoder_model.onnx"
+  }
+]

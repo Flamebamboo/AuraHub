@@ -14,7 +14,7 @@ config.transformer = {
 
 config.resolver = {
   ...resolver,
-  assetExts: resolver.assetExts.filter((ext) => ext !== 'svg'),
+  assetExts: [...resolver.assetExts.filter((ext) => ext !== 'svg'), 'onnx', 'bin', 'json'],
   sourceExts: [...resolver.sourceExts, 'svg'],
   alias: {
     '@': path.resolve(__dirname, 'src'),
