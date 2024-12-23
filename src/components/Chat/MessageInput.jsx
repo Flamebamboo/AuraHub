@@ -1,10 +1,7 @@
-import { View, Text, TextInput } from 'react-native';
 import React from 'react';
+import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 
-const MessageInput = (setText) => {
-  const handleChangeText = (text) => {
-    setText(text);
-  };
+const MessageInput = ({ input, setInput, handleSendInput }) => {
   return (
     <View className="flex w-full items-center justify-center">
       <View className="bg-secondary-custom-black w-[90%] rounded-2xl">
@@ -13,12 +10,16 @@ const MessageInput = (setText) => {
             className="flex-1 bg-secondary-custom-black text-white px-4 py-2 mr-2 text-2xl"
             placeholder="Type a message..."
             placeholderTextColor="#666"
-            onChangeText={handleChangeText}
+            onChangeText={setInput}
+            value={input}
             multiline
             maxLength={500}
             autoCapitalize="none"
             autoCorrect={true}
           />
+          <TouchableOpacity onPress={handleSendInput}>
+            <Text>Send</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </View>
