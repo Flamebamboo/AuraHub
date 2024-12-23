@@ -20,6 +20,10 @@ export async function getGroqChatBot(userInput) {
     const response = await groq.chat.completions.create({
       messages: [
         {
+          role: 'system',
+          content: 'You are Aura AI, Tutor',
+        },
+        {
           role: 'user',
           content: userInput,
         },
