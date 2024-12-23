@@ -5,10 +5,7 @@ import { router } from 'expo-router';
 
 export const LibraryTimer = () => {
   return (
-    <TouchableOpacity
-      className="bg-[#2C2C2C] p-4 rounded-2xl"
-      onPress={() => router.push('/library')}
-    >
+    <TouchableOpacity className="bg-[#2C2C2C] p-4 rounded-2xl" onPress={() => router.push('(chat)/chat')}>
       <View className="flex-row items-center gap-2 mb-4">
         <View className="w-2 h-2 bg-green-400 rounded-full" />
         <View className="w-6 h-6 bg-white/20 rounded-full items-center justify-center">
