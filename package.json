@@ -23,6 +23,9 @@
     "@fortawesome/react-native-fontawesome": "^0.3.2",
     "@gorhom/bottom-sheet": "^5",
     "@huggingface/inference": "^2.8.1",
+    "@langchain/core": "^0.3.26",
+    "@langchain/groq": "^0.1.2",
+    "@langchain/langgraph": "^0.2.34",
     "@react-native-async-storage/async-storage": "1.23.1",
     "@react-native-community/blur": "^4.4.1",
     "@react-native-community/slider": "^4.5.5",
@@ -44,6 +47,7 @@
     "expo-system-ui": "~4.0.4",
     "expo-web-browser": "~14.0.1",
     "groq-sdk": "^0.9.1",
+    "langchain": "^0.3.7",
     "nativewind": "^4.1.23",
     "onnxruntime-react-native": "^1.20.1",
     "react": "18.3.1",
@@ -63,6 +67,7 @@
     "react-native-web": "~0.19.13",
     "tailwindcss": "^3.4.15",
     "typescript": "^5.7.2",
+    "uuid": "^11.0.3",
     "zustand": "^5.0.2"
   },
   "devDependencies": {

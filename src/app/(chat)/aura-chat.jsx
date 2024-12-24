@@ -7,6 +7,7 @@ import { chatAura } from 'groq/Aura.js';
 import { ScrollView } from 'react-native-gesture-handler';
 import { KeyboardAvoidingView, KeyboardAwareScrollView, KeyboardToolbar } from 'react-native-keyboard-controller';
 
+import { use } from 'react';
 const Chat = () => {
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState([]);
