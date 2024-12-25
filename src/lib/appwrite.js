@@ -6,6 +6,7 @@ import {
   COLLECTION_ID,
   FOCUS_SESSION_COLLECTION_ID,
   FOCUS_ITEM_COLLECTION_ID,
+  USER_PURCHASES_COLLECTION_ID,
 } from '@env';
 export const appwriteConfig = {
   endpoint: ENDPOINT,
@@ -14,6 +15,7 @@ export const appwriteConfig = {
   collectionId: COLLECTION_ID,
   focusItemCollectionId: FOCUS_ITEM_COLLECTION_ID,
   focusSessionCollectionId: FOCUS_SESSION_COLLECTION_ID,
+  userPurchasesCollectionId: USER_PURCHASES_COLLECTION_ID,
 };
 
 const client = new Client().setEndpoint(appwriteConfig.endpoint).setProject(appwriteConfig.projectId);

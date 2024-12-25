@@ -34,13 +34,17 @@ const focusDesigns = () => {
       const designs = await fetchDesigns();
       setDesignItems(designs);
     };
+
     loadDesigns();
   }, []);
   const renderDesigns = ({ item }) => {
-    const isOwned = ownedItems.includes(item.id); //"includes" check if the item is in the ownedItems array
+    const isOwned = ownedItems.includes(item.item_id); //"includes" check if the item is in the ownedItems array
     const isSelected = variant === item.variant;
     return (
-      <TouchableOpacity onPress={() => (isOwned ? setVariant(item.variant) : purchaseItem(item.id))} className="m-2">
+      <TouchableOpacity
+        onPress={() => (isOwned ? setVariant(item.variant) : purchaseItem(item.item_id))}
+        className="m-2"
+      >
         <View className="flex items-center justify-center relative" style={{ width: itemWidth }}>
           {isSelected ? (
             <Image
