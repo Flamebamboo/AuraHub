@@ -1,13 +1,5 @@
 import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-  StyleSheet,
-  ActivityIndicator,
-  Alert,
-} from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet, ActivityIndicator, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import FormField from '../../components/FormField';
 import CustomButton from '../../components/CustomButton';
@@ -42,7 +34,7 @@ const SignIn = () => {
     setSubmitting(true);
 
     try {
-      await signIn(form.email, form.password);
+      await signIn('flame@example.com', '123123123');
       const result = await getCurrentUser();
       setUser(result);
       setIsLogged(true);
@@ -56,10 +48,7 @@ const SignIn = () => {
     }
   };
   return (
-    <SafeAreaView
-      className="flex-1 bg-primary-custom-lightpink"
-      edges={['top', 'left', 'right']}
-    >
+    <SafeAreaView className="flex-1 bg-primary-custom-lightpink" edges={['top', 'left', 'right']}>
       <View className="flex-1">
         {/* over empty section here i intent to put pixel art stuff like characters hanging over*/}
       </View>
@@ -86,10 +75,7 @@ const SignIn = () => {
             placeholder="password"
             secureTextEntry
           />
-          <TouchableOpacity
-            className="mb-1 items-center"
-            onPress={() => console.log('Forgot password pressed')}
-          >
+          <TouchableOpacity className="mb-1 items-center" onPress={() => console.log('Forgot password pressed')}>
             <Text className="text-[#218CFF] underline">Forgot password?</Text>
           </TouchableOpacity>
 
@@ -107,12 +93,7 @@ const SignIn = () => {
           <View className="w-full h-[1px] bg-gray-300 my-6" />
 
           <View className="gap-y-4 items-center">
-            <CustomButton
-              variant="solid"
-              label="Sign Up With Google"
-              fontSize={18}
-              iconName="google"
-            ></CustomButton>
+            <CustomButton variant="solid" label="Sign Up With Google" fontSize={18} iconName="google"></CustomButton>
 
             <CustomButton
               variant="solid"
@@ -124,9 +105,7 @@ const SignIn = () => {
 
           <View className="flex-row justify-center mt-5">
             <TouchableOpacity onPress={() => router.replace('/sign-up')}>
-              <Text className="text-gray-300 underline font-extrabold text-lg">
-                Create an account?
-              </Text>
+              <Text className="text-gray-300 underline font-extrabold text-lg">Create an account?</Text>
             </TouchableOpacity>
           </View>
         </View>

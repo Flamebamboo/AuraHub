@@ -43,10 +43,10 @@ export const useTimer = (initialDuration) => {
 
   const stop = useCallback(() => {
     if (timer) {
+      const stats = sessionTracker.stop();
       timer.stop();
       setIsActive(false);
-      sessionTracker.stop();
-      return sessionTracker.getStats();
+      return stats;
     }
   }, [timer]);
 

@@ -1,9 +1,8 @@
-import { Client, Databases } from 'appwrite';
-import { appwriteConfig } from '@/lib/appwrite';
-import { FocusSessionCollectionID } from '@env';
+import { Client, Databases, ID } from 'react-native-appwrite';
+
 const client = new Client().setEndpoint(appwriteConfig.endpoint).setProject(appwriteConfig.projectId);
-import { ID } from 'appwrite'; // Import ID from appwrite
-import { getID } from '@/lib/appwrite';
+
+import { getID, appwriteConfig } from '@/lib/appwrite';
 const databases = new Databases(client);
 
 /* I want to create focus stats for now only duration stats 
@@ -28,9 +27,12 @@ export async function saveFocusStats(stats, task) {
   };
 
   try {
+    console.log('Database ID:', appwriteConfig.databaseId);
+    console.log('Collection ID:', appwriteConfig.focusSessionCollectionId);
+    console.log('Session Data:', sessionData);
     await databases.createDocument(
       appwriteConfig.databaseId,
-      FocusSessionCollectionID,
+      appwriteConfig.focusSessionCollectionId,
       ID.unique(), // Generate unique document ID
       sessionData
     );

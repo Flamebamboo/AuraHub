@@ -7,17 +7,17 @@ export class SessionTracker {
     this.startTime = null;
     this.endTime = null;
     this.pauseIntervals = [];
-    this.currentPauseStart = null;
+    this.currentPause = null;
   }
 
   start() {
-    if (this.currentPauseStart) {
+    if (this.currentPause) {
       //occurs when we pause and then start again
       this.pauseIntervals.push({
-        start: this.currentPauseStart,
+        start: this.currentPause,
         end: new Date(),
       });
-      this.currentPauseStart = null;
+      this.currentPause = null;
     } else {
       //first start
       this.startTime = new Date();
@@ -25,21 +25,27 @@ export class SessionTracker {
   }
 
   pause() {
-    if (!this.currentPauseStart) {
-      this.currentPauseStart = new Date();
+    if (!this.currentPause) {
+      this.currentPause = new Date();
     }
   }
 
   stop() {
     this.endTime = new Date();
     //make it so that it aslo push the pause intervals if stop during pause
-    if (this.currentPauseStart) {
+    if (this.currentPause) {
       this.pauseIntervals.push({
-        start: this.currentPauseStart,
+        start: this.currentPause,
         end: new Date(),
       });
-      this.currentPauseStart = null;
+      this.currentPause = null;
     }
+    // Get the stats before resetting the session
+    const stats = this.getStats();
+    // Reset the session state
+    this.reset();
+    // Return the stats
+    return stats;
   }
 
   getStats() {

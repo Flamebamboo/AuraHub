@@ -1,11 +1,12 @@
 import { View, Text, FlatList, Image, Dimensions, Touchable, TouchableOpacity } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { getFocusItems } from '@/lib/focusItem';
+
 import { faUnlock, faLock, faArrowLeft, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import useTimerVariant from '@/store/timerVariantStore';
-import { designItems } from '@/store/timerVariantStore';
+
+import { fetchDesigns } from '@/lib/focusItem';
 import { router } from 'expo-router';
 /*
   The plan is to store all the design data in the appwrite database and then fetch it from focusItem.js
@@ -26,11 +27,15 @@ const focusDesigns = () => {
   const { width } = Dimensions.get('window');
   const itemWidth = width / 2 - 20;
   const { ownedItems, variant, purchaseItem, loadItems, setVariant } = useTimerVariant();
+  const [designItems, setDesignItems] = useState([]);
 
   useEffect(() => {
-    loadItems();
-  }, [loadItems]);
-
+    const loadDesigns = async () => {
+      const designs = await fetchDesigns();
+      setDesignItems(designs);
+    };
+    loadDesigns();
+  }, []);
   const renderDesigns = ({ item }) => {
     const isOwned = ownedItems.includes(item.id); //"includes" check if the item is in the ownedItems array
     const isSelected = variant === item.variant;
@@ -46,7 +51,7 @@ const focusDesigns = () => {
           ) : (
             <Image
               className="rounded-xl"
-              source={item.image}
+              source={{ uri: item.image }} //needed to migrate to appwrite Storage will comabck later
               style={{ width: itemWidth - 20, height: itemWidth - 20, resizeMode: 'contain' }}
             />
           )}

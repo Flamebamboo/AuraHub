@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
@@ -22,7 +22,11 @@ const FocusTimer = () => {
   const currentVariant = useTimerVariant((state) => state.variant);
   const { timeRemaining, isActive, start, pause, stop, getProgress } = useTimer(duration);
 
+  const [isStopping, setIsStopping] = useState(false);
+
   const handleStop = async () => {
+    if (isStopping) return;
+    setIsStopping(true);
     const stats = stop();
     if (stats) {
       try {
@@ -31,7 +35,11 @@ const FocusTimer = () => {
       } catch (error) {
         console.error('Failed to save session stats:', error);
         // Optionally show error to user
+      } finally {
+        setIsStopping(false);
       }
+    } else {
+      setIsStopping(false);
     }
     router.replace('/(tabs)/home');
   };

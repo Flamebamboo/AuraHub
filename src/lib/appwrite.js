@@ -1,11 +1,19 @@
 import { Account, Client, Databases, ID, Query } from 'react-native-appwrite';
-
+import {
+  ENDPOINT,
+  PROJECT_ID,
+  DATABASE_ID,
+  COLLECTION_ID,
+  FOCUS_SESSION_COLLECTION_ID,
+  FOCUS_ITEM_COLLECTION_ID,
+} from '@env';
 export const appwriteConfig = {
-  endpoint: 'https://cloud.appwrite.io/v1',
-  projectId: '673034da00188e05b86c',
-  databaseId: '6731408200127d6e8929',
-  collectionId: '67356a41003ad8567aed',
-  designCollectionId: '676366c100128c9b5b26',
+  endpoint: ENDPOINT,
+  projectId: PROJECT_ID,
+  databaseId: DATABASE_ID,
+  collectionId: COLLECTION_ID,
+  focusItemCollectionId: FOCUS_ITEM_COLLECTION_ID,
+  focusSessionCollectionId: FOCUS_SESSION_COLLECTION_ID,
 };
 
 const client = new Client().setEndpoint(appwriteConfig.endpoint).setProject(appwriteConfig.projectId);
@@ -148,46 +156,6 @@ export async function signOut() {
   } catch (error) {
     console.error('Sign out error:', error);
     throw error;
-  }
-}
-
-// using this to save the user's designs, called from timerVariantStore item id is passed
-
-export async function saveUserDesigns(designId) {
-  const currentAccount = await account.get();
-  try {
-    // Query the database to find the document associated with the current user's ID
-    const response = await databases.listDocuments(appwriteConfig.databaseId, appwriteConfig.collectionId, [
-      Query.equal('userId', currentAccount.$id), //this statement retrives the document and checks if the userId field in the database matches the current account id
-    ]);
-
-    const userDocument = response.documents[0];
-
-    // update the document with the new id
-    await databases.updateDocument(appwriteConfig.databaseId, appwriteConfig.collectionId, userDocument.$id, {
-      designId: JSON.stringify(designId),
-    });
-
-    console.log('saved');
-  } catch (error) {
-    console.log('error', error);
-  }
-}
-
-export async function loadUserDesigns() {
-  const currentAccount = await account.get();
-  try {
-    // Query the database to find the document associated with the current user's ID
-    const response = await databases.listDocuments(appwriteConfig.databaseId, appwriteConfig.collectionId, [
-      Query.equal('userId', currentAccount.$id), //this statement retrives the document and checks if the userId field in the database matches the current account id
-    ]);
-
-    const userDocument = response.documents[0];
-
-    // update the document with the new id
-    return JSON.parse(userDocument.designId);
-  } catch (error) {
-    console.log('error', error);
   }
 }
 
