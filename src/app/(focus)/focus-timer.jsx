@@ -11,6 +11,7 @@ import { faTag, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import useTimerStore from '@/store/timerStore';
 import useTimerVariant from '@/store/timerVariantStore';
+import { saveFocusStats } from '@/lib/focusStats';
 
 const FocusTimer = () => {
   const duration = useTimerStore((state) => state.duration);
@@ -21,8 +22,17 @@ const FocusTimer = () => {
   const currentVariant = useTimerVariant((state) => state.variant);
   const { timeRemaining, isActive, start, pause, stop, getProgress } = useTimer(duration);
 
-  const handleStop = () => {
-    stop();
+  const handleStop = async () => {
+    const stats = stop();
+    if (stats) {
+      try {
+        await saveFocusStats(stats, task);
+        console.log('Session stats saved:', stats);
+      } catch (error) {
+        console.error('Failed to save session stats:', error);
+        // Optionally show error to user
+      }
+    }
     router.replace('/(tabs)/home');
   };
 

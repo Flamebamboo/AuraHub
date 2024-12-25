@@ -96,6 +96,19 @@ export async function getCurrentUser() {
   }
 }
 
+export async function getID() {
+  try {
+    const currentAccount = await account.get();
+    if (!currentAccount || !currentAccount.$id) {
+      throw new Error('No valid account found');
+    }
+    return currentAccount.$id;
+  } catch (error) {
+    console.error('Error getting user ID:', error);
+    return null;
+  }
+}
+
 export async function createUser(email, password, username) {
   try {
     // Step 1: Create the Appwrite account

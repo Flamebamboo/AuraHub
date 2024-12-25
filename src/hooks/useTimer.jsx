@@ -1,17 +1,23 @@
 // hooks/useTimer.js
 import { useState, useEffect, useCallback } from 'react';
 import { TimerService } from '@/services/timerService';
+import { SessionTracker } from '@/utils/sessionTracker';
 
 export const useTimer = (initialDuration) => {
   const [timeRemaining, setTimeRemaining] = useState(0);
   const [isActive, setIsActive] = useState(false);
   const [timer, setTimer] = useState(null);
 
+  const [sessionTracker] = useState(() => new SessionTracker());
+
   useEffect(() => {
     const newTimer = new TimerService(
       initialDuration,
       (time) => setTimeRemaining(time),
-      () => setIsActive(false)
+      () => {
+        setIsActive(false);
+        sessionTracker.stop();
+      }
     );
     setTimer(newTimer);
 
@@ -22,6 +28,8 @@ export const useTimer = (initialDuration) => {
     if (timer) {
       timer.start();
       setIsActive(true);
+
+      sessionTracker.start();
     }
   }, [timer]);
 
@@ -29,6 +37,7 @@ export const useTimer = (initialDuration) => {
     if (timer) {
       timer.pause();
       setIsActive(false);
+      sessionTracker.pause();
     }
   }, [timer]);
 
@@ -36,6 +45,8 @@ export const useTimer = (initialDuration) => {
     if (timer) {
       timer.stop();
       setIsActive(false);
+      sessionTracker.stop();
+      return sessionTracker.getStats();
     }
   }, [timer]);
 
@@ -45,7 +56,7 @@ export const useTimer = (initialDuration) => {
 
   return {
     timeRemaining,
-    isActive,
+    isActive, //for split buttons
     start,
     pause,
     stop,

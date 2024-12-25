@@ -33,7 +33,7 @@ export default function TabLayout() {
       />
 
       <Tabs.Screen
-        name="hubs"
+        name="aura-chat"
         options={{
           title: '',
           headerShown: false,
@@ -46,6 +46,7 @@ export default function TabLayout() {
               variant="hubsIcon"
             />
           ),
+          tabBarStyle: { display: 'none' },
         }}
       />
 

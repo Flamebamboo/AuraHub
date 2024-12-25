@@ -26,7 +26,7 @@ const index = () => {
                 variant="outline"
                 fontSize={20}
                 leftIcon="sign-in"
-                onPress={() => router.replace('/(chat)/aura-chat')}
+                onPress={() => router.replace('/(tabs)/home')}
               />
             </View>
             <CustomButton

@@ -14,7 +14,6 @@ export class TimerService {
       this.interval = setInterval(() => {
         this.timeRemaining--;
         this.onTick(this.timeRemaining);
-
         if (this.timeRemaining <= 0) {
           this.stop();
           this.onComplete();
@@ -33,6 +32,7 @@ export class TimerService {
 
   stop() {
     this.pause();
+
     this.timeRemaining = this.duration;
   }
 
