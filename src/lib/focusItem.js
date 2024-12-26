@@ -1,9 +1,9 @@
 import { Client, Databases, Query, ID } from 'react-native-appwrite';
-import { appwriteConfig, getID } from '@/lib/appwrite';
+import { appwriteConfig, getUserDetails } from '@/lib/appwrite';
 const client = new Client().setEndpoint(appwriteConfig.endpoint).setProject(appwriteConfig.projectId);
 
 const databases = new Databases(client);
-const userId = getID();
+
 // using this to save the user's designs, called from timerVariantStore item id is passed
 
 // NOTE there is two collection being used here, the focusItemCollectionId and the userPurchasesCollectionId
@@ -12,7 +12,7 @@ const userId = getID();
 
 export async function saveUserDesigns(designId) {
   try {
-    const userId = await getID();
+    const userDetails = await getUserDetails();
     console.log('User ID:', userId);
     // Query the database to find the document associated with the current user's ID
     const response = await databases.createDocument(
@@ -20,9 +20,10 @@ export async function saveUserDesigns(designId) {
       appwriteConfig.userPurchasesCollectionId,
       ID.unique(),
       {
-        user_id: userId,
+        user_id: userDetails.$id,
         item_id: JSON.stringify(designId),
         purchase_date: new Date().toISOString(),
+        email: userDetails.email,
       }
     );
 
@@ -34,15 +35,15 @@ export async function saveUserDesigns(designId) {
 
 export async function loadUserDesigns() {
   try {
-    const userId = await getID();
+    const userDetails = await getUserDetails();
     // Query the database to find the document associated with the current user's ID
     const response = await databases.listDocuments(
       appwriteConfig.databaseId,
       appwriteConfig.userPurchasesCollectionId,
-      [Query.equal('user_id', userId)]
+      [Query.equal('user_id', userDetails.$id)]
     );
 
-    return response.documents.map((doc) => doc.itemId);
+    return response.documents.map((doc) => doc.item_id);
   } catch (error) {
     console.log('error fucks', error);
   }

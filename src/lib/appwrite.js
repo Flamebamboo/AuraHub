@@ -106,15 +106,18 @@ export async function getCurrentUser() {
   }
 }
 
-export async function getID() {
+export async function getUserDetails() {
   try {
     const currentAccount = await account.get();
     if (!currentAccount || !currentAccount.$id) {
       throw new Error('No valid account found');
     }
-    return currentAccount.$id;
+    return {
+      userId: currentAccount.$id,
+      email: currentAccount.email,
+    };
   } catch (error) {
-    console.error('Error getting user ID:', error);
+    console.error('Error getting user details:', error);
     return null;
   }
 }

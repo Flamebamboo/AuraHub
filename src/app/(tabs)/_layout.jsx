@@ -31,6 +31,22 @@ export default function TabLayout() {
           ),
         }}
       />
+      <Tabs.Screen
+        name="stats-screen"
+        options={{
+          title: '',
+          headerShown: false,
+          tabBarIcon: ({ focused }) => (
+            <CustomSvg
+              style={{ marginTop: 30 }}
+              height={32}
+              width={32}
+              fillColor={focused ? '#fff' : 'transparent'}
+              variant="profileIcon"
+            />
+          ),
+        }}
+      />
 
       <Tabs.Screen
         name="aura-chat"

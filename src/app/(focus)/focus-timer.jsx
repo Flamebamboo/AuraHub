@@ -12,7 +12,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import useTimerStore from '@/store/timerStore';
 import useTimerVariant from '@/store/timerVariantStore';
 import { saveFocusStats } from '@/lib/focusStats';
-
+import { getByDay } from '@/lib/focusStats';
 const FocusTimer = () => {
   const duration = useTimerStore((state) => state.duration);
 
@@ -30,7 +30,7 @@ const FocusTimer = () => {
     const stats = stop();
     if (stats) {
       try {
-        await saveFocusStats(stats, task);
+        await saveFocusStats(stats, task, color);
         console.log('Session stats saved:', stats);
       } catch (error) {
         console.error('Failed to save session stats:', error);
