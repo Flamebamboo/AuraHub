@@ -39,18 +39,12 @@ export async function getByDay() {
       return accu + current.total_duration;
     });
 
-    //group the session by task and color and calculate total duration for each
-    const groupTask = {};
-    for (const session of sessions) {
-      if (!groupTask[session.task]) {
-        groupTask[session.task] = {};
-      }
-      if (!groupTask[session.task][session.color]) {
-        groupTask[session.task][session.color] = 0;
-      }
-      groupTask[session.task][session.color] += session.total_duration; // this returns the total duration for each task and color
-    }
-    console.log('groupTask:', groupTask);
+    const groupTask = sessions.map((session) => ({
+      value: session.total_duration,
+      label: session.task,
+      frontColor: session.color,
+    }));
+
     return {
       totalFocusTime,
       groupTask,
