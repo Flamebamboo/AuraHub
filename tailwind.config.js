@@ -7,6 +7,9 @@ export default {
   theme: {
     extend: {
       colors: {
+        onboarding: {
+          black: '#16141C',
+        },
         primary: {
           'custom-black': '#141414',
           'custom-blue': '#0B192C',
@@ -22,8 +25,7 @@ export default {
       },
       fontFamily: {
         PixelifySans: ['PixelifySans', 'sans-serif'],
-        ReadexPro: ['ReadexPro', 'sans-serif'],
-        ReadexProBold: ['ReadexPro-Bold', 'sans-serif'],
+        PixelCode: ['PixelCode', 'sans-serif'],
       },
     },
   },

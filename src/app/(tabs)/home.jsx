@@ -3,18 +3,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRef } from 'react';
 import { useGlobalContext } from '@/context/GlobalProvider';
 
-import { LibraryTimer } from '@/components/LibraryTimer';
 import { StartFocus } from '@/components/StartFocus';
-import { DaySelector } from '@/components/DaySelector';
-
-import { StatsCard } from '@/components/StatsCard';
-
-import { useState } from 'react';
 
 import { useCallback } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { CreateSessionModal } from '@/components/BottomSheet/CreateSessionModal';
-import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 
 const Home = () => {
   const { user } = useGlobalContext();
@@ -43,21 +36,10 @@ const Home = () => {
               <Text className="text-white font-bold text-3xl font-PixelifySans">{user ? user.username : 'User'}</Text>
             </View>
 
-            <View className="space-y-6">
-              <View className="mb-6">
-                <StatsCard />
-              </View>
-              <View className="mb-20">
-                <DaySelector />
-              </View>
-              <View className="mb-6">
-                <LibraryTimer />
-              </View>
-              <View className="mb-6">
-                <StartFocus onOpenPress={handlePresentModalPress} />
-              </View>
-              <CreateSessionModal bottomSheetModalRef={createSessionModalRef} />
+            <View className="mb-6">
+              <StartFocus onOpenPress={handlePresentModalPress} />
             </View>
+            <CreateSessionModal bottomSheetModalRef={createSessionModalRef} />
           </View>
         </ScrollView>
       </SafeAreaView>
