@@ -1,24 +1,13 @@
-import {
-  View,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-  Alert,
-  StyleSheet,
-} from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, Alert, StyleSheet } from 'react-native';
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useState } from 'react';
 import FormField from '../../components/FormField';
-import CustomButton from '../../components/CustomButton';
+import CustomButton from '@/components/Onboarding/CustomButton';
 import { router } from 'expo-router';
 import { createUser } from '../../lib/appwrite';
 import { useGlobalContext } from '../../context/GlobalProvider';
-import {
-  KeyboardAvoidingView,
-  KeyboardAwareScrollView,
-  KeyboardToolbar,
-} from 'react-native-keyboard-controller';
+import { KeyboardAvoidingView, KeyboardAwareScrollView, KeyboardToolbar } from 'react-native-keyboard-controller';
 
 const SignUp = () => {
   const { setUser, setIsLogged } = useGlobalContext();
@@ -54,10 +43,7 @@ const SignUp = () => {
   };
 
   return (
-    <SafeAreaView
-      className="flex-1 h-full bg-primary-custom-lightpink"
-      edges={['top', 'left', 'right']}
-    >
+    <SafeAreaView className="flex-1 h-full bg-primary-custom-lightpink" edges={['top', 'left', 'right']}>
       <View className="flex-1">
         {/* over empty section here i intent to put pixel art stuff like characters hanging over*/}
       </View>
@@ -107,12 +93,7 @@ const SignUp = () => {
 
           {/* oAuth google and apple sign up custom buttons*/}
           <View className="gap-y-4 items-center">
-            <CustomButton
-              variant="solid"
-              label="Sign Up With Google"
-              fontSize={18}
-              iconName="google"
-            ></CustomButton>
+            <CustomButton variant="solid" label="Sign Up With Google" fontSize={18} iconName="google"></CustomButton>
 
             <CustomButton
               variant="solid"
@@ -126,9 +107,7 @@ const SignUp = () => {
 
           <View className="flex-row justify-center mt-5">
             <TouchableOpacity onPress={() => router.replace('/sign-in')}>
-              <Text className="text-gray-300 underline font-extrabold text-lg">
-                Already have an account?
-              </Text>
+              <Text className="text-gray-300 underline font-extrabold text-lg">Already have an account?</Text>
             </TouchableOpacity>
           </View>
         </View>

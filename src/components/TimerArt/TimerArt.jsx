@@ -1,5 +1,5 @@
 // components/TimerArt/index.jsx
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import CoffeeCupSvg from './variants/CoffeeCupSvg';
 import Square from './variants/Square';
@@ -16,7 +16,16 @@ const TimerArtVariants = {
   // CODE_EDITOR: 'CODE_EDITOR',
 };
 
-const TimerArt = ({ variant = 'COFFEE_CUP', progress, style }) => {
+//bg for the timer art depending on current variant in use we will let the home compoenet change background to this
+const TimerColor = {
+  COFFEE_CUP: '#241527',
+};
+
+const TimerArt = ({ variant = 'COFFEE_CUP', progress, style, onColorChange }) => {
+  useEffect(() => {
+    const color = TimerColor[variant];
+    onColorChange(color);
+  }, [variant, onColorChange]);
   const renderArt = () => {
     switch (variant) {
       case TimerArtVariants.COFFEE_CUP:

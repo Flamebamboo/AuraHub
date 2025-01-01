@@ -2,7 +2,7 @@ import { View, Text, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import CustomButton from '@/components/CustomButton';
+import CustomButton from '@/components/Onboarding/CustomButton';
 
 import { router } from 'expo-router';
 
@@ -15,8 +15,8 @@ const index = () => {
         }}
       >
         <View className="w-full flex justify-center items-center h-full pt-8 px-4">
-          <Text className="align-top font-bold text-7xl text-white mt-10 font-PixelCode">PixFocus</Text>
-          <Text className="text-white text-2x font-PixelifySans">+ aura everytime you study or work</Text>
+          <Text className="align-top font-thin text-7xl text-white mt-10 font-ReadexPro">PixFocus</Text>
+          <Text className="text-white text-2x font-PixelifySans"> +points everytime you study or work</Text>
 
           <StatusBar style="auto" />
           <View className="flex-1 justify-end pb-10">

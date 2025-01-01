@@ -49,8 +49,13 @@ const FocusTimer = () => {
     console.log('Timer started');
   }, [start]);
 
+  const [bgColor, setBgColor] = useState('#000');
+  const handleBg = (color) => {
+    setBgColor(color);
+  };
+
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={{ backgroundColor: bgColor, flex: 1 }}>
       <View style={styles.contentContainer}>
         <View style={styles.taskContainer}>
           <FontAwesomeIcon icon={faTag} size={22} color={color} />
@@ -58,7 +63,7 @@ const FocusTimer = () => {
           <FontAwesomeIcon icon={faCaretDown} size={22} color={color} />
         </View>
         <TouchableOpacity onPress={() => router.push('/(shop)/focus-design')}>
-          <TimerArt variant={currentVariant} progress={getProgress()} />
+          <TimerArt onColorChange={handleBg} variant={currentVariant} progress={getProgress()} />
         </TouchableOpacity>
 
         <TimerDisplay time={timeRemaining} />
@@ -83,10 +88,6 @@ const FocusTimer = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#241527',
-  },
   contentContainer: {
     flex: 1,
     alignItems: 'center',

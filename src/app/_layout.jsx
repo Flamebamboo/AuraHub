@@ -11,23 +11,26 @@ import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 
 // Prevent splash screen from auto-hiding
 SplashScreen.preventAutoHideAsync();
-
 const RootLayout = () => {
   const [fontsLoaded] = useFonts({
+    ReadexPro: require('assets/fonts/ReadexPro.ttf'),
     PixelifySans: require('assets/fonts/PixelifySans.ttf'),
-    PixelCode: require('assets/fonts/PixelCode.ttf'),
+    BhalooBold: require('assets/fonts/Bhaloo Bold.ttf'),
   });
 
   useEffect(() => {
     if (fontsLoaded) {
-      // Hide splash screen once fonts are loaded
+      console.log('Fonts loaded');
       SplashScreen.hideAsync();
+    } else {
+      console.log('Fonts not loaded yet');
     }
   }, [fontsLoaded]);
 
   if (!fontsLoaded) {
     return null;
   }
+
   return (
     <SafeAreaProvider>
       <GestureHandlerRootView style={{ flex: 1 }}>

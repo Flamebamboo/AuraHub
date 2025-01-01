@@ -25,7 +25,8 @@ export default {
       },
       fontFamily: {
         PixelifySans: ['PixelifySans'],
-        PixelCode: ['PixelCode'],
+        ReadexPro: ['ReadexPro'],
+        BhalooBold: ['BhalooBold'],
       },
     },
   },
