@@ -24,8 +24,8 @@ export default {
         },
       },
       fontFamily: {
-        PixelifySans: ['PixelifySans', 'sans-serif'],
-        PixelCode: ['PixelCode', 'sans-serif'],
+        PixelifySans: ['PixelifySans'],
+        PixelCode: ['PixelCode'],
       },
     },
   },

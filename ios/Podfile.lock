@@ -9,15 +9,15 @@ PODS:
   - EXImageLoader (5.0.0):
     - ExpoModulesCore
     - React-Core
-  - Expo (52.0.18):
+  - Expo (52.0.23):
     - ExpoModulesCore
   - ExpoAsset (11.0.1):
     - ExpoModulesCore
-  - ExpoFileSystem (18.0.5):
+  - ExpoFileSystem (18.0.6):
     - ExpoModulesCore
-  - ExpoFont (13.0.1):
+  - ExpoFont (13.0.2):
     - ExpoModulesCore
-  - ExpoHead (4.0.11):
+  - ExpoHead (4.0.15):
     - ExpoModulesCore
   - ExpoImage (2.0.3):
     - ExpoModulesCore
@@ -33,7 +33,7 @@ PODS:
     - ExpoModulesCore
   - ExpoLinking (7.0.3):
     - ExpoModulesCore
-  - ExpoModulesCore (2.1.1):
+  - ExpoModulesCore (2.1.2):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -65,9 +65,9 @@ PODS:
   - FBLazyVector (0.76.5)
   - fmt (9.1.0)
   - glog (0.3.5)
-  - hermes-engine (0.76.3):
-    - hermes-engine/Pre-built (= 0.76.3)
-  - hermes-engine/Pre-built (0.76.3)
+  - hermes-engine (0.76.5):
+    - hermes-engine/Pre-built (= 0.76.5)
+  - hermes-engine/Pre-built (0.76.5)
   - libavif/core (0.11.1)
   - libavif/libdav1d (0.11.1):
     - libavif/core
@@ -1671,7 +1671,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNReanimated (3.16.5):
+  - RNReanimated (3.16.3):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1691,10 +1691,10 @@ PODS:
     - ReactCodegen
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
-    - RNReanimated/reanimated (= 3.16.5)
-    - RNReanimated/worklets (= 3.16.5)
+    - RNReanimated/reanimated (= 3.16.3)
+    - RNReanimated/worklets (= 3.16.3)
     - Yoga
-  - RNReanimated/reanimated (3.16.5):
+  - RNReanimated/reanimated (3.16.3):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1714,30 +1714,9 @@ PODS:
     - ReactCodegen
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
-    - RNReanimated/reanimated/apple (= 3.16.5)
+    - RNReanimated/reanimated/apple (= 3.16.3)
     - Yoga
-  - RNReanimated/reanimated/apple (3.16.5):
-    - DoubleConversion
-    - glog
-    - hermes-engine
-    - RCT-Folly (= 2024.01.01.00)
-    - RCTRequired
-    - RCTTypeSafety
-    - React-Core
-    - React-debug
-    - React-Fabric
-    - React-featureflags
-    - React-graphics
-    - React-ImageManager
-    - React-NativeModulesApple
-    - React-RCTFabric
-    - React-rendererdebug
-    - React-utils
-    - ReactCodegen
-    - ReactCommon/turbomodule/bridging
-    - ReactCommon/turbomodule/core
-    - Yoga
-  - RNReanimated/worklets (3.16.5):
+  - RNReanimated/reanimated/apple (3.16.3):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1758,7 +1737,28 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNScreens (4.1.0):
+  - RNReanimated/worklets (3.16.3):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.01.01.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
+  - RNScreens (4.4.0):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -2092,24 +2092,24 @@ SPEC CHECKSUMS:
   EXAV: 9773c9799767c9925547b05e41a26a0240bb8ef2
   EXConstants: dd2fe64c6cdb1383b694c309a63028a8e9f2be6d
   EXImageLoader: 759063a65ab016b836f73972d3bb25404888713d
-  Expo: dc7907584c3517c592315a59719180037703ff33
+  Expo: 37cea4167605a3a1b88fa0caf8349ae76c0d389c
   ExpoAsset: 8138f2a9ec55ae1ad7c3871448379f7d97692d15
-  ExpoFileSystem: 2161e16165279fb46e138d8ea8795c71cc6718be
-  ExpoFont: 7522d869d84ee2ee8093ee997fef5b86f85d856b
-  ExpoHead: c2695f9e8d685d6fa76e7a42006b0b3420cf2d50
+  ExpoFileSystem: 179a0661fd6d3c4e5d7e500a99a9cd8b295d9566
+  ExpoFont: 260fb85279912421894060d9aea453cee4ffc01c
+  ExpoHead: 83465614d1af3df77a0db724a24a43648e3daefa
   ExpoImage: 9cdae70d80c8a59cbfb51a475fc820172fa71666
   ExpoImagePicker: 440a560c9bfc63edae854d08b9f12f75bd11c112
   ExpoKeepAwake: 783e68647b969b210a786047c3daa7b753dcac1f
   ExpoLinearGradient: 7ca3b1d1625a1ab85c129abce4a3cdc78a9500a3
   ExpoLinking: a8332a219379ba80f8e612d5a5de4a3da446886e
-  ExpoModulesCore: 6b1ed7e4e5ab279a1825f40ef0140db84f6aad0f
+  ExpoModulesCore: 7ca0054f09a5205c1dac65fa98c2430472db50e6
   ExpoSplashScreen: aa5c5eba706a5686b91861b53ced2996f1dd080d
   ExpoSystemUI: 2d729aea8219f03af1b1996c1d14488a01fea94a
   ExpoWebBrowser: f08aaf1c8a02af8a768d83793186cb6d2c69f529
   FBLazyVector: 1bf99bb46c6af9a2712592e707347315f23947aa
   fmt: 10c6e61f4be25dc963c36bd73fc7b1705fe975be
   glog: 08b301085f15bcbb6ff8632a8ebaf239aae04e6a
-  hermes-engine: 0555a84ea495e8e3b4bde71b597cd87fbb382888
+  hermes-engine: 06a9c6900587420b90accc394199527c64259db4
   libavif: 84bbb62fb232c3018d6f1bab79beea87e35de7b7
   libdav1d: 23581a4d8ec811ff171ed5e2e05cd27bad64c39f
   onnxruntime-c: 07cfff40dda7e1c54a4350bb2ad226c63150fce3
@@ -2178,8 +2178,8 @@ SPEC CHECKSUMS:
   RNCPicker: f963e01f78e546a93b98aa201501713dbda14e94
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
   RNGestureHandler: 511250b190a284388f9dd0d2e56c1df76f14cfb8
-  RNReanimated: 77edb855d7bb668567759c0c9fa42bd3bb860122
-  RNScreens: e6f9bc3a41be76af2ba0a815ea299a0000b1c838
+  RNReanimated: 365e7d6c1ed443cf8e1b7ba4f0b15dd9f82f052a
+  RNScreens: e52d2e7e5fa29266d6f8f68e8229452e5b2f4236
   RNSVG: 8b1a777d54096b8c2a0fd38fc9d5a454332bbb4d
   SDWebImage: 8a6b7b160b4d710e2a22b6900e25301075c34cb3
   SDWebImageAVIFCoder: 00310d246aab3232ce77f1d8f0076f8c4b021d90

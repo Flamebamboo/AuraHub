@@ -35,6 +35,8 @@ const Home = () => {
               <Text className="font-PixelifySans text-[#aeaeae] text-xl">{getGreeting()},</Text>
               <Text className="text-white font-bold text-3xl font-PixelifySans">{user ? user.username : 'User'}</Text>
             </View>
+            {/* Start Focus */}
+            <View></View>
 
             <View className="mb-6">
               <StartFocus onOpenPress={handlePresentModalPress} />
