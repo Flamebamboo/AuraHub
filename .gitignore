@@ -21,3 +21,6 @@ web-build/
 .expo
 dist/
 web-build/
+
+# Ignore eas.json
+eas.json

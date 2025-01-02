@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "StudyHub",
-    "slug": "StudyHub",
+    "name": "PixFocus",
+    "slug": "PixFocus",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -29,10 +29,10 @@
       },
       "ios": {
         "supportsTablet": true,
-        "bundleIdentifier": "com.flamebamboo.StudyHub"
+        "bundleIdentifier": "com.flamebamboo.PixFocus"
       },
       "android": {
-        "package": "com.flamebamboo.StudyHub",
+        "package": "com.flamebamboo.PixFocus",
         "adaptiveIcon": {
           "foregroundImage": "./assets/images/adaptive-icon.png",
           "backgroundColor": "#ffffff"
@@ -61,6 +61,14 @@
     },
     "ios": {
       "bundleIdentifier": "com.anonymous.StudyHub"
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "f6dce225-fb96-4df0-a336-bcf0e7de1aa7"
+      }
     }
   }
 }
