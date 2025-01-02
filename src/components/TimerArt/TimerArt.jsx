@@ -44,8 +44,8 @@ const TimerArt = ({ variant = 'COFFEE_CUP', progress, style, onColorChange }) =>
 
 const styles = StyleSheet.create({
   container: {
-    width: 400,
-    height: 400,
+    width: 300,
+    height: 300,
     justifyContent: 'center',
     alignItems: 'center',
   },

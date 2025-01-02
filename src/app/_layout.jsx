@@ -11,7 +11,6 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import * as SplashScreen from 'expo-splash-screen';
 
-//update from expo sdk 52 using expo splash screen package refered from this doc https://docs.expo.dev/versions/latest/sdk/splash-screen/#configuration
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
 
@@ -54,25 +53,26 @@ const RootLayout = () => {
   }
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
-        <SafeAreaProvider>
-          <BottomSheetModalProvider>
-            <KeyboardProvider>
-              <GlobalProvider>
+    <GlobalProvider>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
+          <SafeAreaProvider>
+            <BottomSheetModalProvider>
+              <KeyboardProvider>
                 <Stack>
                   <Stack.Screen name="index" options={{ headerShown: false }} />
                   <Stack.Screen name="(auth)" options={{ headerShown: false }} />
                   <Stack.Screen name="(shop)" options={{ headerShown: false }} />
                   <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
                   <Stack.Screen name="(focus)" options={{ headerShown: false }} />
+                  <Stack.Screen name="(onboarding)" options={{ headerShown: false }} />
                 </Stack>
-              </GlobalProvider>
-            </KeyboardProvider>
-          </BottomSheetModalProvider>
-        </SafeAreaProvider>
-      </View>
-    </GestureHandlerRootView>
+              </KeyboardProvider>
+            </BottomSheetModalProvider>
+          </SafeAreaProvider>
+        </View>
+      </GestureHandlerRootView>
+    </GlobalProvider>
   );
 };
 
