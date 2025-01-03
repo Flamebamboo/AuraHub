@@ -13,10 +13,10 @@ export default {
         primary: {
           'custom-black': '#141414',
           'custom-blue': '#0B192C',
-          'custom-lightpink': '#9482DA',
-          'custom-purple': '#231F35',
+          'custom-lightpink': '#7C444F',
+          'custom-purple': '#2F1818',
           'custom-button': '#004086',
-          'custom-pink': '#EB3678',
+          'custom-pink': '#E9870E',
         },
         secondary: {
           'custom-black': '#2C2C2C',

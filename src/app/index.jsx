@@ -1,28 +1,29 @@
-import { View, Text, ScrollView } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import React, { useEffect } from 'react';
-import { StatusBar } from 'expo-status-bar';
-import CustomButton from '@/components/Onboarding/CustomButton';
-import { useRouter, useRootNavigationState } from 'expo-router';
-import { useGlobalContext } from '../context/GlobalProvider';
+import { View, ActivityIndicator } from 'react-native';
+import { useRouter } from 'expo-router';
+import { useGlobalContext } from '@/context/GlobalProvider';
 
-const index = () => {
+export default function Index() {
+  const { firstLaunch, isLogged, loading } = useGlobalContext();
   const router = useRouter();
-  const navState = useRootNavigationState();
-  const { firstLaunch } = useGlobalContext();
 
   useEffect(() => {
-    // Wait until the navigation state is ready
-    if (!navState?.key) return;
-
-    if (firstLaunch) {
-      router.replace('/(onboarding)/onboarding');
-    } else {
-      router.replace('/(auth)/sign-in');
+    if (!loading) {
+      if (firstLaunch) {
+        router.replace('/(onboarding)/onboarding');
+      } else if (isLogged) {
+        // If logged in, navigate to main app or home screen
+        router.replace('/home');
+      } else {
+        // Not first launch, not logged in -> sign in screen
+        router.replace('/(auth)/sign-in');
+      }
     }
-  }, [firstLaunch, navState?.key]);
+  }, [loading, firstLaunch, isLogged]);
 
-  return null; // No UI needed since navigation is handled here
-};
-
-export default index;
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <ActivityIndicator size="large" />
+    </View>
+  );
+}

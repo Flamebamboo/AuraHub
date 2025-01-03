@@ -11,6 +11,7 @@ const Card4 = () => {
     <View>
       <View style={styles.slide}>
         <Text style={styles.title}>PixFocus</Text>
+        {/* final image here later*/}
       </View>
     </View>
   );

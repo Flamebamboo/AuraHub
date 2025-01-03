@@ -1,5 +1,5 @@
 import { View, Text, Dimensions, StyleSheet, TouchableOpacity, useWindowDimensions } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Animated, {
   useSharedValue,
@@ -18,9 +18,12 @@ import Card1 from '@/components/Onboarding/Card1';
 import Card2 from '@/components/Onboarding/Card2';
 import Card3 from '@/components/Onboarding/Card3';
 import Card4 from '@/components/Onboarding/Card4';
+import { useGlobalContext } from '@/context/GlobalProvider';
+
 const { width, height } = Dimensions.get('window');
 
 export default function Onboarding() {
+  const { firstLaunch } = useGlobalContext();
   const screenSize = useWindowDimensions();
   const animatedRef = useAnimatedRef();
   const scroll = useSharedValue(0);

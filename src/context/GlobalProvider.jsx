@@ -1,6 +1,6 @@
 // context/GlobalProvider.jsx
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { getCurrentUser } from '../lib/appwrite';
+import { getCurrentUser, checkStoredSession } from '../lib/appwrite';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const GlobalContext = createContext();
 
@@ -16,14 +16,18 @@ const GlobalProvider = ({ children }) => {
     async function checkOnFirstLaunch() {
       try {
         const hasLaunched = await AsyncStorage.getItem('firstLaunch');
-        if (hasLaunched === null) {
+        if (hasLaunched === 'false') {
+          setFirstLaunch(false);
+        } else if (hasLaunched === null) {
           setFirstLaunch(true);
           await AsyncStorage.setItem('firstLaunch', 'true');
         } else {
-          setFirstLaunch(hasLaunched !== 'false');
+          setFirstLaunch(hasLaunched === 'true');
         }
       } catch (error) {
         console.error('Error checking first launch:', error);
+        // Default to false in case of error
+        setFirstLaunch(false);
       }
     }
 
@@ -33,16 +37,21 @@ const GlobalProvider = ({ children }) => {
   const checkUser = async () => {
     try {
       console.log('Checking user status...');
-      const userData = await getCurrentUser();
+      const storedSession = await checkStoredSession();
 
-      if (userData) {
-        console.log('User found:', userData);
+      if (storedSession) {
+        console.log('Found stored session');
         setIsLogged(true);
-        setUser(userData);
+        setUser(storedSession.userData);
       } else {
-        console.log('No user found');
-        setIsLogged(false);
-        setUser(null);
+        const userData = await getCurrentUser();
+        if (userData) {
+          setIsLogged(true);
+          setUser(userData);
+        } else {
+          setIsLogged(false);
+          setUser(null);
+        }
       }
     } catch (error) {
       console.error('Error checking user:', error);

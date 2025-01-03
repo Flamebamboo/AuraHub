@@ -1,4 +1,5 @@
 import { Account, Client, Databases, ID, Query } from 'react-native-appwrite';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   ENDPOINT,
   PROJECT_ID,
@@ -59,6 +60,9 @@ export async function signIn(email, password) {
   try {
     const session = await account.createEmailPasswordSession(email, password);
     const userData = await getCurrentUser();
+    // Store user session
+    await AsyncStorage.setItem('userSession', JSON.stringify(session));
+    await AsyncStorage.setItem('userData', JSON.stringify(userData));
     return { session, userData };
   } catch (error) {
     console.error('Sign in error:', error);
@@ -157,10 +161,31 @@ export async function createUser(email, password, username) {
 export async function signOut() {
   try {
     await account.deleteSession('current');
+    // Clear stored session
+    await AsyncStorage.multiRemove(['userSession', 'userData']);
     console.log('Signed out successfully');
   } catch (error) {
     console.error('Sign out error:', error);
     throw error;
+  }
+}
+
+// Add new function to check stored session
+export async function checkStoredSession() {
+  try {
+    const storedSession = await AsyncStorage.getItem('userSession');
+    const storedUserData = await AsyncStorage.getItem('userData');
+
+    if (storedSession && storedUserData) {
+      return {
+        session: JSON.parse(storedSession),
+        userData: JSON.parse(storedUserData),
+      };
+    }
+    return null;
+  } catch (error) {
+    console.error('Error checking stored session:', error);
+    return null;
   }
 }
 
