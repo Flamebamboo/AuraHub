@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useRef, useContext, useEffect } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Dimensions, Pressable } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Dimensions, Pressable, Alert } from 'react-native';
 import { BottomSheetModal, BottomSheetView, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -17,6 +17,7 @@ import SegmentadControl from '@/components/SegmentadControl';
 
 import TimerBlock from '@/components/Timer/TimerBlock';
 import Pomodoro from '@/components/Timer/Pomodoro';
+import useTimerStore from '@/store/timerStore';
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 export const CreateSessionModal = ({ bottomSheetModalRef }) => {
@@ -28,9 +29,15 @@ export const CreateSessionModal = ({ bottomSheetModalRef }) => {
 
   //sending data to context api
 
+  const task = useTimerStore((state) => state.task);
+
   const handleCreateSession = () => {
+    if (task === 'Select Task') {
+      Alert.alert('Invalid Task', 'Please select a task before creating a session');
+      return;
+    }
     bottomSheetModalRef.current?.dismiss();
-    router.replace('/(focus)/focus-timer');
+    router.replace('/(focus)/enter-loading');
   };
 
   const handleCreatePomodoro = () => {

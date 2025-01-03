@@ -30,6 +30,7 @@ const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 
 const TaskSelector = ({ taskSelectorRef, onClose }) => {
   const STORAGE_KEY = '@tasks_key'; //key for async storage
+  const LAST_TASK_KEY = '@last_selected_task'; // Add new storage key
   const snapPoints = useMemo(() => ['100%'], []); // 90% of screen height
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
@@ -158,6 +159,36 @@ const TaskSelector = ({ taskSelectorRef, onClose }) => {
 
   const [currentSelectedTask, setCurrentSelectedTask] = useState(null);
 
+  // Add function to save last selected task
+  const saveLastSelectedTask = async (taskName, taskColor) => {
+    try {
+      await AsyncStorage.setItem(LAST_TASK_KEY, JSON.stringify({ name: taskName, color: taskColor }));
+    } catch (error) {
+      console.error('Error saving last task:', error);
+    }
+  };
+
+  // Load last selected task on mount
+  useEffect(() => {
+    const loadLastSelectedTask = async () => {
+      try {
+        const savedTask = await AsyncStorage.getItem(LAST_TASK_KEY);
+        if (savedTask) {
+          const { name, color } = JSON.parse(savedTask);
+          setCurrentSelectedTask(name);
+          setTask(name);
+          setColor(color);
+          setPomodoroTask(name);
+          setPomodoroColor(color);
+        }
+      } catch (error) {
+        console.error('Error loading last task:', error);
+      }
+    };
+
+    loadLastSelectedTask();
+  }, []);
+
   const renderItem = useCallback(
     ({ item }) => {
       const isChecked = currentSelectedTask === item.name;
@@ -166,14 +197,14 @@ const TaskSelector = ({ taskSelectorRef, onClose }) => {
         const newSelectedTask = currentSelectedTask === item.name ? null : item.name;
         setCurrentSelectedTask(newSelectedTask);
 
-        // Update Zustand store
-
-        setTask(item.name);
-        setColor(item.color);
-
-        // Update Pomodoro store
-        setPomodoroTask(item.name);
-        setPomodoroColor(item.color);
+        if (newSelectedTask) {
+          // Only update stores if a task is actually selected
+          setTask(item.name);
+          setColor(item.color);
+          setPomodoroTask(item.name);
+          setPomodoroColor(item.color);
+          saveLastSelectedTask(item.name, item.color); // Save the last selected task
+        }
       };
 
       return (
@@ -212,6 +243,16 @@ const TaskSelector = ({ taskSelectorRef, onClose }) => {
   useEffect(() => {
     taskSelectorRef.current?.present();
   }, []);
+
+  // Add validation before closing
+  const handleDonePress = () => {
+    if (!currentSelectedTask) {
+      // Show error or alert
+      alert('Please select a task before proceeding');
+      return;
+    }
+    onClose();
+  };
 
   return (
     <SafeAreaView>
@@ -271,7 +312,7 @@ const TaskSelector = ({ taskSelectorRef, onClose }) => {
                 <View className="pb-8 items-center justify-center ">
                   <TouchableOpacity
                     className="w-1/2 px-4 py-6 bg-white rounded-2xl shadow-lg flex items-center justify-center"
-                    onPress={onClose}
+                    onPress={handleDonePress}
                   >
                     <Text className="text-black font-semibold text-lg">Done</Text>
                   </TouchableOpacity>

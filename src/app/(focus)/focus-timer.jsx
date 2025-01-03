@@ -42,7 +42,7 @@ const FocusTimer = () => {
     } else {
       setIsStopping(false);
     }
-    router.replace('/(tabs)/home');
+    router.replace('/(focus)/exit-loading');
   };
 
   useEffect(() => {
