@@ -9,6 +9,8 @@ import Animated, {
   Extrapolate,
   useAnimatedRef,
   runOnJS,
+  FadeInDown,
+  FadeOut,
 } from 'react-native-reanimated';
 import CustomButton from '@/components/Onboarding/CustomButton';
 import { router } from 'expo-router';
@@ -80,14 +82,39 @@ export default function Onboarding() {
         <Card3 />
         <Card4 />
       </Animated.ScrollView>
-
       <Paginator />
-
-      {/* <TouchableOpacity style={styles.button} onPress={handlePress}>
-        <Text style={styles.buttonText}>{step === 2 ? 'Get Started' : 'Next'}</Text>
-      </TouchableOpacity> */}
       <View style={styles.button}>
-        <CustomButton backgroundColor="#E9870E" label="Next" variant="solid" fontSize={20} onPress={handleNextSlider} />
+        {step === 3 ? (
+          <Animated.View
+            entering={FadeInDown.duration(400)}
+            exiting={FadeOut.duration(100)}
+            style={{ paddingBottom: 30, marginTop: 20 }}
+          >
+            <CustomButton
+              backgroundColor="#E9870E"
+              label="Get Started"
+              variant="solid"
+              fontSize={20}
+              leftIcon="sign-in"
+              onPress={handleNextSlider}
+            />
+            <CustomButton
+              fontSize={16}
+              label="I ALREADY HAVE AN ACCOUNT"
+              rightIcon="chevron-right"
+              variant="transparent"
+              onPress={() => router.push('/(auth)/sign-in')}
+            />
+          </Animated.View>
+        ) : (
+          <CustomButton
+            backgroundColor="#E9870E"
+            label="Next"
+            variant="solid"
+            fontSize={20}
+            onPress={handleNextSlider}
+          />
+        )}
       </View>
     </View>
   );

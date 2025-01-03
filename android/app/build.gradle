@@ -86,7 +86,7 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace 'com.anonymous.StudyHub'
+    namespace "com.pixfocus"
     defaultConfig {
         applicationId 'com.anonymous.StudyHub'
         minSdkVersion rootProject.ext.minSdkVersion
