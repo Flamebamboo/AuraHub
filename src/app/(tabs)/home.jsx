@@ -9,6 +9,9 @@ import { useCallback } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { CreateSessionModal } from '@/components/BottomSheet/CreateSessionModal';
 import { router } from 'expo-router';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+
+import { faCog, faChartBar } from '@fortawesome/free-solid-svg-icons';
 const Home = () => {
   const { user } = useGlobalContext();
   const currentVariant = useTimerVariant((state) => state.variant);
@@ -33,11 +36,19 @@ const Home = () => {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaView className="flex-1" style={{ backgroundColor: bgColor }}>
-        <View className="p-5 gap-7 flex-1 ">
+        <View className="p-5 gap-7 flex-1  ">
           {/* Header */}
-          <View className="mb-6">
-            <Text className="font-PixelifySans text-[#aeaeae] text-xl">{getGreeting()},</Text>
-            <Text className="text-white font-bold text-3xl font-PixelifySans">{user ? user.username : 'User'}</Text>
+          <View className="flex-row justify-between items-center">
+            <View className="flex-col">
+              <Text className="font-PixelifySans text-[#aeaeae] text-xl">{getGreeting()},</Text>
+              <Text className="text-white font-bold text-3xl font-PixelifySans">{user ? user.username : 'User'}</Text>
+            </View>
+            <View className="flex-row gap-6">
+              <TouchableOpacity onPress={() => router.push('/(tabs)/stats-screen')}>
+                <FontAwesomeIcon icon={faChartBar} size={26} color="white" />
+              </TouchableOpacity>
+              <FontAwesomeIcon icon={faCog} size={26} color="white" />
+            </View>
           </View>
 
           <View className="mb-6 justify-center items-center flex-1">

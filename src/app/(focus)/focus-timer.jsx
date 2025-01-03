@@ -12,9 +12,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import useTimerStore from '@/store/timerStore';
 import useTimerVariant from '@/store/timerVariantStore';
 import { saveFocusStats } from '@/lib/focusStats';
-import { getByDay } from '@/lib/focusStats';
+import { useGlobalContext } from '@/context/GlobalProvider';
 const FocusTimer = () => {
   const duration = useTimerStore((state) => state.duration);
+  const { user } = useGlobalContext();
 
   const color = useTimerStore((state) => state.color);
   const task = useTimerStore((state) => state.task);
@@ -28,9 +29,9 @@ const FocusTimer = () => {
     if (isStopping) return;
     setIsStopping(true);
     const stats = stop();
-    if (stats) {
+    if (stats && user) {
       try {
-        await saveFocusStats(stats, task, color);
+        await saveFocusStats(stats, task, color, user);
         console.log('Session stats saved:', stats);
       } catch (error) {
         console.error('Failed to save session stats:', error);

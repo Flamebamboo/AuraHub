@@ -87,7 +87,7 @@ const EditTaskModal = ({ visible, onClose, onEdit, labels, task }) => {
               value={taskName}
               maxLength={10}
               onChangeText={handleInputChange}
-              autoFocus
+              //reminder on phone the input automatialy open keyboard
             />
           </View>
           {error && <Text style={styles.errorText}>{error}</Text>}
