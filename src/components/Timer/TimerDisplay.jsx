@@ -10,6 +10,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#fff',
     marginBottom: 30,
-    fontFamily: 'ReadexPro',
+    fontFamily: 'PixelifySans',
   },
 });

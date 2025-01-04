@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 
@@ -57,12 +57,15 @@ const FocusTimer = () => {
 
   return (
     <SafeAreaView style={{ backgroundColor: bgColor, flex: 1 }}>
-      <View style={styles.contentContainer}>
+      <View className="flex flex-row justify-between items-center m-7">
+        <Text style={styles.logo}>PixFocus</Text>
         <View style={styles.taskContainer}>
           <FontAwesomeIcon icon={faTag} size={22} color={color} />
           <Text style={styles.task}>{task}</Text>
-          <FontAwesomeIcon icon={faCaretDown} size={22} color={color} />
         </View>
+      </View>
+
+      <View style={styles.contentContainer}>
         <TouchableOpacity onPress={() => router.push('/(shop)/focus-design')}>
           <TimerArt onColorChange={handleBg} variant={currentVariant} progress={getProgress()} />
         </TouchableOpacity>
@@ -98,22 +101,23 @@ const styles = StyleSheet.create({
   taskContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20,
-    backgroundColor: 'white',
-    width: 160,
-    height: 40,
-    borderRadius: 20,
     paddingHorizontal: 20,
-    justifyContent: 'space-between',
-    marginTop: 20,
-    gap: 5,
+    justifyContent: 'center',
+  },
+
+  logo: {
+    color: '#fff',
+    fontSize: 20,
+    fontWeight: 'bold',
+    fontFamily: 'ReadexProBold',
   },
 
   task: {
-    color: 'black',
-    fontSize: 16,
+    color: '#fff',
+    fontSize: 20,
     fontWeight: 'bold',
-    textAlign: 'center',
+    marginLeft: 10,
+    fontFamily: 'PixelifySans',
   },
 });
 
